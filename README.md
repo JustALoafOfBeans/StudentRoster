@@ -11,7 +11,7 @@
 * If its not mentioned, probably wont loose points
 * Really use the document (there is set up for code, point breakdowns, all requirements, etc)
 
-### Topics and Code
+#### Topics and Code
 * Focus on what was learned the 1st 2 weeks of class
 * Boundry --> roster manager, class handling I/O and control
 * Entity objs --> student, roster, profile, major, completed credits, etc (the data points)
