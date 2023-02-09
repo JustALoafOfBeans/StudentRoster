@@ -10,7 +10,15 @@ public class Roster {
      @return index in roster where student is located, or NOT_FOUND = -1 if not found
      */
     private int find (Student student) {
-        return 0; // TEMP REMOVE LATER
+        // For each Student in roster[], use <Student>.equals() to compare
+        for (int rIndex = 0; rIndex < size; rIndex++) {
+            if (roster[rIndex].equals(student)) {
+                // Student found
+                return rIndex;
+            }
+        }
+        // Returns -1 if reach end of roster without hit
+        return -1;
     }
 
     /**
@@ -18,6 +26,11 @@ public class Roster {
      */
     private void grow () {
         // Increase array capacity by 4
+        Student[] rosterNew = new Student[size + 4];
+        for (int rIndex = 0; rIndex < size; rIndex++) {
+            rosterNew[rIndex] = roster[rIndex];
+        }
+        roster = rosterNew;
     }
 
     /**
