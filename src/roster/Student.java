@@ -62,4 +62,13 @@ public class Student implements Comparable<Student> {
         }
         return true;
     }
+
+    /**
+     Method that changes a student's major
+     @param newMaj major that Student changed to
+     */
+    public void changeMajor(Major newMaj) {
+        // todo do we need a boolean return and isValid()?
+        this.major = newMaj;
+    }
 }
