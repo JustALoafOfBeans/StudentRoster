@@ -4,7 +4,8 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 /**
  An enum class containing all the majors and corresponding codes and schools.
- Class still needs to be tested but Imma go to bed for now.
+ Call values using "Major.<SUBJECT>.<code/school>". For example
+ "Major.MATH .code" will return "01:198".
  @author Victoria Chen, Bridget Zhang
  */
 public enum Major {
