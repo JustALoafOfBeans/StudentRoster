@@ -20,20 +20,14 @@ public class Date  {
     }
 
     /**
-     Constructor for Date object using input parameters
-     */
-    public Date (String month, String day, String year) {
-        this.year = Integer.parseInt(year);
-        this.month = Integer.parseInt(month);
-        this.day = Integer.parseInt(day);
-    }
-
-    /**
      Constructor for Date object using values from input String
      @param date String describing input date in mm/dd/yyyy format
     */
     public Date (String date) {
-        //
+        String[] dateBreakdwn = date.split("/", 3);
+        this.month = Integer.parseInt(dateBreakdwn[0]);
+        this.day = Integer.parseInt(dateBreakdwn[1]);
+        this.year = Integer.parseInt(dateBreakdwn[2]);
     }
 
     /**
@@ -47,7 +41,7 @@ public class Date  {
     }
 
     /**
-     * Overrides the default toString method.
+     * Returns a string representation of the given date.
      * If the day or month is a single digit, add padding.
      * @return String formatted as mm/dd/yyyy
      */
@@ -70,12 +64,33 @@ public class Date  {
     }
 
     /**
+     * Compares this Date object to the specified Object
+     * @param obj String describing input date in mm/dd/yyyy format
+     * @return true if the objects refer to the same date, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj){
+        // first check if object type is correct
+        if(obj instanceof Date) {
+            Date date = (Date) obj; //casting
+            boolean matchMonth = date.month == this.month;
+            boolean matchDay = date.day == this.day;
+            boolean matchYear = date.year == this.year;
+            return (matchMonth && matchDay && matchYear);
+        }
+        return false;
+    }
+
+    /**
      * -------------------------------------------------------------------
      * DELETE THIS, FOR TESTING PURPOSES ONLY
      * -------------------------------------------------------------------
      */
     public static void main(String[] args) {
-        Date test = new Date("3", "2", "1996");
+        Date test = new Date("16/5/2023");
+        Date test2 = new Date("16/000005/2023");
         System.out.println(test);
+        System.out.println(test2);
+        System.out.println(test.equals("test2"));
     }
 }
