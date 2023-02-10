@@ -90,25 +90,29 @@ public class Date implements Comparable<Date> {
      */
     @Override
     public int compareTo(Date date) {
+        int SAME = 0;
+        int BEFORE = -1;
+        int AFTER = 1;
+
         if (this.equals(date)) {
-            return 0; // compared dates are the same
+            return SAME; // compared dates are the same
         }
         if(this.year < date.year) { // compare years
-            return -1;
+            return BEFORE;
         } else if (this.year > date.year) {
-            return 1;
+            return AFTER;
         }
         if(this.month < date.month) { // compare months
-            return -1;
+            return BEFORE;
         } else if (this.month > date.month) {
-            return 1;
+            return AFTER;
         }
         if(this.day < date.day) { // compare days
-            return -1;
+            return BEFORE;
         } else if (this.day > date.day) {
-            return 1;
+            return AFTER;
         }
-        return 1;
+        return AFTER;
     }
 
     /**
@@ -117,7 +121,7 @@ public class Date implements Comparable<Date> {
      * -------------------------------------------------------------------
      */
     public static void main(String[] args) {
-        Date test = new Date("08/00000016/001996");
+        Date test = new Date("08/15/1996");
         Date test2 = new Date("8/16/1996");
         System.out.println(test);
         System.out.println(test2);
