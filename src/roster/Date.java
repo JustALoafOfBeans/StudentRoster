@@ -1,15 +1,14 @@
 package roster;
 import java.util.Calendar;
 
-public class Date  {
-    //implements Comparable<Date> ?
+public class Date implements Comparable<Date> {
     private int year;
     private int month;
     private int day;
 
     /**
-     Constructor for Date object without parameters using today's date
-     Uses Calendar class to retrieve today's date
+     Constructor for Date object without parameters using today's date.
+     Uses Calendar class to retrieve today's date.
      */
     public Date () {
         Calendar calendar = Calendar.getInstance();
@@ -20,8 +19,8 @@ public class Date  {
     }
 
     /**
-     Constructor for Date object using values from input String
-     @param date String describing input date in mm/dd/yyyy format
+     Constructor for Date object using values from input String.
+     @param date String describing input date in mm/dd/yyyy format.
     */
     public Date (String date) {
         String[] dateBreakdwn = date.split("/", 3);
@@ -31,9 +30,9 @@ public class Date  {
     }
 
     /**
-     Method to check if the date is a valid calendar date
-     Checks if date is valid for given month, and checks for leap years
-     @return true if the date is valid, false if otherwise
+     Method to check if the date is a valid calendar date.
+     Checks if date is valid for given month, and checks for leap years.
+     @return true if the date is valid, false if otherwise.
      */
     public boolean isValid() {
 
@@ -43,7 +42,7 @@ public class Date  {
     /**
      * Returns a string representation of the given date.
      * If the day or month is a single digit, add padding.
-     * @return String formatted as mm/dd/yyyy
+     * @return String formatted as mm/dd/yyyy.
      */
     @Override
     public String toString() {
@@ -64,9 +63,9 @@ public class Date  {
     }
 
     /**
-     * Compares this Date object to the specified Object
-     * @param obj String describing input date in mm/dd/yyyy format
-     * @return true if the objects refer to the same date, false otherwise
+     * Compares this Date object to the specified Object.
+     * @param obj String describing input date in mm/dd/yyyy format.
+     * @return true if the objects refer to the same date, false otherwise.
      */
     @Override
     public boolean equals(Object obj){
@@ -82,15 +81,47 @@ public class Date  {
     }
 
     /**
+     * Compares the month, day, and year represented by the two Date objects.
+     * @param date the Date object to be compared.
+     * @return 0 if the dates are equal; a value less than 0 if the time
+     of this Date is before the Date represented by the argument; and a value
+    greater than 0 if the time of this Date is after the Date represented by
+    the argument.
+     */
+    @Override
+    public int compareTo(Date date) {
+        if (this.equals(date)) {
+            return 0; // compared dates are the same
+        }
+        if(this.year < date.year) { // compare years
+            return -1;
+        } else if (this.year > date.year) {
+            return 1;
+        }
+        if(this.month < date.month) { // compare months
+            return -1;
+        } else if (this.month > date.month) {
+            return 1;
+        }
+        if(this.day < date.day) { // compare days
+            return -1;
+        } else if (this.day > date.day) {
+            return 1;
+        }
+        return 1;
+    }
+
+    /**
      * -------------------------------------------------------------------
      * DELETE THIS, FOR TESTING PURPOSES ONLY
      * -------------------------------------------------------------------
      */
     public static void main(String[] args) {
-        Date test = new Date("16/5/2023");
-        Date test2 = new Date("16/000005/2023");
+        Date test = new Date("08/00000016/001996");
+        Date test2 = new Date("8/16/1996");
         System.out.println(test);
         System.out.println(test2);
-        System.out.println(test.equals("test2"));
+        System.out.println(test.equals(test2));
+        System.out.println(test.compareTo(test2));
     }
 }
