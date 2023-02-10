@@ -8,7 +8,7 @@ public class Date  {
     private int day;
 
     /**
-     Constructor for Date object using today's date if none given
+     Constructor for Date object without parameters using today's date
      Uses Calendar class to retrieve today's date
      */
     public Date () {
@@ -17,6 +17,15 @@ public class Date  {
         // Months are indexed starting at 0, add 1 to adjust
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DATE);
+    }
+
+    /**
+     Constructor for Date object using input parameters
+     */
+    public Date (String month, String day, String year) {
+        this.year = Integer.parseInt(year);
+        this.month = Integer.parseInt(month);
+        this.day = Integer.parseInt(day);
     }
 
     /**
@@ -39,11 +48,25 @@ public class Date  {
 
     /**
      * Overrides the default toString method.
+     * If the day or month is a single digit, add padding.
      * @return String formatted as mm/dd/yyyy
      */
     @Override
     public String toString() {
-        return this.month + "/" + this.day + "/" + this.year;
+        String monthAndDay = "";
+        String padding = "0";
+
+        if (this.month < 10) {
+            monthAndDay += padding + this.month + "/";
+        } else {
+            monthAndDay += this.month + "/";
+        }
+        if (this.day < 10) {
+            monthAndDay += padding + this.day;
+        } else {
+            monthAndDay += this.day;
+        }
+        return monthAndDay + "/" + this.year;
     }
 
     /**
@@ -52,8 +75,7 @@ public class Date  {
      * -------------------------------------------------------------------
      */
     public static void main(String[] args) {
-        System.out.println("Test");
-        Date test = new Date();
+        Date test = new Date("3", "2", "1996");
         System.out.println(test);
     }
 }
