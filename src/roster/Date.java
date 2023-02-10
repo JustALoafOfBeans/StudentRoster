@@ -23,6 +23,7 @@ public class Date implements Comparable<Date> {
      @param date String describing input date in mm/dd/yyyy format.
     */
     public Date (String date) {
+        // do we have to deal with incorrect formatted dates?
         String[] dateBreakdwn = date.split("/", 3);
         this.month = Integer.parseInt(dateBreakdwn[0]);
         this.day = Integer.parseInt(dateBreakdwn[1]);
@@ -40,9 +41,25 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Returns a string representation of the given date.
-     * If the day or month is a single digit, add padding.
-     * @return String formatted as mm/dd/yyyy.
+     Method to check if this date occurred 16 or more years ago.
+     @return true if this date is 16 or more years ago, false otherwise
+     */
+    public boolean checkIfSixteen() {
+        int validAge = 16;
+        Date today = new Date(); //date of today
+        today.year = today.year - validAge;
+
+        // if this date is exactly 16 years ago, still return true
+        if (this.compareTo(today) <= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     Returns a string representation of the given date.
+     If the day or month is a single digit, add padding.
+     @return String formatted as mm/dd/yyyy.
      */
     @Override
     public String toString() {
@@ -63,9 +80,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Compares this Date object to the specified Object.
-     * @param obj String describing input date in mm/dd/yyyy format.
-     * @return true if the objects refer to the same date, false otherwise.
+     Compares this Date object to the specified Object.
+     @param obj String describing input date in mm/dd/yyyy format.
+     @return true if the objects refer to the same date, false otherwise.
      */
     @Override
     public boolean equals(Object obj){
@@ -81,12 +98,12 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Compares the month, day, and year represented by the two Date objects.
-     * @param date the Date object to be compared.
-     * @return 0 if the dates are equal; a value less than 0 if the time
-     of this Date is before the Date represented by the argument; and a value
-    greater than 0 if the time of this Date is after the Date represented by
-    the argument.
+     Compares the month, day, and year represented by the two Date objects.
+     @param date the Date object to be compared.
+     @return 0 if the dates are equal; a value less than 0 if the time
+     of this Date is before the Date represented by the argument; and a
+     value greater than 0 if the time of this Date is after the Date
+     represented by the argument.
      */
     @Override
     public int compareTo(Date date) {
@@ -121,11 +138,8 @@ public class Date implements Comparable<Date> {
      * -------------------------------------------------------------------
      */
     public static void main(String[] args) {
-        Date test = new Date("08/15/1996");
-        Date test2 = new Date("8/16/1996");
+        Date test = new Date("5/10/2007");
         System.out.println(test);
-        System.out.println(test2);
-        System.out.println(test.equals(test2));
-        System.out.println(test.compareTo(test2));
+        System.out.println(test.checkIfSixteen());
     }
 }

@@ -7,22 +7,25 @@ package roster;
  @author Victoria Chen, Bridget Zhang
  */
 public enum Months {
-    JAN ("01"),
-    FEB("02"),
-    MARCH("03"),
-    APRIL("04"),
-    MAY("05"),
-    JUNE("06"),
-    JULY("07"),
-    AUG("08"),
-    SEP("09"),
-    OCT("10"),
-    NOV("11"),
-    DEC("12");
+    JAN (1),
+    FEB(2),
+    MARCH(3),
+    APRIL(4),
+    MAY(5),
+    JUNE(6),
+    JULY(7),
+    AUG(8),
+    SEP(9),
+    OCT(10),
+    NOV(11),
+    DEC(12),
+    QUADRENNIAL(4),
+    CENTENNIAL(100),
+    QUATERCENTENNIAL(400);
 
-    public final String num;
+    public final int num;
 
-    Months(String num) {
+    Months(int num) {
         this.num = num;
     }
 
