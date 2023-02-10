@@ -1,6 +1,8 @@
 package roster;
+import java.util.Calendar;
 
-public class Date implements Comparable<Date> {
+public class Date  {
+    //implements Comparable<Date> ?
     private int year;
     private int month;
     private int day;
@@ -10,7 +12,11 @@ public class Date implements Comparable<Date> {
      Uses Calendar class to retrieve today's date
      */
     public Date () {
-        //
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        // Months are indexed starting at 0, add 1 to adjust
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DATE);
     }
 
     /**
@@ -27,6 +33,27 @@ public class Date implements Comparable<Date> {
      @return true if the date is valid, false if otherwise
      */
     public boolean isValid() {
+
         return false; // TEMP REMOVE LATER
+    }
+
+    /**
+     * Overrides the default toString method.
+     * @return String formatted as mm/dd/yyyy
+     */
+    @Override
+    public String toString() {
+        return this.month + "/" + this.day + "/" + this.year;
+    }
+
+    /**
+     * -------------------------------------------------------------------
+     * DELETE THIS, FOR TESTING PURPOSES ONLY
+     * -------------------------------------------------------------------
+     */
+    public static void main(String[] args) {
+        System.out.println("Test");
+        Date test = new Date();
+        System.out.println(test);
     }
 }
