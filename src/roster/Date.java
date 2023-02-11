@@ -76,7 +76,7 @@ public class Date implements Comparable<Date> {
 
     /**
      Private method, checks if this month is a month with 30 days.
-     Either April, June, September, or November
+     Either April, June, September, or November.
      * @return true if this month is a month with 30 days.
      */
     private boolean shorterMonth() {
@@ -109,7 +109,7 @@ public class Date implements Comparable<Date> {
         boolean aboveDay = this.day > DateBreakpoints.MAXDAYS.num;
         boolean aboveMonth = this.month > DateBreakpoints.MAXMONTHS.num;
         boolean futureYear = this.year > calendar.get(Calendar.YEAR);
-        if ( aboveDay || aboveMonth || futureYear ){
+        if ( aboveDay || aboveMonth || futureYear ) {
             return true;
         }
 
@@ -117,7 +117,7 @@ public class Date implements Comparable<Date> {
         boolean negDay = this.day < lowerBound;
         boolean negMonth = this.month < lowerBound;
         boolean negYear = this.year < lowerBound;
-        if ( negDay || negMonth || negYear ){
+        if ( negDay || negMonth || negYear ) {
             return true;
         }
 
@@ -126,7 +126,7 @@ public class Date implements Comparable<Date> {
 
     /**
      Method to check if this date occurred 16 or more years ago.
-     @return true if this date is 16 or more years ago, false otherwise
+     @return true if this date is 16 or more years ago, false otherwise.
      */
     public boolean checkIfSixteen() {
         int validAge = 16;
@@ -169,7 +169,7 @@ public class Date implements Comparable<Date> {
      @return true if the objects refer to the same date, false otherwise.
      */
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         // first check if object type is correct
         if(obj instanceof Date) {
             Date date = (Date) obj; //casting
@@ -214,19 +214,5 @@ public class Date implements Comparable<Date> {
             return AFTER;
         }
         return AFTER;
-    }
-
-    /**
-     * -------------------------------------------------------------------
-     * DELETE THIS, FOR TESTING PURPOSES ONLY
-     * -------------------------------------------------------------------
-     */
-    public static void main(String[] args) {
-        Date test = new Date("2/28/2015");
-        System.out.println(test);
-        System.out.println(2016%4);
-        System.out.println(2016%100);
-        System.out.println(2016%400);
-        System.out.println(test.isValid());
     }
 }
