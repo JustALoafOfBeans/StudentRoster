@@ -9,10 +9,12 @@ public class Student implements Comparable<Student> {
      Constructor for a Student object from user's input
      @param studentInput as with tokens as string
      */
-    public Student(String studentInput) { // todo handle bad inputs? rotten garbage keysmash inputs?????
+    public Student(String studentInput) {
         int tokenStart, tokenEnd; // Tracks beginning and end of each token
         tokenStart = 0;
         int tokenNum = 0; // Number of tokens retrieved
+
+        // todo check if student valid (check date)
 
         String firstName = "", lastName = "", dateOfBirth = ""; // For Profile (convert DOB to Date)
         //John Doe 9/2/2022 EE 10 //todo remove example
@@ -31,7 +33,7 @@ public class Student implements Comparable<Student> {
                 } else if (tokenNum == 3) {
                     // todo what how major
                 } else {
-                    creditCompleted = Integer.parseInt(studentInput.substring(tokenStart, tokenEnd)); // todo legal?
+                    creditCompleted = Integer.parseInt(studentInput.substring(tokenStart, tokenEnd));
                 }
 
                 tokenNum += 1; // Incr num of tokens retrieved
@@ -39,8 +41,8 @@ public class Student implements Comparable<Student> {
             }
         }
 
-        Date profDate; // todo how make Date from dateOfBirthString
-        profile = Profile(lastName, firstName, profDate);
+        Date profDate = new Date(dateOfBirth);
+        profile = new Profile(lastName, firstName, profDate);
     }
 
     @Override
@@ -54,13 +56,19 @@ public class Student implements Comparable<Student> {
         return 1; // todo
     }
 
+    /**
+     Overrides equals to check if two students are equal
+     @param equalObject student to be compared to
+     @return true if equal, false otherwise
+     */
     @Override
-    public boolean equals(Object o) { // todo wack
-        if (!(o instanceof Student))
+    public boolean equals(Object equalObject) { // todo wack
+        if (equalObject instanceof Student)
         {
-            return false;
+            Student equalStudent = (Student) equalObject; // Cast into Student if can
+            return true; // todo return true if equal check names DOB blahblah
         }
-        return true;
+        return false; // Not of type student, invalid comparison
     }
 
     /**

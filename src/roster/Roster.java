@@ -108,4 +108,21 @@ public class Roster {
     public void printByStanding() {
         // todo sorted by school, major
     }
+
+    // SORTING ALGORITHMS RAAAAARAAAA
+    // Use a gross O(n^2) in-place algo like insertion or selection idk
+    // Runtime in the CLOUDS BABEEEEEE
+    public void sortProfile() {
+        // todo sort by profile, called by print()
+    }
+
+    public void sortSchoolMajor () {
+        // todo sort by school (alphabetical) then major (alphabetical)
+        // called by printBySchoolMajor()
+    }
+
+    public void sortStanding () {
+        // todo sort by standing (alphabetical)
+        // called by printByStanding()
+    }
 }

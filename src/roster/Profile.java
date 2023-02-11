@@ -62,12 +62,15 @@ public class Profile implements Comparable<Profile> {
     /**
      Method to check if two Profiles are equal
      Overrides equals() from Object class
-     @param equalProfile the Profile whose equality is checked against
+     @param equalObject the Profile whose equality is checked against
      @return true if equal, false if not
      */
-    public boolean equals(Object equalProfile) { // todo hmmm?
-        if (compareTo(this, equalProfile) == 0) {
-            return true;
+    public boolean equals(Object equalObject) {
+        if (equalObject instanceof Profile) { // Check if Profile and cast
+            Profile equalProfile = (Profile) equalObject;
+            if (compareTo(equalProfile) == 0) {
+                return true;
+            }
         }
         return false;
     }
