@@ -43,8 +43,13 @@ public class Date implements Comparable<Date> {
         if (this.month ==
                 (Calendar.FEBRUARY + DateBreakpoints.MONTHPADDING.num)) {
             //leap year process
-            System.out.println("Is feb");
-            return true;
+            if (this.isLeapYear()) {
+                if ( this.day > 29 ) {
+                    return false;
+                }
+            } else if ( this.day > 28 ) {
+                return false;
+            }
         } else if (this.shorterMonth() &&
                 this.day > DateBreakpoints.SHORTERMONTH.num) {
             // April, June, September, and November have max 30 days
@@ -52,6 +57,21 @@ public class Date implements Comparable<Date> {
         }
         // Any other month has 31 days
         return true;
+    }
+
+    /**
+     Private method, checks if the year of this date is a leap year.
+     * @return true if this year is a leap year, false is otherwise.
+     */
+    private boolean isLeapYear() {
+        if (this.year % DateBreakpoints.QUADRENNIAL.num != 0) {
+            return false;
+        } else if (this.year % DateBreakpoints.CENTENNIAL.num != 0) {
+            return true;
+        } else if (this.year % DateBreakpoints.QUATERCENTENNIAL.num == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -202,8 +222,11 @@ public class Date implements Comparable<Date> {
      * -------------------------------------------------------------------
      */
     public static void main(String[] args) {
-        Date test = new Date("11/31/2005");
+        Date test = new Date("2/28/2015");
         System.out.println(test);
+        System.out.println(2016%4);
+        System.out.println(2016%100);
+        System.out.println(2016%400);
         System.out.println(test.isValid());
     }
 }
