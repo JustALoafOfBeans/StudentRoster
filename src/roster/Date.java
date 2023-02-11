@@ -14,7 +14,7 @@ public class Date implements Comparable<Date> {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         // Months are indexed starting at 0, add 1 to adjust
-        month = calendar.get(Calendar.MONTH) + 1;
+        month = calendar.get(Calendar.MONTH) + DateBreakpoints.MONTHPADDING.num;
         day = calendar.get(Calendar.DATE);
     }
 
@@ -36,8 +36,72 @@ public class Date implements Comparable<Date> {
      @return true if the date is valid, false if otherwise.
      */
     public boolean isValid() {
+        if (this.outOfBounds()) { // date is out of bounds
+            return false;
+        }
 
-        return false; // TEMP REMOVE LATER
+        if (this.month ==
+                (Calendar.FEBRUARY + DateBreakpoints.MONTHPADDING.num)) {
+            //leap year process
+            System.out.println("Is feb");
+            return true;
+        } else if (this.shorterMonth() &&
+                this.day > DateBreakpoints.SHORTERMONTH.num) {
+            // April, June, September, and November have max 30 days
+            return false;
+        }
+        // Any other month has 31 days
+        return true;
+    }
+
+    /**
+     Private method, checks if this month is a month with 30 days.
+     Either April, June, September, or November
+     * @return true if this month is a month with 30 days.
+     */
+    private boolean shorterMonth() {
+        if (this.month == (Calendar.APRIL + DateBreakpoints.MONTHPADDING.num)) {
+            return true;
+        } else if (this.month == (Calendar.JUNE
+                + DateBreakpoints.MONTHPADDING.num)) {
+            return true;
+        } else if (this.month == (Calendar.SEPTEMBER
+                + DateBreakpoints.MONTHPADDING.num)) {
+            return true;
+        } else if (this.month == (Calendar.NOVEMBER
+                + DateBreakpoints.MONTHPADDING.num)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     Private method, checks if the numerical values of this date are possible.
+     Days must be between 1 and 31; Months must be between 1 and 12; Years
+     must be between 1 and the current year.
+     * @return true if this date is out of bounds, false otherwise.
+     */
+    private boolean outOfBounds() {
+        Calendar calendar = Calendar.getInstance();
+        int lowerBound = 1;
+
+        // check if date is in the future or above max possible values
+        boolean aboveDay = this.day > DateBreakpoints.MAXDAYS.num;
+        boolean aboveMonth = this.month > DateBreakpoints.MAXMONTHS.num;
+        boolean futureYear = this.year > calendar.get(Calendar.YEAR);
+        if ( aboveDay || aboveMonth || futureYear ){
+            return true;
+        }
+
+        // check if date is lower than possible (lower bound)
+        boolean negDay = this.day < lowerBound;
+        boolean negMonth = this.month < lowerBound;
+        boolean negYear = this.year < lowerBound;
+        if ( negDay || negMonth || negYear ){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -138,8 +202,8 @@ public class Date implements Comparable<Date> {
      * -------------------------------------------------------------------
      */
     public static void main(String[] args) {
-        Date test = new Date("5/10/2007");
+        Date test = new Date("11/31/2005");
         System.out.println(test);
-        System.out.println(test.checkIfSixteen());
+        System.out.println(test.isValid());
     }
 }
