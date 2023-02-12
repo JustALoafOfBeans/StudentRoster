@@ -24,7 +24,7 @@ public class Date implements Comparable<Date> {
     */
     public Date (String date) {
         // do we have to deal with incorrect formatted dates?
-        String[] dateBreakdwn = date.split("/", 3);
+        String[] dateBreakdwn = date.split("/");
         this.month = Integer.parseInt(dateBreakdwn[0]);
         this.day = Integer.parseInt(dateBreakdwn[1]);
         this.year = Integer.parseInt(dateBreakdwn[2]);
