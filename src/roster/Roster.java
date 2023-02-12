@@ -26,7 +26,7 @@ public class Roster {
      */
     private void grow () {
         // Increase array capacity by 4
-        Student[] rosterNew = new Student[size + 4];
+        Student[] rosterNew = new Student[roster.length + 4];
         for (int rIndex = 0; rIndex < size; rIndex++) {
             rosterNew[rIndex] = roster[rIndex];
         }
@@ -39,10 +39,12 @@ public class Roster {
      @return true if student valid and added successfully, false otherwise
      */
     public boolean add (Student student) {
-        // todo check if student is valid
+        if (!student.isValid()) { // Student not valid, can not be added
+            return false;
+        }
         // Check if student already in roster
-        int lastFullIndex = size - 1; // Assume full to start
-        for (int rostInd = 0; rostInd < size; rostInd++) {
+        int lastFullIndex = roster.length - 1; // Assume full to start
+        for (int rostInd = 0; rostInd < roster.length; rostInd++) {
             if (roster[rostInd] == null) {
                 lastFullIndex = rostInd - 1; // Track last full index
                 break;
@@ -52,11 +54,12 @@ public class Roster {
             }
         }
         // Is valid and not yet in roster, add accordingly
-        if (lastFullIndex != (size - 1)) {
+        if (lastFullIndex == (roster.length - 1)) {
             // Resize of last index full (roster filled)
             grow();
         }
         roster[lastFullIndex + 1] = student;
+        size += 1;
         return true;
     }
 
@@ -69,7 +72,7 @@ public class Roster {
         // Seek target student in roster
         boolean found = false;
         int rem = 0; // remove index
-        for (rem = 0; rem < size; rem++) {
+        for (rem = 0; rem < roster.length; rem++) {
             if (roster[rem].equals(student)) {
                 found = true;
                 break;
@@ -77,24 +80,30 @@ public class Roster {
         }
         // Move everything after remIndex up (null for last)
         if (found) {
-            for (int shift = rem + 1; shift < size; shift++) {
+            for (int shift = rem + 1; shift < roster.length; shift++) {
+                // todo can optimize knowing "size" holds size not capacity
                 if (roster[shift] == null) { // If null, roster complete
                     roster[shift - 1] = null;
                     break;
                 }
-                if (shift == size - 1) { // Set last to null
+                if (shift == roster.length - 1) { // Set last to null
                     roster[shift] = null;
                 }
                 roster[shift - 1] = roster[shift];
             }
+            size -= 1;
         }
-
         // If not found, return false
         return found;
     }
 
     public boolean contains (Student student) {
-        return false; // TEMP REMOVE LATER
+        for (int ind = 0; ind < size; ind++) { // todo please change counter name
+            if (roster[ind].compareTo(student) == 0) {
+                return true;
+            }
+        }
+        return false; // Student not found in roster
     }
 
     public void print() {
@@ -109,20 +118,64 @@ public class Roster {
         // todo sorted by school, major
     }
 
-    // SORTING ALGORITHMS RAAAAARAAAA
-    // Use a gross O(n^2) in-place algo like insertion or selection idk
-    // Runtime in the CLOUDS BABEEEEEE
+    //
     public void sortProfile() {
-        // todo sort by profile, called by print()
+        Student swapTemp;
+        for (int i = 0; i < size; i++) { // todo change counter names (note size not roster.length)
+            for (int j = i-1; j >= 0; j--) {
+                // If Profile "less" than prev, swap
+                if (roster[j].getProfile().compareTo(roster[j-1].getProfile()) < 0) {
+                    swapTemp = roster[j];
+                    roster[j] = roster[j-1];
+                    roster[j-1] = swapTemp;
+                } else {
+                    break;
+                }
+            }
+        }
     }
 
+    // sorts by school (alphabetical) then major (alphabetical), called by printBySchoolMajor()
     public void sortSchoolMajor () {
-        // todo sort by school (alphabetical) then major (alphabetical)
-        // called by printBySchoolMajor()
+        Student swapTemp;
+        int schoolComp, majorComp; // Value of school comparison
+        for (int i = 0; i < size; i++) {
+            for (int j = i-1; j >= 0; j--) {
+                schoolComp = roster[j].getMajor().school.compareTo(roster[j-1].getMajor().school); // todo long
+                if (schoolComp < 0) {
+                    // School "less" alphabetically, swap
+                    swapTemp = roster[j];
+                    roster[j] = roster[j-1];
+                    roster[j-1] = swapTemp;
+                } else if (schoolComp == 0) {
+                    // Schools same, check majors
+                    majorComp = roster[j].getMajor().name().compareTo(roster[j-1].getMajor().name());
+                    if (majorComp < 0) {
+                        // Major "less" alphabetically, swap
+                        swapTemp = roster[j];
+                        roster[j] = roster[j-1];
+                        roster[j-1] = swapTemp; // todo extract repeat code
+                    } else if (majorComp == 0) {
+                        // Same major, compare profiles
+                        if (roster[j].getProfile().compareTo(roster[j-1].getProfile()) < 0) {
+                            swapTemp = roster[j];
+                            roster[j] = roster[j-1];
+                            roster[j-1] = swapTemp;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+                } else {
+                    // School "greater" alphabetically
+                    break;
+                }
+            }
+        }
     }
 
+    // Sorts by standing (alphabetical) then profile
     public void sortStanding () {
-        // todo sort by standing (alphabetical)
-        // called by printByStanding()
     }
 }

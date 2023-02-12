@@ -133,7 +133,7 @@ public class Profile implements Comparable<Profile> {
             }
         }
 
-        // Return longer
+        // Count longer word as greater
         if (shortWord == 0) {
             return 0; // Same length words, chars all equal
         } else if (shortWord == 1) {
