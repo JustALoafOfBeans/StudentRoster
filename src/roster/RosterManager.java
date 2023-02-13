@@ -7,7 +7,7 @@ import java.util.Scanner;
  This class is run by calling RosterManager.run() and first initiates a new
  roster object and session. The roster can be manipulated during the session
  but all actions are cleared after running the opcode "Q".
- @author Victoria Chen, Bridget Zhang
+ @author Victoria Chen
  */
 public class RosterManager {
     public void run() {
@@ -38,7 +38,6 @@ public class RosterManager {
      */
     private Roster takeAction(Roster studentRoster, String[] parameters) {
         String opCode = parameters[0];
-        // Course of action based on op code
         switch (opCode) {
             case "A": // add student
                 if (validStudent(parameters)) {
@@ -46,7 +45,6 @@ public class RosterManager {
                 }
                 break;
             case "R": //remove student
-                System.out.println("Remove student");
                 if (validStudent(parameters)) {
                     studentRoster = removeStudent(studentRoster, parameters);
                 }
@@ -65,6 +63,9 @@ public class RosterManager {
                 break;
             case "C": // change a students major
                 System.out.println("Change a students major");
+                if (validStudent(parameters)) {
+                    studentRoster = changeMajor(studentRoster, parameters);
+                }
                 break;
             case "Q": // end the program
                 System.out.println("Roster Manager terminated.");
@@ -73,6 +74,33 @@ public class RosterManager {
                 System.out.println(opCode + " is an invalid command!");
                 break;
         }
+        return studentRoster;
+    }
+
+    /**
+     Private method which, give the parameters, changes the major of the
+     specified student.
+     * @param studentRoster Roster object containing student objects.
+     * @param parameters Array of strings containing a breakdown of the
+     *                   student to process.
+     * @return An updated Roster object.
+     */
+    private Roster changeMajor(Roster studentRoster, String[] parameters) {
+        if (!validMajor(parameters[4])) {
+            return studentRoster;
+        }
+        // create student using parameters with dummy major and credits
+        String student = parameters[1] + " " + parameters[2] + " "
+                        + parameters[3];
+        Profile toChange = new Profile(student);
+        Student stuObj = new Student(toChange);
+        if (studentRoster.contains(stuObj)) {
+            studentRoster.changeMajor(toChange, parameters[4]);
+            System.out.println(student + " major changed to " + parameters[4]);
+        } else {
+            System.out.println(student + " is not in the roster.");
+        }
+
         return studentRoster;
     }
 
@@ -151,7 +179,7 @@ public class RosterManager {
             // valid major
             System.out.println("Major code invalid: " + parameters[4]);
             return false;
-        } else if (parameters.length > mjrInd && !validCredits(parameters[5])) {
+        } else if (parameters.length > mjrInd+1 && !validCredits(parameters[5])) {
             // valid credits
             // print statements are in validCredits method
             return false;
