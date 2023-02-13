@@ -1,4 +1,5 @@
 package roster;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -37,7 +38,6 @@ public class RosterManager {
      */
     private Roster takeAction(Roster studentRoster, String[] parameters) {
         String opCode = parameters[0];
-
         // Course of action based on op code
         switch (opCode) {
             case "A": // add student
@@ -47,14 +47,9 @@ public class RosterManager {
                 break;
             case "R": //remove student
                 System.out.println("Remove student");
-                /** use parameters to make student obj
-                if (roster.contains(student)) {
-                    roster.remove(student);
-                    System.out.println(fname lname dob removed from the
-                 roster.);
-                } else {
-                 System.out.println(fname lname dob is not in the roster.);
-                } */
+                if (validStudent(parameters)) {
+                    studentRoster = removeStudent(studentRoster, parameters);
+                }
                 break;
             case "P": // print roster by last name
                 studentRoster.print();
@@ -82,11 +77,36 @@ public class RosterManager {
     }
 
     /**
-     Private method which checks if a student is valid and adds them to the
-     roster.
+     Private method which, given the parameters, makes a student obj and
+     removes the student from the roster argument.
      * @param studentRoster Roster object containing student objects.
      * @param parameters Array of strings containing a breakdown of the
-     *                   command to process.
+     *                   student to process.
+     * @return An updated Roster object.
+     */
+    private Roster removeStudent(Roster studentRoster, String[] parameters) {
+        // create student using parameters with dummy major and credits
+        String student =
+                parameters[1] + " " + parameters[2] + " "
+                        + parameters[3] + " FAKE 50";
+        Student toRemove = new Student(student);
+        if (studentRoster.contains(toRemove)) {
+            studentRoster.remove(toRemove);
+            System.out.println(parameters[1] + " " + parameters[2] + " "
+                            + parameters[3] + " removed from the roster.");
+        } else {
+            System.out.println(parameters[1] + " " + parameters[2] + " "
+                    + parameters[3] + " is not in the roster.");
+        }
+        return studentRoster;
+    }
+
+    /**
+     Private method which, given the parameters, makes a Student obj adds the
+     student to the roster argument.
+     * @param studentRoster Roster object containing student objects.
+     * @param parameters Array of strings containing a breakdown of the
+     *                   student to process.
      * @return An updated Roster object.
      */
     private Roster addStudent(Roster studentRoster, String[] parameters) {
@@ -97,7 +117,6 @@ public class RosterManager {
         Student toAdd = new Student(student);
         // check if student exists
         if(!studentRoster.contains(toAdd)) {
-            System.out.println("Add student");
             studentRoster.add(toAdd);
              System.out.println(parameters[1] + " " + parameters[2]
              + " " + parameters[3] + " added to the " +
@@ -119,7 +138,7 @@ public class RosterManager {
      */
     private boolean validStudent(String[] parameters) {
         Date dob = new Date(parameters[3]);
-
+        int mjrInd = 4; // index for end of profile
         if (!dob.isValid()) { //valid DoB
             System.out.println("DOB invalid: " + dob + " not a valid calendar "
                     + "date!");
@@ -128,10 +147,12 @@ public class RosterManager {
             System.out.println("DOB invalid: " + dob
                     + " younger than 16 years old.");
             return false;
-        } else if (!validMajor(parameters[4])) { // valid major
+        } else if (parameters.length > mjrInd && !validMajor(parameters[4])) {
+            // valid major
             System.out.println("Major code invalid: " + parameters[4]);
             return false;
-        } else if (!validCredits(parameters[5])) { // valid credits
+        } else if (parameters.length > mjrInd && !validCredits(parameters[5])) {
+            // valid credits
             // print statements are in validCredits method
             return false;
         }
