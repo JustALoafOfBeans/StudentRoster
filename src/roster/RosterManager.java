@@ -55,13 +55,13 @@ public class RosterManager {
                 } */
                 break;
             case "P": // print roster by last name
-                System.out.println("Display roster by last name");
+                studentRoster.print();
                 break;
             case "PS": // print roster by standing
-                System.out.println("Display roster by standing");
+                studentRoster.printByStanding();
                 break;
             case "PC": // print roster by school major
-                System.out.println("Display roster by school/major");
+                studentRoster.printBySchoolMajor();
                 break;
             case "L": // list all students in a school
                 System.out.println("List students in a school");
@@ -73,9 +73,7 @@ public class RosterManager {
                 System.out.println("Roster Manager terminated.");
                 break;
             default:
-                if (!opCode.matches("\n") && !opCode.matches("\r")) {
-                    System.out.println(opCode + " is an invalid command!");
-                }
+                System.out.println(opCode + " is an invalid command!");
                 break;
         }
         return studentRoster;
