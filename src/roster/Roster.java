@@ -6,13 +6,13 @@ public class Roster {
 
     /**
      Method to find the student in the roster
-     @param student student that is to be found
-     @return index in roster where student is located, or NOT_FOUND = -1 if not found
+     * @param student student that is to be found
+     * @return index in roster where student is located, or NOT_FOUND = -1 if not found
      */
     private int find (Student student) {
         // For each Student in roster[], use <Student>.equals() to compare
-        for (int rIndex = 0; rIndex < size; rIndex++) {
-            if (roster[rIndex].equals(student)) {
+        for (int rIndex = 0; rIndex < size-1; rIndex++) {
+            if (roster[rIndex].getProfile().equals(student.getProfile())) {
                 // Student found
                 return rIndex;
             }
@@ -27,7 +27,7 @@ public class Roster {
     private void grow () {
         // Increase array capacity by 4
         Student[] rosterNew = new Student[roster.length + 4];
-        for (int rIndex = 0; rIndex < size; rIndex++) {
+        for (int rIndex = 0; rIndex < size-1; rIndex++) {
             rosterNew[rIndex] = roster[rIndex];
         }
         roster = rosterNew;
@@ -35,8 +35,8 @@ public class Roster {
 
     /**
      Add student to the end of the array
-     @param student the student to be added to the roster
-     @return true if student valid and added successfully, false otherwise
+     * @param student the student to be added to the roster
+     * @return true if student valid and added successfully, false otherwise
      */
     public boolean add (Student student) {
         if (!student.isValid()) { // Student not valid, can not be added
@@ -65,69 +65,81 @@ public class Roster {
 
     /**
      Removes student from array and maintains order
-     @param student student to be removed from roster
-     @return true if removed successfully, false if otherwise
+     * @param student student to be removed from roster
+     * @return true if removed successfully, false if otherwise
      */
     public boolean remove (Student student) {
-        // Seek target student in roster
-        boolean found = false;
-        int rem = 0; // remove index
-        for (rem = 0; rem < roster.length; rem++) {
-            if (roster[rem].equals(student)) {
-                found = true;
-                break;
-            }
+        int rem = find(student); // Index to find student at
+        if (rem < 0) { // Not found
+            return false;
         }
         // Move everything after remIndex up (null for last)
-        if (found) {
-            for (int shift = rem + 1; shift < roster.length; shift++) {
-                // todo can optimize knowing "size" holds size not capacity
-                if (roster[shift] == null) { // If null, roster complete
-                    roster[shift - 1] = null;
-                    break;
-                }
-                if (shift == roster.length - 1) { // Set last to null
-                    roster[shift] = null;
-                }
-                roster[shift - 1] = roster[shift];
+        for (int shift = rem + 1; shift < size-1; shift++) {
+            roster[shift - 1] = roster[shift];
+            if (shift == roster.length-1 || roster[shift+1] == null) { // Set last to null
+                roster[shift] = null;
             }
-            size -= 1;
         }
-        // If not found, return false
-        return found;
+        size -= 1;
+        return true;
     }
 
+    /**
+     Checks if target student can be found in roster
+     * @param student target student being sought
+     * @return true if student in roster, false if not
+     */
     public boolean contains (Student student) {
-        for (int ind = 0; ind < size; ind++) { // todo please change counter name
-            if (roster[ind].compareTo(student) == 0) {
-                return true;
-            }
-        }
-        return false; // Student not found in roster
+        int foundIndex = find(student);
+        return foundIndex >= 0; // If foundIndex < 0, student not found in roster
     }
 
+    /**
+     Prints roster sorted by student profiles
+     */
     public void print() {
-        // todo sorted last, first, DOB
+        // Sort by profile
+        sortProfile();
+        // Print all elements of sorted roster
+        for (int ind = 0; ind < size-1; ind++) {
+            System.out.println(roster[ind].toString());
+        }
     }
 
+    /**
+     Prints roster sorted by student majors (alpahbetical) and profile
+     */
     public void printBySchoolMajor() {
-        // todo sorted by standing (alphabetical)
+        // Sort by standing
+        sortStanding();
+        // Print all elements of sorted roster
+        for (int ind = 0; ind < size-1; ind++) {
+            System.out.println(roster[ind].toString());
+        }
     }
 
+    /**
+     Prints roster sorted by student standing (alphabetical) and profile
+     */
     public void printByStanding() {
-        // todo sorted by school, major
+        // Sort by school and major
+        sortSchoolMajor();
+        // Print all elements of sorted roster
+        for (int ind = 0; ind < size-1; ind++) {
+            System.out.println(roster[ind].toString());
+        }
     }
 
-    //
+    /**
+     Sorts roster by student Profile
+     Called to sort by print()
+     */
     public void sortProfile() {
-        Student swapTemp;
-        for (int i = 0; i < size; i++) { // todo change counter names (note size not roster.length)
+        for (int i = 0; i < size-1; i++) { // todo change counter names (note size not roster.length)
             for (int j = i-1; j >= 0; j--) {
                 // If Profile "less" than prev, swap
                 if (roster[j].getProfile().compareTo(roster[j-1].getProfile()) < 0) {
-                    swapTemp = roster[j];
-                    roster[j] = roster[j-1];
-                    roster[j-1] = swapTemp;
+                    swapRoster(j, j-1);
                 } else {
                     break;
                 }
@@ -135,32 +147,28 @@ public class Roster {
         }
     }
 
-    // sorts by school (alphabetical) then major (alphabetical), called by printBySchoolMajor()
+    /**
+     Sorts roster by student Major then by School (and if same, by Profile)
+     Called to sort by printBySchoolMajor()
+     */
     public void sortSchoolMajor () {
-        Student swapTemp;
         int schoolComp, majorComp; // Value of school comparison
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size-1; i++) {
             for (int j = i-1; j >= 0; j--) {
                 schoolComp = roster[j].getMajor().school.compareTo(roster[j-1].getMajor().school); // todo long
                 if (schoolComp < 0) {
                     // School "less" alphabetically, swap
-                    swapTemp = roster[j];
-                    roster[j] = roster[j-1];
-                    roster[j-1] = swapTemp;
+                    swapRoster(j, j-1);
                 } else if (schoolComp == 0) {
                     // Schools same, check majors
                     majorComp = roster[j].getMajor().name().compareTo(roster[j-1].getMajor().name());
                     if (majorComp < 0) {
                         // Major "less" alphabetically, swap
-                        swapTemp = roster[j];
-                        roster[j] = roster[j-1];
-                        roster[j-1] = swapTemp; // todo extract repeat code
+                        swapRoster(j, j-1);
                     } else if (majorComp == 0) {
                         // Same major, compare profiles
                         if (roster[j].getProfile().compareTo(roster[j-1].getProfile()) < 0) {
-                            swapTemp = roster[j];
-                            roster[j] = roster[j-1];
-                            roster[j-1] = swapTemp;
+                            swapRoster(j, j-1);
                         } else {
                             break;
                         }
@@ -175,7 +183,42 @@ public class Roster {
         }
     }
 
-    // Sorts by standing (alphabetical) then profile
+    /**
+     Sorts roster by student Standing then Profile
+     Called to sort by printByStanding()
+     */
     public void sortStanding () {
+        int standingComp;
+        for (int i = 0; i < size-1; i++) {
+            for (int j = i-1; j >= 0; j--) {
+                standingComp = roster[j].getStanding().name().compareTo(roster[j-1].getStanding().name());
+                if (standingComp < 0) {
+                    // If standing of previous greater alphabetically, swap
+                    swapRoster(j, j-1);
+                } else if (standingComp == 0) {
+                    // If standing of current SAME, check profiles
+                    if (roster[j].getProfile().compareTo(roster[j-1].getProfile()) < 0) {
+                        // If previous profile greater, swap
+                        swapRoster(j, j-1);
+                    } else {
+                        break;
+                    }
+                } else {
+                    // Move to next value of j
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     Swaps elements at indices "x" and "y" in roster
+     * @param indX index of first element in swap
+     * @param indY index of other element in swap
+     */
+    private void swapRoster(int indX, int indY) {
+        Student swapTemp = roster[indX];
+        roster[indX] = roster[indY];
+        roster[indY] = swapTemp;
     }
 }

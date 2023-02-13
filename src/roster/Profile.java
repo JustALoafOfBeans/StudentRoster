@@ -10,20 +10,36 @@ public class Profile implements Comparable<Profile> {
 
     /**
      Constructor for Profile class
-     @param profLast the last name for the new profile, given as String
-     @param profFirst the first name for the new profile, given as String
-     @param profDate the date of birth for the new profile, given as a Date
+     * @param profInput Profile input string
      */
-    public Profile(String profLast, String profFirst, Date profDate) {
-        lname = profLast;
-        fname = profFirst;
-        dob = profDate;
+    public Profile(String profInput) {
+        int tokenStart = 0, tokenEnd, tokenNum = 0;
+
+        for (int ind = 0; ind < profInput.length(); ind++) {
+            // Check for space delimiter
+            if (profInput.charAt(ind) == ' ') {
+                tokenEnd = ind;
+                if (tokenNum == 0) { // First name
+                    fname = profInput.substring(tokenStart, tokenEnd);
+                } else if (tokenNum == 1) { // Last name
+                    lname = profInput.substring(tokenStart, tokenEnd);
+                }
+                tokenNum += 1; // Count tokens taken in already
+                tokenStart = tokenEnd + 1; // Reset next token start
+            }
+            // Take in last token since no space delimiter
+            if (ind == profInput.length() - 1) {
+                tokenEnd = ind + 1;
+                String strDob = profInput.substring(tokenStart, tokenEnd);
+                dob = new Date(strDob);
+            }
+        }
     }
 
     /**
      Method to give Profile in String format
      Overrides toString() from Comparable interface
-     @return profile as a String in format [first name] [last name] [dob]
+     * @return profile as a String in format [first name] [last name] [dob]
      */
     @Override
     public String toString() {
@@ -33,8 +49,8 @@ public class Profile implements Comparable<Profile> {
     /**
      Method to compare two Profiles
      Overrides compareTo() from Comparable interface
-     @param compareProfile the Profile to be compared to
-     @return 1 if this profile is "greater" and -1 if it is "less" than compared // todo valid?
+     * @param compareProfile the Profile to be compared to
+     * @return 1 if this profile is "greater" and -1 if it is "less" than compared
      */
     public int compareTo(Profile compareProfile) {
         int compVal;
@@ -53,17 +69,17 @@ public class Profile implements Comparable<Profile> {
         // First names same, compare DOBs
         compVal = dob.compareTo(compareProfile.getDob());
         if (compVal != 0) {
-            return (compVal < 0) ? -1 : 1; //todo make sure this matches how Vic does Date compare
+            return (compVal < 0) ? -1 : 1;
         }
 
-        return 0; // Profiles same //todo
+        return 0; // Profiles same
     }
 
     /**
      Method to check if two Profiles are equal
      Overrides equals() from Object class
-     @param equalObject the Profile whose equality is checked against
-     @return true if equal, false if not
+     * @param equalObject the Profile whose equality is checked against
+     * @return true if equal, false if not
      */
     public boolean equals(Object equalObject) {
         if (equalObject instanceof Profile) { // Check if Profile and cast
@@ -78,7 +94,7 @@ public class Profile implements Comparable<Profile> {
     /**
      Helper method that returns lname
      Used to get attributes for compared Profile objects
-     @return lname of Profile object
+     * @return lname of Profile object
      */
     public String getLname() {
         return lname;
@@ -87,7 +103,7 @@ public class Profile implements Comparable<Profile> {
     /**
      Helper method that returns fname
      Used to get attributes for compared Profile objects
-     @return fname of Profile object
+     * @return fname of Profile object
      */
     public String getFname() {
         return fname;
@@ -96,7 +112,7 @@ public class Profile implements Comparable<Profile> {
     /**
      Helper method that returns dob
      Used to get attributes for compared Profile objects
-     @return dob of Profile object
+     * @return dob of Profile object
      */
     public Date getDob() {
         return dob;
@@ -104,9 +120,9 @@ public class Profile implements Comparable<Profile> {
 
     /**
      Helper method to compare two Strings lexicographically
-     @param wordOne first String being compared
-     @param wordTwo second String being compared
-     @return 1 if wordOne "greater", -1 if it is "less", and 0 if equal to wordTwo
+     * @param wordOne first String being compared
+     * @param wordTwo second String being compared
+     * @return 1 if wordOne "greater", -1 if it is "less", and 0 if equal to wordTwo
      */
     private int lexicoCompare(String wordOne, String wordTwo) {
         // Find length of shorter and compare through
@@ -122,8 +138,8 @@ public class Profile implements Comparable<Profile> {
         int asciiOne, asciiTwo;
         for (int lIndex = 0; lIndex < shortLen; lIndex++) {
             // Get ascii values for chars, case-insensitive
-            asciiOne = asciiLower((int) wordOne.charAt(lIndex));
-            asciiTwo = asciiLower((int) wordTwo.charAt(lIndex));
+            asciiOne = asciiLower(wordOne.charAt(lIndex));
+            asciiTwo = asciiLower(wordTwo.charAt(lIndex));
 
             // Compare, if one larger then return
             if (asciiOne < asciiTwo) {
@@ -145,8 +161,8 @@ public class Profile implements Comparable<Profile> {
 
     /**
      Helper method to convert ASCII values to lowercase for case-insensitive comparison
-     @param asciiIn ASCII value in
-     @return lowercase value of character
+     * @param asciiIn ASCII value in
+     * @return lowercase value of character
      */
     private int asciiLower (int asciiIn) {
         if (asciiIn < ASCIILOWERA) {

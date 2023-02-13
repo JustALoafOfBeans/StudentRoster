@@ -5,6 +5,10 @@ public class Student implements Comparable<Student> {
     private Major major;
     private int creditCompleted;
 
+    public static final int FRESHMANCRED = 30; // Credit cutoff for freshmen
+    public static final int SOPHOMORECRED = 60; // Credit cutoff for sophomores
+    public static final int JUNIORCRED = 90; // Credit cutoff for juniors
+
     /**
      Constructor for a Student object from user's input
      @param studentInput as with tokens as string
@@ -15,10 +19,9 @@ public class Student implements Comparable<Student> {
         int tokenNum = 0; // Number of tokens retrieved
 
         String firstName = "", lastName = "", dateOfBirth = ""; // For Profile (convert DOB to Date)
-        //John Doe 9/2/2022 EE 10 //todo remove example
 
         // Parse string, extracting tokens as encounter " " delimiter
-        for (int ind = 0; ind < studentInput.length(); ind++) { // todo var name could be better mm
+        for (int ind = 0; ind < studentInput.length(); ind++) {
             if (studentInput.charAt(ind) == ' ') { // Look for closing " " delimiter
                 tokenEnd = ind; // Space is end (non-inclusive) of token
                 // Set appropriate token
@@ -57,17 +60,33 @@ public class Student implements Comparable<Student> {
             }
         }
 
-        Date profDate = new Date(dateOfBirth);
-        profile = new Profile(lastName, firstName, profDate);
+        profile = new Profile(firstName + " " + lastName + " " + dateOfBirth);
     }
 
+    /**
+     Dummy constructor for Student used for Find() in Roster
+     Used when only given profile information for removal or search
+     * @param profInput given profile information
+     */
+    public Student(Profile profInput) { // todo take in String? or profInput
+        profile = profInput;
+    }
+
+    /**
+     Converts Student object to String format
+     Overrides toString() from Comparable interface
+     * @return Student in String format for print
+     */
     @Override
     public String toString() {
         return profile.toString() + " " + major.name() + " " + creditCompleted;
     }
 
     /**
-     // Returns
+     Compares this student to another
+     Overrides compareTo() from Comparable interface
+     * @param compareStudent student that this is being compared to
+     * @return positive integer if this is greater, 0 if same, negative if less
     */
     @Override
     public int compareTo(Student compareStudent) {
@@ -75,7 +94,7 @@ public class Student implements Comparable<Student> {
         int compProf = profile.compareTo(compareStudent.getProfile());
         if (compProf != 0) {
             return compProf;
-        };
+        }
         // Compare major
         String thisMaj = major.name();
         String compareMaj = compareStudent.getMajor().name();
@@ -88,33 +107,10 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     Helper method that returns profile for comparison
-     @return Profile attached to Student object
-     */
-    public Profile getProfile() {
-        return profile;
-    }
-
-    /**
-     Helper method that returns major for comparison
-     @return Major value attached to Student object
-     */
-    public Major getMajor() {
-        return major;
-    }
-
-    /**
-     Helper method that returns credit completed
-     @return credits completed by Student
-     */
-    public int getCreditCompleted() {
-        return creditCompleted;
-    }
-
-    /**
-     Overrides equals to check if two students are equal
-     @param equalObject student to be compared to
-     @return true if equal, false otherwise
+     Checks ir two students are considered "equal"
+     Overrides equals() from Object class
+     * @param equalObject student to be compared to
+     * @return true if equal, false otherwise
      */
     @Override
     public boolean equals(Object equalObject) {
@@ -127,8 +123,48 @@ public class Student implements Comparable<Student> {
     }
 
     /**
+     Helper method that returns profile for comparison
+     * @return Profile attached to Student object
+     */
+    public Profile getProfile() {
+        return profile;
+    }
+
+    /**
+     Helper method that returns major for comparison
+     * @return Major value attached to Student object
+     */
+    public Major getMajor() {
+        return major;
+    }
+
+    /**
+     Helper method that returns credit completed
+     * @return credits completed by Student
+     */
+    public int getCreditCompleted() {
+        return creditCompleted;
+    }
+
+    /**
+     Helper method that returns standing based on credits completed
+     * @return value of Standing enum
+     */
+    public Standing getStanding() {
+        if (creditCompleted < FRESHMANCRED) { // Less than 30 credits
+            return Standing.FRESHMAN;
+        } else if (creditCompleted < SOPHOMORECRED) { // 30 to 59 credits
+            return Standing.SOPHOMORE;
+        } else if (creditCompleted < JUNIORCRED) { // 60 to 89 credits
+            return Standing.JUNIOR;
+        } else {
+            return Standing.SENIOR;
+        }
+    }
+
+    /**
      Method that changes a student's major
-     @param newMaj major that Student changed to
+     * @param newMaj major that Student changed to
      */
     public void changeMajor(String newMaj) { // todo who/where calls this
         switch (newMaj) {
@@ -143,14 +179,16 @@ public class Student implements Comparable<Student> {
                 break;
             case "CS":
                 major = Major.CS;
+                break;
             case "MATH":
                 major = Major.MATH;
+                break;
         }
     }
 
     /**
      Helper method that checks if Student is valid
-     @return true if valid, false if not
+     * @return true if valid, false if not
      */
     public boolean isValid () {
         if (!profile.getDob().checkIfSixteen()) { // Under 16 years old
