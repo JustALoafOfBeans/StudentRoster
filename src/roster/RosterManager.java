@@ -41,7 +41,9 @@ public class RosterManager {
         // Course of action based on op code
         switch (opCode) {
             case "A": // add student
-                studentRoster = addStudent(studentRoster, parameters);
+                if (validStudent(parameters)) {
+                    studentRoster = addStudent(studentRoster, parameters);
+                }
                 break;
             case "R": //remove student
                 System.out.println("Remove student");
@@ -88,39 +90,52 @@ public class RosterManager {
      * @return An updated Roster object.
      */
     private Roster addStudent(Roster studentRoster, String[] parameters) {
-        Date dob = new Date(parameters[3]);
-        // check dob, major code, and credits completed
-        if (!dob.isValid()) {
-            System.out.println("DOB invalid: " + dob + " not a valid calendar "
-                    + "date!");
-        } else if (!dob.checkIfSixteen()) {
-            System.out.println("DOB invalid: " + dob
-                    + " younger than 16 years old.");
-        } else if (!validMajor(parameters[4])) {
-            System.out.println("Major code invalid: " + parameters[4]);
-        } else if (!validCredits(parameters[5])) {
-            // print statements are in validCredits method
+        String student =
+                parameters[1] + " " + parameters[2] + " "
+                        + parameters[3] + " " + parameters[4] + " "
+                        + parameters[5];
+        Student toAdd = new Student(student);
+        // check if student exists
+        if(!studentRoster.contains(toAdd)) {
+            System.out.println("Add student");
+            studentRoster.add(toAdd);
+             System.out.println(parameters[1] + " " + parameters[2]
+             + " " + parameters[3] + " added to the " +
+             "roster.");
         } else {
-            System.out.println("legal dob");
-            String student =
-                    parameters[1] + " " + parameters[2] + " "
-                            + parameters[3] + " " + parameters[4] + " "
-                            + parameters[5];
-            Student toAdd = new Student(student);
-            // check if student exists
-            if(!studentRoster.contains(toAdd)) {
-                System.out.println("Add student");
-                /** studentRoster.add(toAdd);
-                 System.out.println(parameters[1] + " " + parameters[2]
-                 + " " + parameters[3] + " added to the " +
-                 "roster."); */
-            } else {
-                System.out.println(parameters[1] + " " + parameters[2]
-                        + " " + parameters[3]
-                        + " is already in the roster.");
-            }
+            System.out.println(parameters[1] + " " + parameters[2]
+                    + " " + parameters[3]
+                    + " is already in the roster.");
         }
         return studentRoster;
+    }
+
+    /**
+     Private method returns whether a string array can be turned into a valid
+     student object or not.
+     * @param parameters String array in the format [fname, lname, dob,
+     *                   major, credits].
+     * @return true if student can be a valid Student object, false otherwise.
+     */
+    private boolean validStudent(String[] parameters) {
+        Date dob = new Date(parameters[3]);
+
+        if (!dob.isValid()) { //valid DoB
+            System.out.println("DOB invalid: " + dob + " not a valid calendar "
+                    + "date!");
+            return false;
+        } else if (!dob.checkIfSixteen()) { // over 16 years old
+            System.out.println("DOB invalid: " + dob
+                    + " younger than 16 years old.");
+            return false;
+        } else if (!validMajor(parameters[4])) { // valid major
+            System.out.println("Major code invalid: " + parameters[4]);
+            return false;
+        } else if (!validCredits(parameters[5])) { // valid credits
+            // print statements are in validCredits method
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -130,6 +145,7 @@ public class RosterManager {
      */
     private boolean validMajor(String major) {
         boolean contains = false;
+        major = major.toUpperCase();
         if (major.equals("CS")) {
             contains = true;
         } else if (major.equals("MATH")) {
