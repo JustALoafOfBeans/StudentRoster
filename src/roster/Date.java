@@ -142,25 +142,11 @@ public class Date implements Comparable<Date> {
 
     /**
      Returns a string representation of the given date.
-     If the day or month is a single digit, add padding.
      @return String formatted as mm/dd/yyyy.
      */
     @Override
     public String toString() {
-        String monthAndDay = "";
-        String padding = "0";
-
-        if (this.month < 10) {
-            monthAndDay += padding + this.month + "/";
-        } else {
-            monthAndDay += this.month + "/";
-        }
-        if (this.day < 10) {
-            monthAndDay += padding + this.day;
-        } else {
-            monthAndDay += this.day;
-        }
-        return monthAndDay + "/" + this.year;
+        return this.month + "/" + this.day + "/" + this.year;
     }
 
     /**
