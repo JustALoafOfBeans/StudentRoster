@@ -4,6 +4,16 @@ public class Roster {
     private Student[] roster;
     private int size;
 
+    private static final int STARTSIZE = 0;
+
+    /**
+     Constructor for Roster class
+     */
+    public Roster() {
+        size = STARTSIZE;
+        roster = new Student[size];
+    }
+
     /**
      Method to find the student in the roster
      * @param student student that is to be found
@@ -11,7 +21,7 @@ public class Roster {
      */
     private int find (Student student) {
         // For each Student in roster[], use <Student>.equals() to compare
-        for (int rIndex = 0; rIndex < size-1; rIndex++) {
+        for (int rIndex = 0; rIndex < size; rIndex++) {
             if (roster[rIndex].getProfile().equals(student.getProfile())) {
                 // Student found
                 return rIndex;
@@ -74,7 +84,7 @@ public class Roster {
             return false;
         }
         // Move everything after remIndex up (null for last)
-        for (int shift = rem + 1; shift < size-1; shift++) {
+        for (int shift = rem + 1; shift < size; shift++) {
             roster[shift - 1] = roster[shift];
             if (shift == roster.length-1 || roster[shift+1] == null) { // Set last to null
                 roster[shift] = null;
@@ -101,7 +111,7 @@ public class Roster {
         // Sort by profile
         sortProfile();
         // Print all elements of sorted roster
-        for (int ind = 0; ind < size-1; ind++) {
+        for (int ind = 0; ind < size; ind++) {
             System.out.println(roster[ind].toString());
         }
     }
@@ -113,7 +123,7 @@ public class Roster {
         // Sort by standing
         sortStanding();
         // Print all elements of sorted roster
-        for (int ind = 0; ind < size-1; ind++) {
+        for (int ind = 0; ind < size; ind++) {
             System.out.println(roster[ind].toString());
         }
     }
@@ -125,7 +135,7 @@ public class Roster {
         // Sort by school and major
         sortSchoolMajor();
         // Print all elements of sorted roster
-        for (int ind = 0; ind < size-1; ind++) {
+        for (int ind = 0; ind < size; ind++) {
             System.out.println(roster[ind].toString());
         }
     }
@@ -135,7 +145,7 @@ public class Roster {
      Called to sort by print()
      */
     public void sortProfile() {
-        for (int i = 0; i < size-1; i++) { // todo change counter names (note size not roster.length)
+        for (int i = 0; i < size; i++) { // todo change counter names (note size not roster.length)
             for (int j = i-1; j >= 0; j--) {
                 // If Profile "less" than prev, swap
                 if (roster[j].getProfile().compareTo(roster[j-1].getProfile()) < 0) {
@@ -148,12 +158,33 @@ public class Roster {
     }
 
     /**
+     * Changes major of a student given profile
+     * @param prof Profile of student whose major should be changed
+     * @param strMaj new major as a string
+     * @return false if student not found or major invalid, true if successful
+     */
+    public boolean changeMajor(Profile prof, String strMaj) {
+        for (int ind = 0; ind < size; ind++) {
+            if (roster[ind].getProfile().compareTo(prof) == 0) {
+                if (roster[ind].changeMajor(strMaj)) {
+                    // Successfully found student and changed their major
+                    return true;
+                } else {
+                    // Student found but major could not be changed
+                    return false;
+                }
+            }
+        }
+        return false; // Student not found
+    }
+
+    /**
      Sorts roster by student Major then by School (and if same, by Profile)
      Called to sort by printBySchoolMajor()
      */
     public void sortSchoolMajor () {
         int schoolComp, majorComp; // Value of school comparison
-        for (int i = 0; i < size-1; i++) {
+        for (int i = 0; i < size; i++) {
             for (int j = i-1; j >= 0; j--) {
                 schoolComp = roster[j].getMajor().school.compareTo(roster[j-1].getMajor().school); // todo long
                 if (schoolComp < 0) {
@@ -189,7 +220,7 @@ public class Roster {
      */
     public void sortStanding () {
         int standingComp;
-        for (int i = 0; i < size-1; i++) {
+        for (int i = 0; i < size; i++) {
             for (int j = i-1; j >= 0; j--) {
                 standingComp = roster[j].getStanding().name().compareTo(roster[j-1].getStanding().name());
                 if (standingComp < 0) {

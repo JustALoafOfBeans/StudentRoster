@@ -5,9 +5,9 @@ public class Student implements Comparable<Student> {
     private Major major;
     private int creditCompleted;
 
-    public static final int FRESHMANCRED = 30; // Credit cutoff for freshmen
-    public static final int SOPHOMORECRED = 60; // Credit cutoff for sophomores
-    public static final int JUNIORCRED = 90; // Credit cutoff for juniors
+    private static final int FRESHMANCRED = 30; // Credit cutoff for freshmen
+    private static final int SOPHOMORECRED = 60; // Credit cutoff for sophomores
+    private static final int JUNIORCRED = 90; // Credit cutoff for juniors
 
     /**
      Constructor for a Student object from user's input
@@ -165,8 +165,9 @@ public class Student implements Comparable<Student> {
     /**
      Method that changes a student's major
      * @param newMaj major that Student changed to
+     * @return true if changed successfully, false if new major invalid
      */
-    public void changeMajor(String newMaj) { // todo who/where calls this
+    public boolean changeMajor(String newMaj) {
         switch (newMaj) {
             case "EE":
                 major = Major.EE;
@@ -183,7 +184,10 @@ public class Student implements Comparable<Student> {
             case "MATH":
                 major = Major.MATH;
                 break;
+            default:
+                return false;
         }
+        return true;
     }
 
     /**
