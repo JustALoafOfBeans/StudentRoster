@@ -37,7 +37,7 @@ public class Roster {
     private void grow () {
         // Increase array capacity by 4
         Student[] rosterNew = new Student[roster.length + 4];
-        for (int rIndex = 0; rIndex < size-1; rIndex++) {
+        for (int rIndex = 0; rIndex < size; rIndex++) {
             rosterNew[rIndex] = roster[rIndex];
         }
         roster = rosterNew;
