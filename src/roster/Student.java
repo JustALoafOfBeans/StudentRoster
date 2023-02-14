@@ -8,6 +8,8 @@ public class Student implements Comparable<Student> {
     private static final int FRESHMANCRED = 30; // Credit cutoff for freshmen
     private static final int SOPHOMORECRED = 60; // Credit cutoff for sophomores
     private static final int JUNIORCRED = 90; // Credit cutoff for juniors
+    private static final int ASCIILOWERA = 97;      // ascii value for lower case a
+    private static final int ASCIICASEDIFF = 32;    // difference from upper to lower case ascii values
 
     /**
      Constructor for a Student object from user's input
@@ -33,21 +35,23 @@ public class Student implements Comparable<Student> {
                     dateOfBirth = studentInput.substring(tokenStart, tokenEnd);
                 } else if (tokenNum == 3) {
                     String majorString = studentInput.substring(tokenStart, tokenEnd);
-                    System.out.println("read in major " + majorString);
+                    majorString = stringLower(majorString);
                     switch (majorString) {
-                        case "EE":
+                        case "ee":
                             major = Major.EE;
                             break;
-                        case "ITI":
+                        case "iti":
                             major = Major.ITI;
                             break;
-                        case "BAIT":
+                        case "bait":
                             major = Major.BAIT;
                             break;
-                        case "CS":
+                        case "cs":
                             major = Major.CS;
-                        case "MATH":
+                            break;
+                        case "math":
                             major = Major.MATH;
+                            break;
                     }
                 }
 
@@ -79,7 +83,11 @@ public class Student implements Comparable<Student> {
      */
     @Override
     public String toString() {
-        return profile.toString() + " " + major.name() + " " + creditCompleted;
+        String strStudent = profile.toString(); // Profile (first, last, DOB)
+        strStudent += " (" + major.code + " " + major.name() + " " + major.school + ")"; // Major
+        strStudent += " credits completed: " + creditCompleted; // Credits
+        strStudent += " (" + getStanding().title + ")";
+        return strStudent;
     }
 
     /**
@@ -97,7 +105,9 @@ public class Student implements Comparable<Student> {
         }
         // Compare major
         String thisMaj = major.name();
+        thisMaj = stringLower(thisMaj);
         String compareMaj = compareStudent.getMajor().name();
+        compareMaj = stringLower(compareMaj);
         int compMaj = thisMaj.compareTo(compareMaj);
         if (compMaj != 0) {
             return compMaj;
@@ -168,20 +178,21 @@ public class Student implements Comparable<Student> {
      * @return true if changed successfully, false if new major invalid
      */
     public boolean changeMajor(String newMaj) {
-        switch (newMaj) {
-            case "EE":
+        String newMajLowercase = stringLower(newMaj);
+        switch (newMajLowercase) {
+            case "ee":
                 major = Major.EE;
                 break;
-            case "ITI":
+            case "iti":
                 major = Major.ITI;
                 break;
-            case "BAIT":
+            case "bait":
                 major = Major.BAIT;
                 break;
-            case "CS":
+            case "cs":
                 major = Major.CS;
                 break;
-            case "MATH":
+            case "math":
                 major = Major.MATH;
                 break;
             default:
@@ -205,11 +216,27 @@ public class Student implements Comparable<Student> {
         // todo think only need to check date?
     }
 
+    /**
+     Converts input string to all lowercase, for non-case-sensitive majors
+     * @param strIn String passed in
+     * @return lowercase value of String
+     */
+    private String stringLower (String strIn) {
+        char[] charsIn = strIn.toCharArray();
+        for (int currInd = 0; currInd < charsIn.length; currInd++) {
+            int currChar = charsIn[currInd];
+            if (currChar < ASCIILOWERA) {
+                // Value is capital, convert to lowercase
+                charsIn[currInd] = (char) (charsIn[currInd] + ASCIICASEDIFF);
+            }
+        }
+        return String.valueOf(charsIn);
+    }
+
     // todo testing remove later
     public static void main(String[] args) {
-        Student testStudent = new Student("John Doe 9/2/2022 EE 10");
-        System.out.println(testStudent.getProfile().toString());
-        //System.out.println(major.code);
-        System.out.println("Credits completed: " + testStudent.getCreditCompleted());
+        Student studentOne = new Student("John Doe 9/2/2022 baIT 10");
+        Student studentTwo = new Student("jOhN DOe 9/2/2022 BAIT 10");
+        System.out.println(studentOne.compareTo(studentTwo));
     }
 }

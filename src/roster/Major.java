@@ -12,7 +12,7 @@ public enum Major {
     CS ("01:198", "SAS"),
     MATH ("01:640", "SAS"),
     EE ("14:332", "SOE"),
-    ITI ("04:332", "SC&I"),
+    ITI ("04:547", "SC&I"),
     BAIT ("33:136", "RBS");
 
     public final String code;

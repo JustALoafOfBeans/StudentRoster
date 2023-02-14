@@ -7,8 +7,14 @@ package roster;
 
 public enum Standing {
 
-    FRESHMAN,
-    SOPHOMORE,
-    JUNIOR,
-    SENIOR
+    FRESHMAN("Freshman"),
+    SOPHOMORE("Sophomore"),
+    JUNIOR("Junior"),
+    SENIOR("Senior");
+
+    public final String title;
+
+    Standing (String title) {
+        this.title = title;
+    }
 }
