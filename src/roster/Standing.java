@@ -9,19 +9,19 @@ package roster;
 public enum Standing {
 
     /**
-     * Standing for freshmen with <30 credits
+     * Standing for freshmen with less than 30 credits
      */
     FRESHMAN("Freshman"),
     /**
-     * Standing for sophomore with >= 30 and <60 credits
+     * Standing for sophomore with between 30 and 60 credits
      */
     SOPHOMORE("Sophomore"),
     /**
-     * Standing for juniors with >= 60 and <90 credits
+     * Standing for juniors with between 60 and 90 credits
      */
     JUNIOR("Junior"),
     /**
-     * Standing for seniors with >=90 credits
+     * Standing for seniors with 90 or more credits
      */
     SENIOR("Senior");
 
