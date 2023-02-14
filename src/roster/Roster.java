@@ -118,8 +118,15 @@ public class Roster {
         // Sort by profile
         sortProfile();
         // Print all elements of sorted roster
-        for (int ind = 0; ind < size; ind++) {
-            System.out.println(roster[ind].toString());
+        if (size == 0) {
+            System.out.println("Student roster is empty!");
+        } else {
+            System.out.println("* Student roster sorted by last name, first " +
+                    "name, DOB **");
+            for (int ind = 0; ind < size; ind++) {
+                System.out.println(roster[ind].toString());
+            }
+            System.out.println("* end of roster **");
         }
     }
 
@@ -129,9 +136,15 @@ public class Roster {
     public void printBySchoolMajor() {
         // Sort by standing
         sortSchoolMajor();
-        // Print all elements of sorted roster
-        for (int ind = 0; ind < size; ind++) {
-            System.out.println(roster[ind].toString());
+        if (size == 0) {
+            System.out.println("Student roster is empty!");
+        } else {
+            System.out.println("* Student roster sorted by school, major **");
+            // Print all elements of sorted roster
+            for (int ind = 0; ind < size; ind++) {
+                System.out.println(roster[ind].toString());
+            }
+            System.out.println("* end of roster **");
         }
     }
 
@@ -141,9 +154,15 @@ public class Roster {
     public void printByStanding() {
         // Sort by school and major
         sortStanding();
-        // Print all elements of sorted roster
-        for (int ind = 0; ind < size; ind++) {
-            System.out.println(roster[ind].toString());
+        if (size == 0) {
+            System.out.println("Student roster is empty!");
+        } else {
+            System.out.println("* Student roster sorted by standing **");
+            // Print all elements of sorted roster
+            for (int ind = 0; ind < size; ind++) {
+                System.out.println(roster[ind].toString());
+            }
+            System.out.println("* end of roster **");
         }
     }
 
