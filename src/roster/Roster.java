@@ -131,6 +131,40 @@ public class Roster {
     }
 
     /**
+     Print students belonging to a specified school, sorted by profiles
+     * @param targetSchool school from which to print students
+     */
+    public void print(String targetSchool) {
+        // Check if targetSchool exists
+        boolean schoolFound = false;
+        for (Major maj : Major.values()) {
+            if (targetSchool.compareTo(maj.school) == 0) {
+                schoolFound = true;
+                break;
+            }
+        }
+        if (!schoolFound) {
+            System.out.println("School doesn't exist: " + targetSchool);
+            return;
+        }
+
+        // Sort by profile
+        sortProfile();
+        // Print if student found in school
+        if (size == 0) {
+            System.out.println("Student roster is empty!");
+        } else {
+            System.out.println("* Students in " + targetSchool + " *");
+            for (int ind = 0; ind < size; ind++) {
+                if (roster[ind].getMajor().school.compareTo(targetSchool) == 0) {
+                    // Print if Student's school matches target
+                    System.out.println(roster[ind].toString());
+                }
+            }
+        }
+    }
+
+    /**
      Prints roster sorted by student majors (alphabetical) and profile
      */
     public void printBySchoolMajor() {
