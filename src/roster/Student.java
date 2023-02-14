@@ -8,15 +8,39 @@ package roster;
  @author Bridget Zhang
  */
 public class Student implements Comparable<Student> {
+    /**
+     * Stores last name, first name, DOB of student as Profile
+     */
     private Profile profile;
+    /**
+     * Student's major as Major enum value
+     */
     private Major major;
+    /**
+     * Integer number of credits that student has completed
+     */
     private int creditCompleted;
 
-    private static final int FRESHMANCRED = 30; // Credit cutoff for freshmen
-    private static final int SOPHOMORECRED = 60; // Credit cutoff for sophomores
-    private static final int JUNIORCRED = 90; // Credit cutoff for juniors
-    private static final int ASCIILOWERA = 97;      // ascii value for lower case a
-    private static final int ASCIICASEDIFF = 32;    // difference from upper to lower case ascii values
+    /**
+     * Credit cutoff for freshmen
+     */
+    private static final int FRESHMANCRED = 30;
+    /**
+     * Credit cutoff for sophomores
+     */
+    private static final int SOPHOMORECRED = 60;
+    /**
+     * Credit cutoff for juniors
+     */
+    private static final int JUNIORCRED = 90;
+    /**
+     * ASCII value for lower case a
+     */
+    private static final int ASCIILOWERA = 97;
+    /**
+     * Difference from upper to lower case ASCII values for conversion
+     */
+    private static final int ASCIICASEDIFF = 32;
 
     /**
      Constructor for a Student object from user's input
