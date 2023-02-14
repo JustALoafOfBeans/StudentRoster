@@ -6,16 +6,41 @@ package roster;
  "DateBreakpoints.MAXDAYS.num" will return "31" as an integer.
  */
 public enum DateBreakpoints {
+    /**
+     * Number of maximum possible days in a month
+     */
     MAXDAYS(31),
+    /**
+     * Number of days in a shorter month excluding February
+     */
     SHORTERMONTH(30),
+    /**
+     * Maximum value a month can take
+     */
     MAXMONTHS(12),
+    /**
+     * Padding to adjust when using the Calendar class (index off by 1)
+     */
     MONTHPADDING(1),
+    /**
+     * For calculating quadrennials for leap years
+     */
     QUADRENNIAL(4),
+    /**
+     * For calculating centennials for leap years
+     */
     CENTENNIAL(100),
+    /**
+     * For calculating quatercentennials for leap years
+     */
     QUATERCENTENNIAL(400);
 
     public final int num;
 
+    /**
+     This method assigns the enum its respective integer value
+     * @param num integer value
+     */
     DateBreakpoints(int num) {
         this.num = num;
     }
