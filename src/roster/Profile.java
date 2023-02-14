@@ -22,7 +22,6 @@ public class Profile implements Comparable<Profile> {
     /**
      * ASCII value for lower case a
      */
-
     private static final int ASCIILOWERA = 97;
     /**
      * Difference from upper to lower case ASCII values for conversion

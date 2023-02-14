@@ -8,6 +8,10 @@ package roster;
  @author Victoria Chen
  */
 public class RunProject1 {
+    /**
+     Main method to run the whole roster project.
+     * @param args String array, unused.
+     */
     public static void main(String[] args) {
         new RosterManager().run();
     }
