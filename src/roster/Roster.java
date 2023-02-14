@@ -306,11 +306,4 @@ public class Roster {
         roster[indX] = roster[indY];
         roster[indY] = swapTemp;
     }
-
-    public static void main(String[] args) {
-        // todo remove main
-        for (int i = 1; i < 10; ++i) {
-            System.out.println(i);
-        }
-    }
 }

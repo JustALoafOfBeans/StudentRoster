@@ -63,7 +63,7 @@ public class Student implements Comparable<Student> {
      Used when only given profile information for removal or search
      * @param profInput given profile information
      */
-    public Student(Profile profInput) { // todo take in String? or profInput
+    public Student(Profile profInput) {
         profile = profInput;
     }
 
@@ -130,6 +130,7 @@ public class Student implements Comparable<Student> {
 
     /**
      Helper method that assigns major from string
+     * @param majStr String for major to assign
      */
     private void assignMajor(String majStr) {
         switch (majStr) {
@@ -232,7 +233,6 @@ public class Student implements Comparable<Student> {
             return false;
         }
         return true;
-        // todo think only need to check date?
     }
 
     /**
