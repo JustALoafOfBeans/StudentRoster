@@ -134,6 +134,11 @@ public class RosterManager {
      * @return An updated Roster object.
      */
     private Roster addStudent(Roster studentRoster, String[] parameters) {
+        int PROFILEINDEX = 5; // point of only having profile info
+        if (parameters.length < PROFILEINDEX) {
+            System.out.println("Insufficient parameters to add a student. ");
+            return studentRoster;
+        }
         String student =
                 parameters[1] + " " + parameters[2] + " "
                         + parameters[3] + " " + parameters[4] + " "
