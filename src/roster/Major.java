@@ -39,6 +39,8 @@ public enum Major {
 
     /**
      * Attributes of Major that designate number code and school
+     * @param code designates numerical code for major
+     * @param school designates school in which major is found
      */
     Major(String code, String school) {
         this.code = code;
