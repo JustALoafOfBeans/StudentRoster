@@ -7,12 +7,27 @@ package roster;
  @author Bridget Zhang
  */
 public class Profile implements Comparable<Profile> {
+    /**
+     * String that stores student's last name
+     */
     private String lname;
+    /**
+     * String that stores student's first name
+     */
     private String fname;
+    /**
+     * String that stores student's date of birth as Date object
+     */
     private Date dob;
+    /**
+     * ASCII value for lower case a
+     */
 
-    private static final int ASCIILOWERA = 97;      // ascii value for lower case a
-    private static final int ASCIICASEDIFF = 32;    // difference from upper to lower case ascii values
+    private static final int ASCIILOWERA = 97;
+    /**
+     * Difference from upper to lower case ASCII values for conversion
+     */
+    private static final int ASCIICASEDIFF = 32;
 
     /**
      Constructor for Profile class
