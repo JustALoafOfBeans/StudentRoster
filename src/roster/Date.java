@@ -8,8 +8,17 @@ import java.util.Calendar;
  @author Victoria Chen
  */
 public class Date implements Comparable<Date> {
+    /**
+     * Integer representing the year of this date
+     */
     private int year;
+    /**
+     * Integer representing the month of this date
+     */
     private int month;
+    /**
+     * Integer representing the day of this date
+     */
     private int day;
 
     /**

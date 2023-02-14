@@ -35,6 +35,9 @@ public enum DateBreakpoints {
      */
     QUATERCENTENNIAL(400);
 
+    /**
+     * Integer representing the value assigned to each enum
+     */
     public final int num;
 
     /**
