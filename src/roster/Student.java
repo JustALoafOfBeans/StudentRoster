@@ -43,23 +43,7 @@ public class Student implements Comparable<Student> {
                 } else if (tokenNum == 3) {
                     String majorString = studentInput.substring(tokenStart, tokenEnd);
                     majorString = stringLower(majorString);
-                    switch (majorString) {
-                        case "ee":
-                            major = Major.EE;
-                            break;
-                        case "iti":
-                            major = Major.ITI;
-                            break;
-                        case "bait":
-                            major = Major.BAIT;
-                            break;
-                        case "cs":
-                            major = Major.CS;
-                            break;
-                        case "math":
-                            major = Major.MATH;
-                            break;
-                    }
+                    assignMajor(majorString);
                 }
 
                 tokenNum += 1; // Incr num of tokens retrieved
@@ -101,14 +85,14 @@ public class Student implements Comparable<Student> {
      Compares this student to another
      Overrides compareTo() from Comparable interface
      * @param compareStudent student that this is being compared to
-     * @return positive integer if this is greater, 0 if same, negative if less
+     * @return 1 if this is greater, 0 if same, -1 if less
     */
     @Override
     public int compareTo(Student compareStudent) {
         // Compare profile
         int compProf = profile.compareTo(compareStudent.getProfile());
         if (compProf != 0) {
-            return compProf;
+            return (compProf < 0) ? -1 : 1;
         }
         // Compare major
         String thisMaj = major.name();
@@ -117,10 +101,15 @@ public class Student implements Comparable<Student> {
         compareMaj = stringLower(compareMaj);
         int compMaj = thisMaj.compareTo(compareMaj);
         if (compMaj != 0) {
-            return compMaj;
+            return (compMaj < 0) ? -1 : 1;
         }
         // Finally, compare credits (if same, will return 0)
-        return creditCompleted - compareStudent.getCreditCompleted(); // todo this legal? for code std
+        int compCredit = creditCompleted - compareStudent.getCreditCompleted();
+        if (compCredit == 0) {
+            return compCredit;
+        } else {
+            return (compCredit < 0) ? -1 : 1;
+        }
     }
 
     /**
@@ -137,6 +126,29 @@ public class Student implements Comparable<Student> {
             return (this.compareTo(equalStudent) == 0);
         }
         return false; // Not of type student, invalid comparison
+    }
+
+    /**
+     Helper method that assigns major from string
+     */
+    private void assignMajor(String majStr) {
+        switch (majStr) {
+            case "ee":
+                major = Major.EE;
+                break;
+            case "iti":
+                major = Major.ITI;
+                break;
+            case "bait":
+                major = Major.BAIT;
+                break;
+            case "cs":
+                major = Major.CS;
+                break;
+            case "math":
+                major = Major.MATH;
+                break;
+        }
     }
 
     /**
@@ -240,10 +252,28 @@ public class Student implements Comparable<Student> {
         return String.valueOf(charsIn);
     }
 
-    // todo testing remove later
+    /**
+     Testbed main() to test the functionality of the Student class when creating
+     Student objects. Method will test valid and invalid arguments.
+     * @param args default String array of multiple arguments. Not used.
+     */
     public static void main(String[] args) {
-        Student studentOne = new Student("John Doe 9/2/2022 baIT 10");
-        Student studentTwo = new Student("jOhN DOe 9/2/2022 BAIT 10");
-        System.out.println(studentOne.compareTo(studentTwo));
+        // Test dates
+        Student base = new Student("John Doe 9/2/2002 BAIT 10");
+        Student nameLess = new Student("Ivy Doe 9/2/2002 BAIT 10"); // Test 1
+        Student nameGreater = new Student("John Evans 9/2/2002 BAIT 10"); // Test 2
+        Student same = new Student("John Doe 9/2/2002 BAIT 10"); // Test 3
+        Student nameCase = new Student("jOhN DOe 9/2/2002 BAIT 10"); // Test 4
+        Student majGreater = new Student("John Doe 9/2/2002 EE 10"); // Test 5
+        Student majCase = new Student("John Doe 9/2/2002 bAIt 10"); // Test 6
+        Student credMore = new Student("John Doe 9/2/2002 BAIT 11"); // Test 7
+
+        System.out.println(nameLess.compareTo(base)); // Test 1, expect -1
+        System.out.println(nameGreater.compareTo(base)); // Test 2, expect 1
+        System.out.println(same.compareTo(base)); // Test 3, expect 0
+        System.out.println(nameCase.compareTo(base)); // Test 4, expect 0
+        System.out.println(majGreater.compareTo(base)); // Test 5, expect 1
+        System.out.println(majCase.compareTo(base)); // Test 6, expect 0
+        System.out.println(credMore.compareTo(base)); // Test 7, expect 1
     }
 }
