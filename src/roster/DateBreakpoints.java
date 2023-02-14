@@ -2,7 +2,7 @@ package roster;
 
 /**
  An enum class containing all the breakpoints for the Date class as integers.
- Call values using "DateBreakpoints.<KEY>.num". For example
+ Call values using "DateBreakpoints.KEY.num". For example
  "DateBreakpoints.MAXDAYS.num" will return "31" as an integer.
  */
 public enum DateBreakpoints {
