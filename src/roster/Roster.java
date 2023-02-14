@@ -161,6 +161,7 @@ public class Roster {
                     System.out.println(roster[ind].toString());
                 }
             }
+            System.out.println("* end of roster **");
         }
     }
 

@@ -57,7 +57,7 @@ public class RosterManager {
                 studentRoster.printBySchoolMajor();
                 break;
             case "L": // list all students in a school
-                System.out.println("List students in a school");
+                studentRoster.print(parameters[1]);
                 break;
             case "C": // change a students major
                 if (validStudent(parameters)) {
