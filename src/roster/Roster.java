@@ -8,9 +8,17 @@ package roster;
  @author Bridget Zhang
  */
 public class Roster {
+    /**
+     * Array of Students in roster
+     */
     private Student[] roster;
+    /**
+     * Number of students currently in roster
+     */
     private int size;
-
+    /**
+     * Constant start size for roster
+     */
     private static final int STARTSIZE = 0;
 
     /**
