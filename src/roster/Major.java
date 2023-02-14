@@ -1,11 +1,9 @@
 package roster;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-
 /**
- An enum class containing all the majors and corresponding codes and schools.
- Call values using "Major.<SUBJECT>.<code/school>". For example
- "Major.MATH.code" will return "01:198".
+ An enum class containing all the majors and corresponding codes and schools
+ both as Strings. Call values using "Major.<MAJOR>.<code/school>". For example
+ "Major.MATH.code" will return "01:198" as a String.
  @author Victoria Chen, Bridget Zhang
  */
 public enum Major {

@@ -1,7 +1,8 @@
 package roster;
 
 /**
- An enum class that contains the possible standings of students based on credits.
+ An enum class that contains the possible standings of students based on
+ their credits.
  @author Victoria Chen, Bridget Zhang
  */
 

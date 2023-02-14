@@ -4,7 +4,7 @@ import java.util.Calendar;
 /**
  The Date class is an abstract class which provides methods to create Date
  objects from the current date or specified date and for manipulating the
- Date fields. Dates are only accepted in the mm/dd/yyyy format.
+ Date fields. Dates are only accepted in the "mm/dd/yyyy" format.
  @author Victoria Chen
  */
 public class Date implements Comparable<Date> {
@@ -230,6 +230,6 @@ public class Date implements Comparable<Date> {
                 System.out.println(dob + " is a valid date.");
             }
         }
-
     }
+
 }

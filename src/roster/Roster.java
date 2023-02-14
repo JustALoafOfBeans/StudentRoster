@@ -1,5 +1,12 @@
 package roster;
 
+/**
+ The Roster class is an abstract class which provides methods to create
+ Roster objects with no parameters and for manipulating the Roster fields.
+ The Roster class is mainly only used in RosterManager to contain a list of
+ Student objects to be manipulated.
+ @author Bridget Zhang
+ */
 public class Roster {
     private Student[] roster;
     private int size;

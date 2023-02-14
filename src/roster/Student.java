@@ -1,5 +1,12 @@
 package roster;
 
+/**
+ The Student class is an abstract class which provides methods to create
+ Student objects from a String or Profile object and for manipulating the
+ Student fields. The main() method serves as a testbed to display
+ functionality of the compareTo() function.
+ @author Bridget Zhang
+ */
 public class Student implements Comparable<Student> {
     private Profile profile;
     private Major major;

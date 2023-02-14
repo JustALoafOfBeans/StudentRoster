@@ -1,5 +1,11 @@
 package roster;
 
+/**
+ The Profile class is an abstract class which provides methods to create
+ Profile objects from a String input and for manipulating the Profile fields.
+ Profiles are only accepted in the "firstname lastname DoB" format.
+ @author Bridget Zhang
+ */
 public class Profile implements Comparable<Profile> {
     private String lname;
     private String fname;
