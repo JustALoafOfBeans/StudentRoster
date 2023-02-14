@@ -16,7 +16,7 @@ public class Date implements Comparable<Date> {
      Constructor for Date object without parameters using today's date.
      Uses Calendar class to retrieve today's date.
      */
-    public Date () {
+    public Date() {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         // Months are indexed starting at 0, add 1 to adjust
@@ -28,8 +28,7 @@ public class Date implements Comparable<Date> {
      Constructor for Date object using values from input String.
      @param date String describing input date in mm/dd/yyyy format.
     */
-    public Date (String date) {
-        // do we have to deal with incorrect formatted dates?
+    public Date(String date) {
         String[] dateBreakdwn = date.split("/");
         this.month = Integer.parseInt(dateBreakdwn[0]);
         this.day = Integer.parseInt(dateBreakdwn[1]);
@@ -42,18 +41,17 @@ public class Date implements Comparable<Date> {
      @return true if the date is valid, false if otherwise.
      */
     public boolean isValid() {
-        if (this.outOfBounds()) { // date is out of bounds
+        if (this.outOfBounds()) {
             return false;
         }
-
         if (this.month ==
                 (Calendar.FEBRUARY + DateBreakpoints.MONTHPADDING.num)) {
-            //leap year process
+            // leap year process
             if (this.isLeapYear()) {
-                if ( this.day > 29 ) {
+                if (this.day > 29) {
                     return false;
                 }
-            } else if ( this.day > 28 ) {
+            } else if (this.day > 28) {
                 return false;
             }
         } else if (this.shorterMonth() &&
@@ -61,7 +59,7 @@ public class Date implements Comparable<Date> {
             // April, June, September, and November have max 30 days
             return false;
         }
-        // Any other month has 31 days
+        // Any other month has 31 days, already filtered by this.outOfBounds()
         return true;
     }
 
@@ -109,8 +107,7 @@ public class Date implements Comparable<Date> {
      */
     private boolean outOfBounds() {
         Calendar calendar = Calendar.getInstance();
-        int lowerBound = 1;
-
+        int LOWERBOUND = 1;
         // check if date is in the future or above max possible values
         boolean aboveDay = this.day > DateBreakpoints.MAXDAYS.num;
         boolean aboveMonth = this.month > DateBreakpoints.MAXMONTHS.num;
@@ -118,28 +115,25 @@ public class Date implements Comparable<Date> {
         if ( aboveDay || aboveMonth || futureYear ) {
             return true;
         }
-
-        // check if date is lower than possible (lower bound)
-        boolean negDay = this.day < lowerBound;
-        boolean negMonth = this.month < lowerBound;
-        boolean negYear = this.year < lowerBound;
+        // check if date is lower than possible (below lower bound)
+        boolean negDay = this.day < LOWERBOUND;
+        boolean negMonth = this.month < LOWERBOUND;
+        boolean negYear = this.year < LOWERBOUND;
         if ( negDay || negMonth || negYear ) {
             return true;
         }
-
         return false;
     }
 
     /**
-     Method to check if this date occurred 16 or more years ago.
+     Method to check if this date occurred 16 or more years ago. If this date
+     is exactly 16 years ago, still return true.
      @return true if this date is 16 or more years ago, false otherwise.
      */
     public boolean checkIfSixteen() {
-        int validAge = 16;
-        Date today = new Date(); //date of today
-        today.year = today.year - validAge;
-
-        // if this date is exactly 16 years ago, still return true
+        int VALIDAGE = 16;
+        Date today = new Date(); // Date object with date of today
+        today.year = today.year - VALIDAGE;
         if (this.compareTo(today) <= 0) {
             return true;
         }
@@ -156,13 +150,12 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     Compares this Date object to the specified Object.
+     Compares this Date object to the argument Object.
      @param obj String describing input date in mm/dd/yyyy format.
      @return true if the objects refer to the same date, false otherwise.
      */
     @Override
     public boolean equals(Object obj) {
-        // first check if object type is correct
         if(obj instanceof Date) {
             Date date = (Date) obj; //casting
             boolean matchMonth = date.month == this.month;
@@ -186,7 +179,6 @@ public class Date implements Comparable<Date> {
         int SAME = 0;
         int BEFORE = -1;
         int AFTER = 1;
-
         if (this.equals(date)) {
             return SAME; // compared dates are the same
         }
@@ -215,9 +207,9 @@ public class Date implements Comparable<Date> {
      */
     public static void main(String[] args) {
         // invalid dates
-        String[] invalid = new String[] {"2/29/2003", "10/24/2001", "4/31" +
-                "/2003", "13/31/2003", "3/32/2003", "-1/31/2003", "2/29/2004"
-                , "5/18/2030"};
+        String[] invalid = new String[] {"10/24/2001", "2/29/2004", "5/18" +
+                "/2030", "2/29/2003", "4/31/2003", "13/31/2003", "3/32/2003",
+                "-1/31/2003", };
         for (int i = 0; i < invalid.length; i++) {
             Date dob = new Date(invalid[i]);
             if (!dob.isValid()) { //valid DoB

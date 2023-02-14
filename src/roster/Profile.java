@@ -77,7 +77,6 @@ public class Profile implements Comparable<Profile> {
         if (compVal != 0) {
             return (compVal < 0) ? -1 : 1;
         }
-
         return 0; // Profiles same
     }
 
@@ -154,7 +153,6 @@ public class Profile implements Comparable<Profile> {
                 return 1; // wordTwo less
             }
         }
-
         // Count longer word as greater
         if (shortWord == 0) {
             return 0; // Same length words, chars all equal
