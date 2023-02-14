@@ -9,6 +9,9 @@ import java.util.Scanner;
  @author Victoria Chen
  */
 public class RosterManager {
+    /**
+     This method launches the Roster Manager.
+     */
     public void run() {
         Scanner intake = new Scanner(System.in);
         Roster studentRoster = new Roster();
