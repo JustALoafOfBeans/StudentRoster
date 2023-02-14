@@ -55,7 +55,7 @@ public class Roster {
      * @param student the student to be added to the roster
      * @return true if student valid and added successfully, false otherwise
      */
-    public boolean add (Student student) {
+    public boolean add(Student student) {
         if (!student.isValid()) { // Student not valid, can not be added
             return false;
         }

@@ -17,10 +17,9 @@ public class RosterManager {
 
         while (!opCode.equals("Q")) {
             String command = intake.nextLine();
-            // split white space
+            // split on white space
             String[] parameters = command.split("\\s+");
-
-            // ignore white space
+            // ignore empty enters
             if (parameters.length > 0 && parameters[0] != "") {
                 opCode = parameters[0];
                 studentRoster = takeAction(studentRoster, parameters);
@@ -61,7 +60,6 @@ public class RosterManager {
                 System.out.println("List students in a school");
                 break;
             case "C": // change a students major
-                System.out.println("Change a students major");
                 if (validStudent(parameters)) {
                     studentRoster = changeMajor(studentRoster, parameters);
                 }
@@ -88,7 +86,7 @@ public class RosterManager {
         if (!validMajor(parameters[4])) {
             return studentRoster;
         }
-        // create student using parameters with dummy major and credits
+        // create a profile and then student from that profile
         String student = parameters[1] + " " + parameters[2] + " "
                         + parameters[3];
         Profile toChange = new Profile(student);
@@ -99,7 +97,6 @@ public class RosterManager {
         } else {
             System.out.println(student + " is not in the roster.");
         }
-
         return studentRoster;
     }
 
@@ -129,8 +126,8 @@ public class RosterManager {
     }
 
     /**
-     Private method which, given the parameters, makes a Student obj adds the
-     student to the roster argument.
+     Private method which, given the parameters, makes a Student obj and adds
+     the student to the roster argument.
      * @param studentRoster Roster object containing student objects.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
@@ -142,16 +139,13 @@ public class RosterManager {
                         + parameters[3] + " " + parameters[4] + " "
                         + parameters[5];
         Student toAdd = new Student(student);
-        // check if student exists
         if(!studentRoster.contains(toAdd)) {
             studentRoster.add(toAdd);
              System.out.println(parameters[1] + " " + parameters[2]
-             + " " + parameters[3] + " added to the " +
-             "roster.");
+             + " " + parameters[3] + " added to the " + "roster.");
         } else {
             System.out.println(parameters[1] + " " + parameters[2]
-                    + " " + parameters[3]
-                    + " is already in the roster.");
+                    + " " + parameters[3] + " is already in the roster.");
         }
         return studentRoster;
     }
@@ -165,21 +159,20 @@ public class RosterManager {
      */
     private boolean validStudent(String[] parameters) {
         Date dob = new Date(parameters[3]);
-        int mjrInd = 4; // index for end of profile
-        if (!dob.isValid()) { //valid DoB
+        int MJRIND = 4; // index for location of the major code
+        int CRDIND = 5; // index for location of the credits
+        if (!dob.isValid()) {
             System.out.println("DOB invalid: " + dob + " not a valid calendar "
                     + "date!");
             return false;
-        } else if (!dob.checkIfSixteen()) { // over 16 years old
-            System.out.println("DOB invalid: " + dob
-                    + " younger than 16 years old.");
+        } else if (!dob.checkIfSixteen()) {
+            System.out.println("DOB invalid: " + dob + " younger than 16 " +
+                    "years old.");
             return false;
-        } else if (parameters.length > mjrInd && !validMajor(parameters[4])) {
-            // valid major
+        } else if (parameters.length > MJRIND && !validMajor(parameters[4])) {
             System.out.println("Major code invalid: " + parameters[4]);
             return false;
-        } else if (parameters.length > mjrInd+1 && !validCredits(parameters[5])) {
-            // valid credits
+        } else if (parameters.length > CRDIND && !validCredits(parameters[5])) {
             // print statements are in validCredits method
             return false;
         }
@@ -217,7 +210,7 @@ public class RosterManager {
         char[] digits = credits.toCharArray();
         for (int i = 0; i < digits.length; i++) {
             if (i == 0 && digits[0] == '-') {
-                continue;
+                continue; // exception made for negative values
             } else if (!Character.isDigit(digits[i])) {
                 System.out.println("Credits completed invalid: " +
                         "not an integer!");
