@@ -1,5 +1,6 @@
 package roster;
 import java.util.Scanner;
+import java.io.File;
 
 /**
  Management class for a roster object which holds student objects.
@@ -8,7 +9,7 @@ import java.util.Scanner;
  but all actions are cleared after running the opcode "Q".
  @author Victoria Chen
  */
-public class RosterManager {
+public class TuitionManager {
     /**
      This method launches the Roster Manager.
      */
@@ -67,12 +68,36 @@ public class RosterManager {
                     studentRoster = changeMajor(studentRoster, parameters);
                 }
                 break;
+            case "LS":
+                addFromFile(studentRoster);
+                break;
             case "Q": // end the program
                 System.out.println("Roster Manager terminated.");
                 break;
             default:
                 System.out.println(opCode + " is an invalid command!");
                 break;
+        }
+        return studentRoster;
+    }
+
+    /**
+     Private method which reads input from studentList.txt and adds the
+     students to the given roster argument.
+     * @param studentRoster Roster object containing student objects.
+     * @return An updated Roster object.
+     */
+    private Roster addFromFile(Roster studentRoster) {
+        try {
+            File studentList = new File("./src/roster/studentList.txt");
+            System.out.println(studentList.exists());
+            Scanner intake = new Scanner(studentList);
+
+            while(intake.hasNextLine()) {
+                System.out.println(intake.nextLine());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getClass());
         }
         return studentRoster;
     }
