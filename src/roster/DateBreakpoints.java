@@ -33,13 +33,20 @@ public enum DateBreakpoints {
     /**
      * For calculating quatercentennials for leap years
      */
-    QUATERCENTENNIAL(400);
+    QUATERCENTENNIAL(400),
+    /**
+     * Max number of days in February not in a leap year
+     */
+    FEBMAX(28),
+    /**
+     * Max number of days in February in a leap year
+     */
+    FEBMAXLEAP(29);
 
     /**
      * Integer representing the value assigned to each enum
      */
     public final int num;
-
     /**
      This method assigns the enum its respective integer value
      * @param num integer value

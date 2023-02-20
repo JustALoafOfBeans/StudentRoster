@@ -38,10 +38,13 @@ public class Date implements Comparable<Date> {
      @param date String describing input date in mm/dd/yyyy format.
     */
     public Date(String date) {
+        int MONTHIND = 0;
+        int DAYIND = 1;
+        int YEARIND = 2;
         String[] dateBreakdwn = date.split("/");
-        this.month = Integer.parseInt(dateBreakdwn[0]);
-        this.day = Integer.parseInt(dateBreakdwn[1]);
-        this.year = Integer.parseInt(dateBreakdwn[2]);
+        this.month = Integer.parseInt(dateBreakdwn[MONTHIND]);
+        this.day = Integer.parseInt(dateBreakdwn[DAYIND]);
+        this.year = Integer.parseInt(dateBreakdwn[YEARIND]);
     }
 
     /**
@@ -57,10 +60,10 @@ public class Date implements Comparable<Date> {
                 (Calendar.FEBRUARY + DateBreakpoints.MONTHPADDING.num)) {
             // leap year process
             if (this.isLeapYear()) {
-                if (this.day > 29) {
+                if (this.day > DateBreakpoints.FEBMAXLEAP.num) {
                     return false;
                 }
-            } else if (this.day > 28) {
+            } else if (this.day > DateBreakpoints.FEBMAX.num) {
                 return false;
             }
         } else if (this.shorterMonth() &&
@@ -77,11 +80,12 @@ public class Date implements Comparable<Date> {
      * @return true if this year is a leap year, false is otherwise.
      */
     private boolean isLeapYear() {
-        if (this.year % DateBreakpoints.QUADRENNIAL.num != 0) {
+        int EVENDIV = 0;
+        if (this.year % DateBreakpoints.QUADRENNIAL.num != EVENDIV) {
             return false;
-        } else if (this.year % DateBreakpoints.CENTENNIAL.num != 0) {
+        } else if (this.year % DateBreakpoints.CENTENNIAL.num != EVENDIV) {
             return true;
-        } else if (this.year % DateBreakpoints.QUATERCENTENNIAL.num == 0) {
+        } else if (this.year % DateBreakpoints.QUATERCENTENNIAL.num == EVENDIV) {
             return true;
         }
         return false;
