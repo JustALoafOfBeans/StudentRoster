@@ -7,7 +7,7 @@ package roster;
  functionality of the compareTo() function.
  @author Bridget Zhang
  */
-public class Student implements Comparable<Student> {
+public abstract class Student implements Comparable<Student> {
     /**
      * Stores last name, first name, DOB of student as Profile
      */
@@ -41,6 +41,13 @@ public class Student implements Comparable<Student> {
      * Difference from upper to lower case ASCII values for conversion
      */
     private static final int ASCIICASEDIFF = 32;
+
+    /**
+     Default constructor of Student for extension of abstract class
+     */
+    public Student() {
+        // todo default constructor for abstract Student
+    }
 
     /**
      Constructor for a Student object from user's input
@@ -276,6 +283,14 @@ public class Student implements Comparable<Student> {
         return String.valueOf(charsIn);
     }
 
+    public boolean isValid(int creditEnrolled) {
+        return false; // todo isValid
+    }
+
+    public abstract double tuitionDue(int creditsEnrolled);
+
+    public abstract boolean isResident();
+
     /**
      Testbed main() to test the functionality of the Student class when creating
      Student objects. Method will test valid and invalid arguments.
@@ -283,6 +298,8 @@ public class Student implements Comparable<Student> {
      */
     public static void main(String[] args) {
         // Test dates
+        /*
+        //todo can not have objects of abstract class
         Student base = new Student("John Doe 9/2/2002 BAIT 10");
         Student nameLess = new Student("Ivy Doe 9/2/2002 BAIT 10"); // Test 1
         Student nameGreater = new Student("John Evans 9/2/2002 BAIT 10"); // Test 2
@@ -299,5 +316,6 @@ public class Student implements Comparable<Student> {
         System.out.println(majGreater.compareTo(base)); // Test 5, expect 1
         System.out.println(majCase.compareTo(base)); // Test 6, expect 0
         System.out.println(credMore.compareTo(base)); // Test 7, expect 1
+         */
     }
 }
