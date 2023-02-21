@@ -3,21 +3,21 @@ import java.util.Scanner;
 import java.io.File;
 
 /**
- Management class for a roster object which holds student objects.
- This class is run by calling RosterManager.run() and first initiates a new
+ Management class for a roster and enroll objects which holds student objects.
+ This class is run by calling TuitionManager.run() and first initiates a new
  roster object and session. The roster can be manipulated during the session
  but all actions are cleared after running the opcode "Q".
  @author Victoria Chen
  */
 public class TuitionManager {
     /**
-     This method launches the Roster Manager.
+     This method launches the Tuition Manager.
      */
     public void run() {
         Scanner intake = new Scanner(System.in);
         Roster studentRoster = new Roster();
         String opCode = "init";
-        System.out.println("Roster manager running...");
+        System.out.println("Tuition manager running...");
 
         while (!opCode.equals("Q")) {
             String command = intake.nextLine();
@@ -38,10 +38,26 @@ public class TuitionManager {
      *                   command to process.
      * @return An updated Roster object.
      */
+    // MUST BE LESS THAN 50 LINES
     private Roster takeAction(Roster studentRoster, String[] parameters) {
         String opCode = parameters[0];
         switch (opCode) {
-            case "A": // add student
+            case "AR": // add resident
+                if (validStudent(parameters)) {
+                    studentRoster = addStudent(studentRoster, parameters);
+                }
+                break;
+            case "AN": // add nonresident
+                if (validStudent(parameters)) {
+                    studentRoster = addStudent(studentRoster, parameters);
+                }
+                break;
+            case "AT": // add tristate student
+                if (validStudent(parameters)) {
+                    studentRoster = addStudent(studentRoster, parameters);
+                }
+                break;
+            case "AI": // add international student
                 if (validStudent(parameters)) {
                     studentRoster = addStudent(studentRoster, parameters);
                 }
@@ -71,8 +87,26 @@ public class TuitionManager {
             case "LS":
                 addFromFile(studentRoster);
                 break;
+            case "E": //enroll a student
+                System.out.println("Enroll student");
+                break;
+            case "D": // drop a student from the roll list
+                System.out.println("Drop student");
+                break;
+            case "S": //award a scholarship
+                System.out.println("Award a scholarship");
+                break;
+            case "PE": // print roll list
+                System.out.println("Print roll list");
+                break;
+            case "PT": // print roll list with tuition
+                System.out.println("Print roll list with tuition");
+                break;
+            case "SE": // end semester
+                System.out.println("End semester.");
+                break;
             case "Q": // end the program
-                System.out.println("Roster Manager terminated.");
+                System.out.println("Tuition Manager terminated.");
                 break;
             default:
                 System.out.println(opCode + " is an invalid command!");
