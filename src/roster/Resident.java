@@ -52,6 +52,12 @@ public class Resident extends Student {
         return creditsDue;
     }
 
+    /**
+     Method to tell if a student is valid given their number of credits.
+     * @param creditEnrolled integer value of credits the student is
+     *                       currently enrolled for.
+     * @return true if the student has a valid amount of credits.
+     */
     public boolean isValid(int creditEnrolled) {
         if (creditEnrolled < 3 || creditEnrolled > 24) {
             return false;
