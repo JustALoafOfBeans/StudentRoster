@@ -9,11 +9,14 @@ package roster;
 public class Resident extends Student {
     private int scholarship;
     private int INITVALUE = 0;
+    private int MINCREDS = 3;
+    private int MAXCREDS = 24;
 
     /**
      Constructs a new Student Resident initialized with 0 scholarship.
      */
     public Resident() {
+        // todo check and correct constructor
         scholarship = INITVALUE;
     }
 
@@ -49,11 +52,11 @@ public class Resident extends Student {
         if (creditsEnrolled < PARTTTIME) {
             tuitionSum += (Tuition.PTRTUITION.fee * creditsEnrolled)
                     + Tuition.PTUNI.fee;
-        } else if (creditsEnrolled < FULLTIME) {
-            tuitionSum += Tuition.FRTUITION.fee + Tuition.FUNI.fee - scholarship;
         } else {
-            tuitionSum += Tuition.FRTUITION.fee + Tuition.FUNI.fee - scholarship
-                    + (Tuition.PTRTUITION.fee * (creditsEnrolled - FULLTIME));
+            tuitionSum += Tuition.FRTUITION.fee + Tuition.FUNI.fee - scholarship;
+            if (creditsEnrolled > FULLTIME) {
+                tuitionSum += (Tuition.PTRTUITION.fee * (creditsEnrolled - FULLTIME));
+            }
         }
         return tuitionSum;
     }
@@ -65,7 +68,7 @@ public class Resident extends Student {
      * @return true if the student has a valid amount of credits.
      */
     public boolean isValid(int creditEnrolled) {
-        if (creditEnrolled < 3 || creditEnrolled > 24) {
+        if (creditEnrolled < MINCREDS || creditEnrolled > MAXCREDS) {
             return false;
         }
         return true;
