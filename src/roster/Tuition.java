@@ -1,7 +1,7 @@
 package roster;
 
 /**
- An enum class containing all tuitions and fees for students (both Resident
+ An enum class containing all tuition and fees for students (both Resident
  and NonResident). Codes for FullTime students begin with an F and PartTime
  students a PT. Resident students have an R and NonResident students have NR.
  Call values using "Tuition.code.fee". For example "Tuition.FUNI.fee" will
@@ -37,18 +37,18 @@ public enum Tuition {
     /**
      * PartTime University fee for Resident and NonResident
      */
-    PTUNI (2614);
+    PTUNI (2614.40);
 
     /**
      * Integer value for the fee
      */
-    public final int fee;
+    public final double fee;
 
     /**
      * Attributes of Tuition that designate the values to fee
-     * @param fee designates how much the fee is
+     * @param fee double, designates how much the fee is
      */
-    Tuition(int fee) {
+    Tuition(double fee) {
         this.fee = fee;
     }
 
