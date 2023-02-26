@@ -1,5 +1,11 @@
 package roster;
 
+/**
+ The Resident class is a subclass of Student which provides methods to create
+ Resident objects using no parameters and for manipulating the Resident
+ fields.
+ @author Victoria Chen
+ */
 public class Resident extends Student {
     private int scholarship;
     private int INITVALUE = 0;
