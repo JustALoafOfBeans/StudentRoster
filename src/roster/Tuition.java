@@ -5,7 +5,7 @@ package roster;
  and NonResident). Codes for FullTime students begin with an F and PartTime
  students a PT. Resident students have an R and NonResident students have NR.
  Call values using "Tuition.code.fee". For example "Tuition.FUNI.fee" will
- return 3268 as an integer representing the University fee for a FullTime
+ return 3268 as a double representing the University fee for a FullTime
  student.
  @author Victoria Chen
  */
