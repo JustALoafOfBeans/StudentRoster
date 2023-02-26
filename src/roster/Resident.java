@@ -44,18 +44,18 @@ public class Resident extends Student {
     public double tuitionDue(int creditsEnrolled) {
         int PARTTTIME = 12;
         int FULLTIME = 16;
-        int creditsDue = INITVALUE;
+        int tuitionSum = INITVALUE;
 
         if (creditsEnrolled < PARTTTIME) {
-            creditsDue += (Tuition.PTRTUITION.fee * creditsEnrolled)
+            tuitionSum += (Tuition.PTRTUITION.fee * creditsEnrolled)
                     + Tuition.PTUNI.fee;
         } else if (creditsEnrolled < FULLTIME) {
-            creditsDue += Tuition.FRTUITION.fee + Tuition.FUNI.fee - scholarship;
+            tuitionSum += Tuition.FRTUITION.fee + Tuition.FUNI.fee - scholarship;
         } else {
-            creditsDue += Tuition.FRTUITION.fee + Tuition.FUNI.fee - scholarship
+            tuitionSum += Tuition.FRTUITION.fee + Tuition.FUNI.fee - scholarship
                     + (Tuition.PTRTUITION.fee * (creditsEnrolled - FULLTIME));
         }
-        return creditsDue;
+        return tuitionSum;
     }
 
     /**
