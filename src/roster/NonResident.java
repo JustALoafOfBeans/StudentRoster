@@ -1,34 +1,65 @@
 package roster;
 
+/**
+ The NonResident class is a subclass of Student which provides methods to create
+ NonResident objects using no parameters and for manipulating the NonResident
+ fields.
+ @author Victoria Chen, Bridget Zhang
+ */
 public class NonResident extends Student {
 
-    private static final int PARTTIMECREDCOST = 966;
-    private static final int FULLTIMECREDCOST = 29737;
-    private static final int FULLTIMECREDCOUNT = 16;
-    private static final int UNIFEE = 3268;
-    private static final int HEALTHFEE = 2650;
+    private int INITVALUE = 0;
+    private int MINCREDS = 3;
+    private int MAXCREDS = 24;
 
     public NonResident(String studentParam) { // NonResident constructor, using Student
         // todo check constructor, should have no additional instance vars
         super(studentParam);
     }
 
+    /**
+     Returns the amount of tuition due for the student. Tuition is calculated
+     based on the student's residential status and credit load.
+     * @param creditsEnrolled integer value of how many credits the student
+     *                        is enrolled for.
+     * @return double representing how much tuition the student has.
+     */
     public double tuitionDue(int creditsEnrolled) { // From Abstract Student
-        double tuitionSum = 0;
-        if (creditsEnrolled < 12) { // Considered parttime
-            tuitionSum += PARTTIMECREDCOST * creditsEnrolled;
-            tuitionSum += UNIFEE * 0.8; // University fee
+        int PARTTTIME = 12;
+        int FULLTIME = 16;
+        double tuitionSum = INITVALUE;
+
+        if (creditsEnrolled < PARTTTIME) { // Considered parttime
+            tuitionSum += (Tuition.PTNRTUITION.fee * creditsEnrolled)
+                    + Tuition.PTUNI.fee;
         } else { // Considered full time
-            tuitionSum += FULLTIMECREDCOST;
-            if ((creditsEnrolled - FULLTIMECREDCOUNT) > 0) { // Over 16 credits
-                tuitionSum += (creditsEnrolled - FULLTIMECREDCOUNT) * PARTTIMECREDCOST;
+            tuitionSum += Tuition.FNRTUITION.fee + Tuition.FUNI.fee;
+            if (creditsEnrolled > FULLTIME) { // Over 16 credits
+                tuitionSum += (Tuition.PTNRTUITION.fee * (creditsEnrolled - FULLTIME));
             }
-            tuitionSum += (UNIFEE + HEALTHFEE); // University and Health Insurance fees
         }
 
         return tuitionSum;
     }
 
+    /**
+     Method to tell if a student is valid given their number of credits.
+     * @param creditEnrolled integer value of credits the student is
+     *                       currently enrolled for.
+     * @return true if the student has a valid amount of credits.
+     */
+    public boolean isValid(int creditEnrolled) {
+        if (creditEnrolled < MINCREDS || creditEnrolled > MAXCREDS) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     Method always returns false to indicate a NonResident student is
+     not classified as a resident.
+     * @return false always.
+     */
     public boolean isResident() { // From Abstract Student
         return false;
     }
