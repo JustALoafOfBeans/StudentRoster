@@ -49,6 +49,77 @@ public class TuitionManager {
     // MUST BE LESS THAN 50 LINES
     private void takeAction(String[] parameters) {
         String opCode = parameters[0];
+        if (opCode.charAt(0) == 'A') {
+            addCommands(parameters);
+        } else if (opCode.charAt(0) == 'P') {
+            printCommands(parameters);
+        } else {
+            switch (opCode) {
+                case "R": //remove student
+                    removeStudent(parameters);
+                    break;
+                case "L": // list all students in a school
+                    studentRoster.print(parameters[1]);
+                    break;
+                case "C": // change a students major
+                    changeMajor(parameters);
+                    break;
+                case "LS":
+                    addFromFile(parameters);
+                    break;
+                case "E": //enroll a student
+                    enrollStudent(parameters);
+                    break;
+                case "D": // drop a student from the roll list
+                    System.out.println("Drop student");
+                    break;
+                case "S": //award a scholarship
+                    System.out.println("Award a scholarship");
+                    break;
+                case "SE": // end semester
+                    System.out.println("End semester.");
+                    break;
+                case "Q": // end the program
+                    System.out.println("Tuition Manager terminated.");
+                    break;
+                default:
+                    System.out.println(opCode + " is an invalid command!");
+                    break;
+            }
+        }
+    }
+
+    /**
+     Helper method to clump together print commands.
+     * @param parameters
+     */
+    private void printCommands(String[] parameters) {
+        String opCode = parameters[0];
+        switch (opCode) {
+            case "P": // print roster by last name
+                studentRoster.print();
+                break;
+            case "PS": // print roster by standing
+                studentRoster.printByStanding();
+                break;
+            case "PC": // print roster by school major
+                studentRoster.printBySchoolMajor();
+                break;
+            case "PE": // print roll list
+                enrolledStudents.print();
+                break;
+            case "PT": // print roll list with tuition
+                System.out.println("Print roll list with tuition");
+                break;
+        }
+    }
+
+    /**
+     Helper method to clump together add commands.
+     * @param parameters
+     */
+    private void addCommands(String[] parameters) {
+        String opCode = parameters[0];
         switch (opCode) {
             case "AR": // add resident
                 addResident(parameters, true);
@@ -62,57 +133,22 @@ public class TuitionManager {
             case "AI": // add international student
                 addInternational(parameters, true);
                 break;
-            case "R": //remove student
-                removeStudent(parameters);
-                break;
-            case "P": // print roster by last name
-                studentRoster.print();
-                break;
-            case "PS": // print roster by standing
-                studentRoster.printByStanding();
-                break;
-            case "PC": // print roster by school major
-                studentRoster.printBySchoolMajor();
-                break;
-            case "L": // list all students in a school
-                studentRoster.print(parameters[1]);
-                break;
-            case "C": // change a students major
-                changeMajor(parameters);
-                break;
-            case "LS":
-                addFromFile(parameters);
-                break;
-            case "E": //enroll a student
-                enrollStudent(parameters);
-                break;
-            case "D": // drop a student from the roll list
-                System.out.println("Drop student");
-                break;
-            case "S": //award a scholarship
-                System.out.println("Award a scholarship");
-                break;
-            case "PE": // print roll list
-                System.out.println("Print roll list");
-                break;
-            case "PT": // print roll list with tuition
-                System.out.println("Print roll list with tuition");
-                break;
-            case "SE": // end semester
-                System.out.println("End semester.");
-                break;
-            case "Q": // end the program
-                System.out.println("Tuition Manager terminated.");
-                break;
-            default:
-                System.out.println(opCode + " is an invalid command!");
-                break;
         }
     }
 
+    /**
+     Method enrolls a student to the Enroll object. Student must be in the
+     Roster object to be qualified to enroll.
+     * @param parameters String array of student's details.
+     */
     private void enrollStudent(String[] parameters) {
         if (validEnroll(parameters)) {
-            System.out.println("valid enroll");
+            String toAdd = parameters[1] + " " + parameters[2] + " "
+                    + parameters[3];
+            EnrollStudent student = new EnrollStudent(toAdd+ " " + parameters[4]);
+            enrolledStudents.add(student);
+            System.out.println(toAdd + " enrolled " + parameters[4] + " " +
+                    "credits");
         }
     }
 
@@ -134,8 +170,21 @@ public class TuitionManager {
                 return false;
             }
         }
-        // if invalid credits
-        // if not in roster
+        int CRDSTOENROLL = Integer.parseInt(parameters[parameters.length - SINGLE]);
+        String toFind = parameters[1] + " " + parameters[2] + " " + parameters[3];
+        Profile tempProfile = new Profile(toFind);
+        Student tempStudent = new Resident(tempProfile);
+        Student student = studentRoster.getStudent(tempStudent);
+        if (student == null || !studentRoster.contains(student)){
+            System.out.println("Cannot enroll: " + toFind + " is not in the " +
+                    "roster.");
+            return false;
+        }
+        if (!student.isValid(CRDSTOENROLL)) {
+            System.out.println("(" + student.returnType() + ") "
+                    + parameters[parameters.length - SINGLE] + ": invalid credit hours.");
+            return false;
+        }
         return true;
     }
 
