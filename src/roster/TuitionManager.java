@@ -53,12 +53,10 @@ public class TuitionManager {
         switch (opCode) {
             case "AR": // add resident
                 addResident(parameters);
-                break; /**
-            case "AN": // add nonresident
-                if (validStudent(parameters)) {
-                    studentRoster = addStudent(studentRoster, parameters);
-                }
                 break;
+            case "AN": // add nonresident
+                addNonResident(parameters);
+                break; /**
             case "AT": // add tristate student
                 if (validStudent(parameters)) {
                     studentRoster = addStudent(studentRoster, parameters);
@@ -118,6 +116,27 @@ public class TuitionManager {
             default:
                 System.out.println(opCode + " is an invalid command!");
                 break;
+        }
+    }
+
+    private void addNonResident(String[] parameters) {
+        int NUMPARAMS = 6;
+        if (parameters.length != NUMPARAMS) {
+            System.out.println("Missing data in command line.");
+            return;
+        }
+        if (validStudent(parameters)) {
+            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+            String studentparam = String.join(" ",noOp);
+            NonResident toAdd = new NonResident(studentparam);
+            if(!studentRoster.contains(toAdd)) {
+                studentRoster.add(toAdd);
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " added to the " + "roster.");
+            } else {
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " is already in the roster.");
+            }
         }
     }
 
@@ -200,11 +219,12 @@ public class TuitionManager {
         // create a profile and then student from that profile
         String student = parameters[1] + " " + parameters[2] + " "
                         + parameters[3];
+        System.out.println(student);
         Profile toChange = new Profile(student);
         String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
         String studentparam = String.join(" ",noOp);
         //Student stuObj = new Student(toChange);
-        Resident stuObj = new Resident(studentparam);
+        Resident stuObj = new Resident(student);
         if (studentRoster.contains(stuObj)) {
             studentRoster.changeMajor(toChange, parameters[4]);
             System.out.println(student + " major changed to " + parameters[4]);
@@ -226,6 +246,7 @@ public class TuitionManager {
         String student =
                 parameters[1] + " " + parameters[2] + " "
                         + parameters[3] + " FAKE 50";
+        System.out.println(student);
         //Student toRemove = new Student(student);
         Student toRemove = new Resident(student);
         if (studentRoster.contains(toRemove)) {
