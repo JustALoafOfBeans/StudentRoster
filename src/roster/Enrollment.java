@@ -56,7 +56,7 @@ public class Enrollment {
     // Helper method for finding student index, used by add(), remove(), and find()
     private int find(EnrollStudent enrollStudent) {
         Profile seekProf = enrollStudent.getProfile(); // Profile of enrollStudent sought
-        for (int ind = 0; ind < enrollStudents.length; ind++) {
+        for (int ind = 0; ind < size; ind++) {
             if (seekProf.compareTo(enrollStudents[ind].getProfile()) == 0) {
                 // Found, return index
                 return ind;
@@ -75,5 +75,9 @@ public class Enrollment {
         for (int ind = 0; ind < enrollStudents.length; ind++) {
             System.out.println(enrollStudents[ind].toString());
         }
+    }
+
+    public EnrollStudent[] getEnrollArr() {
+        return enrollStudents;
     }
 }
