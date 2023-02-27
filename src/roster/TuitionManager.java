@@ -49,6 +49,77 @@ public class TuitionManager {
     // MUST BE LESS THAN 50 LINES
     private void takeAction(String[] parameters) {
         String opCode = parameters[0];
+        if (opCode.charAt(0) == 'A') {
+            addCommands(parameters);
+        } else if (opCode.charAt(0) == 'P') {
+            printCommands(parameters);
+        } else {
+            switch (opCode) {
+                case "R": //remove student
+                    removeStudent(parameters);
+                    break;
+                case "L": // list all students in a school
+                    studentRoster.print(parameters[1]);
+                    break;
+                case "C": // change a students major
+                    changeMajor(parameters);
+                    break;
+                case "LS":
+                    addFromFile(parameters);
+                    break;
+                case "E": //enroll a student
+                    enrollStudent(parameters);
+                    break;
+                case "D": // drop a student from the roll list
+                    System.out.println("Drop student");
+                    break;
+                case "S": //award a scholarship
+                    System.out.println("Award a scholarship");
+                    break;
+                case "SE": // end semester
+                    System.out.println("End semester.");
+                    break;
+                case "Q": // end the program
+                    System.out.println("Tuition Manager terminated.");
+                    break;
+                default:
+                    System.out.println(opCode + " is an invalid command!");
+                    break;
+            }
+        }
+    }
+
+    /**
+     Helper method to clump together print commands.
+     * @param parameters
+     */
+    private void printCommands(String[] parameters) {
+        String opCode = parameters[0];
+        switch (opCode) {
+            case "P": // print roster by last name
+                studentRoster.print();
+                break;
+            case "PS": // print roster by standing
+                studentRoster.printByStanding();
+                break;
+            case "PC": // print roster by school major
+                studentRoster.printBySchoolMajor();
+                break;
+            case "PE": // print roll list
+                enrolledStudents.print();
+                break;
+            case "PT": // print roll list with tuition
+                System.out.println("Print roll list with tuition");
+                break;
+        }
+    }
+
+    /**
+     Helper method to clump together add commands.
+     * @param parameters
+     */
+    private void addCommands(String[] parameters) {
+        String opCode = parameters[0];
         switch (opCode) {
             case "AR": // add resident
                 addResident(parameters, true);
@@ -61,51 +132,6 @@ public class TuitionManager {
                 break;
             case "AI": // add international student
                 addInternational(parameters, true);
-                break;
-            case "R": //remove student
-                removeStudent(parameters);
-                break;
-            case "P": // print roster by last name
-                studentRoster.print();
-                break;
-            case "PS": // print roster by standing
-                studentRoster.printByStanding();
-                break;
-            case "PC": // print roster by school major
-                studentRoster.printBySchoolMajor();
-                break;
-            case "L": // list all students in a school
-                studentRoster.print(parameters[1]);
-                break;
-            case "C": // change a students major
-                changeMajor(parameters);
-                break;
-            case "LS":
-                addFromFile(parameters);
-                break;
-            case "E": //enroll a student
-                enrollStudent(parameters);
-                break;
-            case "D": // drop a student from the roll list
-                System.out.println("Drop student");
-                break;
-            case "S": //award a scholarship
-                System.out.println("Award a scholarship");
-                break;
-            case "PE": // print roll list
-                enrolledStudents.print();
-                break;
-            case "PT": // print roll list with tuition
-                System.out.println("Print roll list with tuition");
-                break;
-            case "SE": // end semester
-                System.out.println("End semester.");
-                break;
-            case "Q": // end the program
-                System.out.println("Tuition Manager terminated.");
-                break;
-            default:
-                System.out.println(opCode + " is an invalid command!");
                 break;
         }
     }
