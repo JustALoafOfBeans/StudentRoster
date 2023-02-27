@@ -47,6 +47,21 @@ public class Roster {
     }
 
     /**
+     Method returns the student object given a dummy student obj as long as
+     the profile matches.
+     * @param student Student object to find.
+     * @return Full student object.
+     */
+    public Student getStudent(Student student) {
+        int NOTFOUND = -1;
+        int foundIndex = find(student);
+        if (foundIndex == NOTFOUND) {
+            return null;
+        }
+        return roster[foundIndex];
+    }
+
+    /**
      Increases the capacity of the array by 4
      */
     private void grow () {
