@@ -52,16 +52,16 @@ public class TuitionManager {
         String opCode = parameters[0];
         switch (opCode) {
             case "AR": // add resident
-                addResident(parameters);
+                addResident(parameters, true);
                 break;
             case "AN": // add nonresident
-                addNonResident(parameters);
+                addNonResident(parameters, true);
                 break;
             case "AT": // add tristate student
-                addTristate(parameters);
+                addTristate(parameters, true);
                 break;
             case "AI": // add international student
-                addInternational(parameters);
+                addInternational(parameters, true);
                 break; /**
             case "R": //remove student
                 if (validStudent(parameters)) {
@@ -120,20 +120,19 @@ public class TuitionManager {
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
      */
-    private void addInternational(String[] parameters) {
+    private void addInternational(String[] parameters, boolean prints) {
         int NUMPARAMS = 6;
         int WITHSTATUS = 7;
         boolean studyAbroad = false;
         int adjust = 0;
 
-        if (parameters.length < NUMPARAMS) {
+        if (parameters.length < NUMPARAMS && prints) {
             System.out.println("Missing data in command line.");
             return;
         }
         if (parameters.length == WITHSTATUS) {
             studyAbroad = Boolean.parseBoolean(parameters[NUMPARAMS]);
             adjust = 1;
-            System.out.println(studyAbroad);
         }
         parameters = Arrays.copyOfRange(parameters,0,parameters.length-adjust);
         if (validStudent(parameters)) {
@@ -142,9 +141,11 @@ public class TuitionManager {
             International toAdd = new International(studentparam,studyAbroad);
             if(!studentRoster.contains(toAdd)) {
                 studentRoster.add(toAdd);
-                System.out.println(parameters[1] + " " + parameters[2]
-                        + " " + parameters[3] + " added to the " + "roster.");
-            } else {
+                if (prints) {
+                    System.out.println(parameters[1] + " " + parameters[2]
+                            + " " + parameters[3] + " added to the " + "roster.");
+                }
+            } else if (prints){
                 System.out.println(parameters[1] + " " + parameters[2]
                         + " " + parameters[3] + " is already in the roster.");
             }
@@ -156,14 +157,14 @@ public class TuitionManager {
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
      */
-    private void addTristate(String[] parameters) {
+    private void addTristate(String[] parameters, boolean prints) {
         int NUMPARAMS = 7;
         int NOSTATE = 6;
 
-        if (parameters.length == NOSTATE) {
+        if (parameters.length == NOSTATE && prints) {
             System.out.println("Missing the state code.");
             return;
-        } else if (parameters.length != NUMPARAMS) {
+        } else if (parameters.length != NUMPARAMS && prints) {
             System.out.println("Missing data in command line.");
             return;
         }
@@ -175,9 +176,11 @@ public class TuitionManager {
             TriState toAdd = new TriState(studentparam,state);
             if(!studentRoster.contains(toAdd)) {
                 studentRoster.add(toAdd);
-                System.out.println(parameters[1] + " " + parameters[2]
-                        + " " + parameters[3] + " added to the " + "roster.");
-            } else {
+                if (prints) {
+                    System.out.println(parameters[1] + " " + parameters[2]
+                            + " " + parameters[3] + " added to the " + "roster.");
+                }
+            } else if (prints) {
                 System.out.println(parameters[1] + " " + parameters[2]
                         + " " + parameters[3] + " is already in the roster.");
             }
@@ -203,9 +206,9 @@ public class TuitionManager {
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
      */
-    private void addNonResident(String[] parameters) {
+    private void addNonResident(String[] parameters, boolean prints) {
         int NUMPARAMS = 6;
-        if (parameters.length != NUMPARAMS) {
+        if (parameters.length != NUMPARAMS && prints) {
             System.out.println("Missing data in command line.");
             return;
         }
@@ -215,9 +218,11 @@ public class TuitionManager {
             NonResident toAdd = new NonResident(studentparam);
             if(!studentRoster.contains(toAdd)) {
                 studentRoster.add(toAdd);
-                System.out.println(parameters[1] + " " + parameters[2]
-                        + " " + parameters[3] + " added to the " + "roster.");
-            } else {
+                if (prints) {
+                    System.out.println(parameters[1] + " " + parameters[2]
+                            + " " + parameters[3] + " added to the " + "roster.");
+                }
+            } else if (prints){
                 System.out.println(parameters[1] + " " + parameters[2]
                         + " " + parameters[3] + " is already in the roster.");
             }
@@ -229,9 +234,9 @@ public class TuitionManager {
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
      */
-    private void addResident(String[] parameters) {
+    private void addResident(String[] parameters, boolean prints) {
         int NUMPARAMS = 6;
-        if (parameters.length != NUMPARAMS) {
+        if (parameters.length != NUMPARAMS && prints) {
             System.out.println("Missing data in command line.");
             return;
         }
@@ -241,9 +246,11 @@ public class TuitionManager {
             Resident toAdd = new Resident(studentparam);
             if(!studentRoster.contains(toAdd)) {
                 studentRoster.add(toAdd);
-                System.out.println(parameters[1] + " " + parameters[2]
-                        + " " + parameters[3] + " added to the " + "roster.");
-            } else {
+                if (prints){
+                    System.out.println(parameters[1] + " " + parameters[2]
+                            + " " + parameters[3] + " added to the " + "roster.");
+                }
+            } else if (prints) {
                 System.out.println(parameters[1] + " " + parameters[2]
                         + " " + parameters[3] + " is already in the roster.");
             }
@@ -263,26 +270,26 @@ public class TuitionManager {
 
             while(intake.hasNextLine()) {
                 String command = intake.nextLine();
-                System.out.println(command);
                 String[] parameters = command.split(",");
                 if (parameters.length > 0 && parameters[0] != "") {
                     opCode = parameters[0];
                     switch (opCode) {
                         case "R":
-                            System.out.println("R");
+                            addResident(parameters, false);
                             break;
                         case "I":
-                            System.out.println("I");
+                            addInternational(parameters, false);
                             break;
                         case "T":
-                            System.out.println("T");
+                            addTristate(parameters, false);
                             break;
                         case "N":
-                            System.out.println("N");
+                            addNonResident(parameters, false);
                             break;
                     }
                 }
             }
+            System.out.println("Students loaded to the roster.");
         } catch (Exception e) {
             System.out.println(e.getClass());
         }
