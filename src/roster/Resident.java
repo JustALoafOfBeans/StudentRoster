@@ -74,4 +74,12 @@ public class Resident extends Student {
         return true;
     }
 
+    /**
+     Method returns what type of student this object is.
+     * @return Resident as a string.
+     */
+    public String returnType() {
+        return "Resident";
+    }
+
 }

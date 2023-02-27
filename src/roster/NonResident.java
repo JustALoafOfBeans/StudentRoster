@@ -64,4 +64,12 @@ public class NonResident extends Student {
         return false;
     }
 
+    /**
+     Method returns what type of student this object is.
+     * @return Non-Resident as a string.
+     */
+    public String returnType() {
+        return "Non-Resident";
+    }
+
 }

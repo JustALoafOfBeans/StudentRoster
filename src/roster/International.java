@@ -45,4 +45,16 @@ public class International extends NonResident {
         }
         return false;
     }
+
+    /**
+     Method returns what type of student this object is.
+     * @return International as a string. May have study abroad if applicable.
+     */
+    public String returnType() {
+        String ans = "International Student";
+        if (isStudyAbroad) {
+            ans += "study abroad";
+        }
+        return ans;
+    }
 }

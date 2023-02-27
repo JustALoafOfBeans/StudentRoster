@@ -27,4 +27,12 @@ public class TriState extends NonResident {
         return tristateSum;
     }
 
+    /**
+     Method returns what type of student this object is.
+     * @return Resident as a string.
+     */
+    public String returnType() {
+        return "Tri-state " + state;
+    }
+
 }
