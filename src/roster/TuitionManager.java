@@ -56,17 +56,13 @@ public class TuitionManager {
                 break;
             case "AN": // add nonresident
                 addNonResident(parameters);
-                break; /**
+                break;
             case "AT": // add tristate student
-                if (validStudent(parameters)) {
-                    studentRoster = addStudent(studentRoster, parameters);
-                }
+                addTristate(parameters);
                 break;
             case "AI": // add international student
-                if (validStudent(parameters)) {
-                    studentRoster = addStudent(studentRoster, parameters);
-                }
-                break;
+                addInternational(parameters);
+                break; /**
             case "R": //remove student
                 if (validStudent(parameters)) {
                     studentRoster = removeStudent(studentRoster, parameters);
@@ -119,6 +115,94 @@ public class TuitionManager {
         }
     }
 
+    /**
+     Private method adds a International type student to the Roster object.
+     * @param parameters Array of strings containing a breakdown of the
+     *                   student to process.
+     */
+    private void addInternational(String[] parameters) {
+        int NUMPARAMS = 6;
+        int WITHSTATUS = 7;
+        boolean studyAbroad = false;
+        int adjust = 0;
+
+        if (parameters.length < NUMPARAMS) {
+            System.out.println("Missing data in command line.");
+            return;
+        }
+        if (parameters.length == WITHSTATUS) {
+            studyAbroad = Boolean.parseBoolean(parameters[NUMPARAMS]);
+            adjust = 1;
+            System.out.println(studyAbroad);
+        }
+        parameters = Arrays.copyOfRange(parameters,0,parameters.length-adjust);
+        if (validStudent(parameters)) {
+            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+            String studentparam = String.join(" ",noOp);
+            International toAdd = new International(studentparam,studyAbroad);
+            if(!studentRoster.contains(toAdd)) {
+                studentRoster.add(toAdd);
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " added to the " + "roster.");
+            } else {
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " is already in the roster.");
+            }
+        }
+    }
+
+    /**
+     Private method adds a TriState type student to the Roster object.
+     * @param parameters Array of strings containing a breakdown of the
+     *                   student to process.
+     */
+    private void addTristate(String[] parameters) {
+        int NUMPARAMS = 7;
+        int NOSTATE = 6;
+
+        if (parameters.length == NOSTATE) {
+            System.out.println("Missing the state code.");
+            return;
+        } else if (parameters.length != NUMPARAMS) {
+            System.out.println("Missing data in command line.");
+            return;
+        }
+        String state = parameters[6];
+        parameters = Arrays.copyOfRange(parameters,0,parameters.length-1);
+        if (validStudent(parameters) && validState(state)) {
+            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+            String studentparam = String.join(" ",noOp);
+            TriState toAdd = new TriState(studentparam,state);
+            if(!studentRoster.contains(toAdd)) {
+                studentRoster.add(toAdd);
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " added to the " + "roster.");
+            } else {
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " is already in the roster.");
+            }
+        }
+    }
+
+    /**
+     Helper method to check if a state code is a valid tristate code.
+     * @param state String representing state.
+     * @return true if state is New York (NY) or Connecticut (CT).
+     */
+    private boolean validState(String state) {
+        if (state.toUpperCase().equals("NY") || state.toUpperCase().equals(
+                "CT")) {
+            return true;
+        }
+        System.out.println(state + ": Invalid state code.");
+        return false;
+    }
+
+    /**
+     Private method adds a NonResident type student to the Roster object.
+     * @param parameters Array of strings containing a breakdown of the
+     *                   student to process.
+     */
     private void addNonResident(String[] parameters) {
         int NUMPARAMS = 6;
         if (parameters.length != NUMPARAMS) {
