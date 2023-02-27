@@ -3,6 +3,7 @@ package roster;
 public class International extends NonResident {
     private boolean isStudyAbroad;
     private static int CREDITBRKPT = 12;
+    private  static int MAXCREDITS = 24;
 
     public International (String studentParam, boolean studentAbroad) { // International constructor, using Student
         // todo this constructor too
@@ -40,7 +41,7 @@ public class International extends NonResident {
     public boolean isValid(int creditEnrolled) {
         if (isStudyAbroad && creditEnrolled <= CREDITBRKPT) {
             return true;
-        } else if (!isStudyAbroad && creditEnrolled >= CREDITBRKPT){
+        } else if (!isStudyAbroad && creditEnrolled >= CREDITBRKPT && creditEnrolled <= MAXCREDITS){
             return true;
         }
         return false;
