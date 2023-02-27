@@ -77,7 +77,47 @@ public class Enrollment {
         }
     }
 
-    public EnrollStudent[] getEnrollArr() {
-        return enrollStudents;
+    public void printTuition(Roster rost) {
+        // Get array of roster students
+        Student[] rostArr = rost.getStudentArr();
+        Profile enrollProf;
+        int profIndex;
+        String tuitionStr;
+        double tuitionDouble;
+        // For each student in enrollArr, find profile in Roster and print details
+        for (int eInd = 0; eInd < size; eInd++) {
+            enrollProf = enrollStudents[eInd].getProfile();
+            // Find student in roster that matches profile
+            profIndex = findProfile(enrollProf, rostArr); // todo should not be -1 (not found in roster)
+
+            // Print tuition
+            tuitionStr = rostArr[profIndex].getProfile().toString() + " (";
+            tuitionStr += rostArr[profIndex].returnType() + ") enrolled ";
+            tuitionStr += enrollStudents[eInd].getCredits() + " credits: tuition due: $";
+            tuitionDouble = rostArr[profIndex].tuitionDue(enrollStudents[eInd].getCredits());
+            tuitionStr += String.format("%,.2f", tuitionDouble);
+
+            System.out.println(tuitionStr);
+        }
+    }
+
+    /**
+     Method to find the student in the roster
+     * @param profile profile that should be found and matched
+     * @return index in roster where student with profile is located, or NOT_FOUND = -1 if not found
+     */
+    private int findProfile (Profile profile, Student[] roster) {
+        // For each Student in roster[], check if profile equal
+        for (int rIndex = 0; rIndex < roster.length; rIndex++) {
+            if (roster[rIndex] == null) {
+                break;
+            }
+            if (roster[rIndex].getProfile().equals(profile)) {
+                // Profile found
+                return rIndex;
+            }
+        }
+        // Returns -1 if reach end of roster without hit
+        return -1;
     }
 }
