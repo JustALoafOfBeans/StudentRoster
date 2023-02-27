@@ -72,7 +72,7 @@ public class Enrollment {
     }
 
     public void print() {
-        for (int ind = 0; ind < enrollStudents.length; ind++) {
+        for (int ind = 0; ind < size; ind++) {
             System.out.println(enrollStudents[ind].toString());
         }
     }
