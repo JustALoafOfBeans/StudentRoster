@@ -9,14 +9,13 @@ package roster;
 public class Resident extends Student {
     private int scholarship;
     private int INITVALUE = 0;
-    private int MINCREDS = 3;
-    private int MAXCREDS = 24;
 
     /**
      Constructs a new Student Resident initialized with 0 scholarship.
      */
-    public Resident() {
+    public Resident(String studentparam) {
         // todo check and correct constructor
+        super(studentparam);
         scholarship = INITVALUE;
     }
 
@@ -59,19 +58,6 @@ public class Resident extends Student {
             }
         }
         return tuitionSum;
-    }
-
-    /**
-     Method to tell if a student is valid given their number of credits.
-     * @param creditEnrolled integer value of credits the student is
-     *                       currently enrolled for.
-     * @return true if the student has a valid amount of credits.
-     */
-    public boolean isValid(int creditEnrolled) {
-        if (creditEnrolled < MINCREDS || creditEnrolled > MAXCREDS) {
-            return false;
-        }
-        return true;
     }
 
     /**

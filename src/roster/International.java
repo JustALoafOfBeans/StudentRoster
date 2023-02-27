@@ -2,6 +2,7 @@ package roster;
 
 public class International extends NonResident {
     private boolean isStudyAbroad;
+    private static int CREDITBRKPT = 12;
 
     public International (String studentParam, boolean studentAbroad) { // International constructor, using Student
         // todo this constructor too
@@ -23,5 +24,25 @@ public class International extends NonResident {
             // abroad
         }
         return interSum;
+    }
+
+    /**
+     Method overrides isValid(int creditEnrolled) from Student class. Return
+     value is based on the Student's study abroad status and number of
+     credits enrolled.
+     * @param creditEnrolled integer value of credits the student is
+     *                       currently enrolled for.
+     * @return true if the student is study abroad and 12 or less credits
+     * or if the student is not study abroad and 12 or more credits. False
+     * otherwise.
+     */
+    @Override
+    public boolean isValid(int creditEnrolled) {
+        if (isStudyAbroad && creditEnrolled <= CREDITBRKPT) {
+            return true;
+        } else if (!isStudyAbroad && creditEnrolled >= CREDITBRKPT){
+            return true;
+        }
+        return false;
     }
 }

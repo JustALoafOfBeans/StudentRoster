@@ -42,6 +42,9 @@ public abstract class Student implements Comparable<Student> {
      */
     private static final int ASCIICASEDIFF = 32;
 
+    private int MINCREDS = 3;
+    private int MAXCREDS = 24;
+
     /**
      Default constructor of Student for extension of abstract class
      */
@@ -283,8 +286,17 @@ public abstract class Student implements Comparable<Student> {
         return String.valueOf(charsIn);
     }
 
+    /**
+     Method to tell if a student is valid given their number of credits.
+     * @param creditEnrolled integer value of credits the student is
+     *                       currently enrolled for.
+     * @return true if the student has a valid amount of credits.
+     */
     public boolean isValid(int creditEnrolled) {
-        return false; // todo isValid
+        if (creditEnrolled < MINCREDS || creditEnrolled > MAXCREDS) {
+            return false;
+        }
+        return true;
     }
 
     public abstract double tuitionDue(int creditsEnrolled);
