@@ -71,7 +71,7 @@ public class TuitionManager {
                     enrollStudent(parameters);
                     break;
                 case "D": // drop a student from the roll list
-                    System.out.println("Drop student");
+                    dropStudent(parameters);
                     break;
                 case "S": //award a scholarship
                     System.out.println("Award a scholarship");
@@ -87,6 +87,26 @@ public class TuitionManager {
                     break;
             }
         }
+    }
+
+    private void dropStudent(String[] parameters) {
+        int NUMPARAMS = 4;
+        if (!validStudent(parameters)) {
+            return;
+        } else if (parameters.length <= NUMPARAMS) {
+            System.out.println("Missing data in line command.");
+        }
+        // create a profile and then student from that profile
+        String student = parameters[1] + " " + parameters[2] + " "
+                + parameters[3];
+        EnrollStudent stuObj = new EnrollStudent(student);
+        if (enrolledStudents.contains(stuObj)) {
+            enrolledStudents.remove(stuObj);
+            System.out.println(student + " dropped.");
+        } else {
+            System.out.println(student + " is not enrolled.");
+        }
+        return;
     }
 
     /**
@@ -109,7 +129,7 @@ public class TuitionManager {
                 enrolledStudents.print();
                 break;
             case "PT": // print roll list with tuition
-                System.out.println("Print roll list with tuition");
+                enrolledStudents.printTuition(studentRoster);
                 break;
         }
     }
