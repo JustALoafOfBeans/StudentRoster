@@ -1,6 +1,4 @@
 package roster;
-import java.util.Arrays;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.io.File;
 
@@ -134,9 +132,10 @@ public class TuitionManager {
             studyAbroad = Boolean.parseBoolean(parameters[NUMPARAMS]);
             adjust = 1;
         }
-        parameters = Arrays.copyOfRange(parameters,0,parameters.length-adjust);
-        if (validStudent(parameters)) {
-            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+        String[] noStatus = {parameters[0],parameters[1],parameters[2],
+                parameters[3],parameters[4], parameters[5]};
+        if (validStudent(noStatus)) {
+            String[] noOp = {parameters[1],parameters[2],parameters[3],parameters[4], parameters[5]};
             String studentparam = String.join(" ",noOp);
             International toAdd = new International(studentparam,studyAbroad);
             if(!studentRoster.contains(toAdd)) {
@@ -169,9 +168,10 @@ public class TuitionManager {
             return;
         }
         String state = parameters[6];
-        parameters = Arrays.copyOfRange(parameters,0,parameters.length-1);
-        if (validStudent(parameters) && validState(state)) {
-            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+        String[] noState = {parameters[0],parameters[1],parameters[2],
+                parameters[3],parameters[4], parameters[5]};
+        if (validStudent(noState) && validState(state)) {
+            String[] noOp = {parameters[1],parameters[2],parameters[3],parameters[4], parameters[5]};
             String studentparam = String.join(" ",noOp);
             TriState toAdd = new TriState(studentparam,state);
             if(!studentRoster.contains(toAdd)) {
@@ -213,7 +213,7 @@ public class TuitionManager {
             return;
         }
         if (validStudent(parameters)) {
-            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+            String[] noOp = {parameters[1],parameters[2],parameters[3],parameters[4], parameters[5]};
             String studentparam = String.join(" ",noOp);
             NonResident toAdd = new NonResident(studentparam);
             if(!studentRoster.contains(toAdd)) {
@@ -241,7 +241,7 @@ public class TuitionManager {
             return;
         }
         if (validStudent(parameters)) {
-            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+            String[] noOp = {parameters[1],parameters[2],parameters[3],parameters[4], parameters[5]};
             String studentparam = String.join(" ",noOp);
             Resident toAdd = new Resident(studentparam);
             if(!studentRoster.contains(toAdd)) {
@@ -312,8 +312,7 @@ public class TuitionManager {
                         + parameters[3];
         System.out.println(student);
         Profile toChange = new Profile(student);
-        String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
-        String studentparam = String.join(" ",noOp);
+        String studentparam = student + " " + parameters[4];
         //Student stuObj = new Student(toChange);
         Resident stuObj = new Resident(student);
         if (studentRoster.contains(stuObj)) {
