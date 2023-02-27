@@ -1,4 +1,6 @@
 package roster;
+import java.util.Arrays;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.io.File;
 
@@ -11,11 +13,19 @@ import java.io.File;
  */
 public class TuitionManager {
     /**
+     * Global instance variable representing the roster object
+     */
+    Roster studentRoster = new Roster();
+    /**
+     * Global instance variable representing the enrollment object
+     */
+    Enrollment enrolledStudents = new Enrollment();
+
+    /**
      This method launches the Tuition Manager.
      */
     public void run() {
         Scanner intake = new Scanner(System.in);
-        Roster studentRoster = new Roster();
         String opCode = "init";
         System.out.println("Tuition manager running...");
 
@@ -26,27 +36,24 @@ public class TuitionManager {
             // ignore empty enters
             if (parameters.length > 0 && parameters[0] != "") {
                 opCode = parameters[0];
-                studentRoster = takeAction(studentRoster, parameters);
+                takeAction(parameters);
             }
         }
     }
 
     /**
      Private method, switches action based on the processed opcode.
-     * @param studentRoster Roster object containing student objects.
      * @param parameters Array of strings containing a breakdown of the
      *                   command to process.
      * @return An updated Roster object.
      */
     // MUST BE LESS THAN 50 LINES
-    private Roster takeAction(Roster studentRoster, String[] parameters) {
+    private void takeAction(String[] parameters) {
         String opCode = parameters[0];
         switch (opCode) {
             case "AR": // add resident
-                if (validStudent(parameters)) {
-                    studentRoster = addStudent(studentRoster, parameters);
-                }
-                break;
+                addResident(parameters);
+                break; /**
             case "AN": // add nonresident
                 if (validStudent(parameters)) {
                     studentRoster = addStudent(studentRoster, parameters);
@@ -66,7 +73,7 @@ public class TuitionManager {
                 if (validStudent(parameters)) {
                     studentRoster = removeStudent(studentRoster, parameters);
                 }
-                break;
+                break; */
             case "P": // print roster by last name
                 studentRoster.print();
                 break;
@@ -81,11 +88,11 @@ public class TuitionManager {
                 break;
             case "C": // change a students major
                 if (validStudent(parameters)) {
-                    studentRoster = changeMajor(studentRoster, parameters);
+                    changeMajor(parameters);
                 }
                 break;
             case "LS":
-                addFromFile(studentRoster);
+                addFromFile();
                 break;
             case "E": //enroll a student
                 System.out.println("Enroll student");
@@ -112,70 +119,115 @@ public class TuitionManager {
                 System.out.println(opCode + " is an invalid command!");
                 break;
         }
-        return studentRoster;
+    }
+
+    /**
+     Private method adds a Resident type student to the Roster object.
+     * @param parameters Array of strings containing a breakdown of the
+     *                   student to process.
+     */
+    private void addResident(String[] parameters) {
+        int NUMPARAMS = 6;
+        if (parameters.length != NUMPARAMS) {
+            System.out.println("Missing data in command line.");
+            return;
+        }
+        if (validStudent(parameters)) {
+            String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+            String studentparam = String.join(" ",noOp);
+            Resident toAdd = new Resident(studentparam);
+            if(!studentRoster.contains(toAdd)) {
+                studentRoster.add(toAdd);
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " added to the " + "roster.");
+            } else {
+                System.out.println(parameters[1] + " " + parameters[2]
+                        + " " + parameters[3] + " is already in the roster.");
+            }
+        }
     }
 
     /**
      Private method which reads input from studentList.txt and adds the
      students to the given roster argument.
-     * @param studentRoster Roster object containing student objects.
      * @return An updated Roster object.
      */
-    private Roster addFromFile(Roster studentRoster) {
+    private void addFromFile() {
         try {
             File studentList = new File("./src/roster/studentList.txt");
-            System.out.println(studentList.exists());
             Scanner intake = new Scanner(studentList);
+            String opCode = "init";
 
             while(intake.hasNextLine()) {
-                System.out.println(intake.nextLine());
+                String command = intake.nextLine();
+                System.out.println(command);
+                String[] parameters = command.split(",");
+                if (parameters.length > 0 && parameters[0] != "") {
+                    opCode = parameters[0];
+                    switch (opCode) {
+                        case "R":
+                            System.out.println("R");
+                            break;
+                        case "I":
+                            System.out.println("I");
+                            break;
+                        case "T":
+                            System.out.println("T");
+                            break;
+                        case "N":
+                            System.out.println("N");
+                            break;
+                    }
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getClass());
         }
-        return studentRoster;
+        return;
     }
 
     /**
      Private method which, give the parameters, changes the major of the
      specified student.
-     * @param studentRoster Roster object containing student objects.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
      * @return An updated Roster object.
      */
-    private Roster changeMajor(Roster studentRoster, String[] parameters) {
+    private void changeMajor(String[] parameters) {
         if (!validMajor(parameters[4])) {
-            return studentRoster;
+            return;
         }
         // create a profile and then student from that profile
         String student = parameters[1] + " " + parameters[2] + " "
                         + parameters[3];
         Profile toChange = new Profile(student);
-        Student stuObj = new Student(toChange);
+        String[] noOp = Arrays.copyOfRange(parameters,1,parameters.length);
+        String studentparam = String.join(" ",noOp);
+        //Student stuObj = new Student(toChange);
+        Resident stuObj = new Resident(studentparam);
         if (studentRoster.contains(stuObj)) {
             studentRoster.changeMajor(toChange, parameters[4]);
             System.out.println(student + " major changed to " + parameters[4]);
         } else {
             System.out.println(student + " is not in the roster.");
         }
-        return studentRoster;
+        return;
     }
 
     /**
      Private method which, given the parameters, makes a student obj and
      removes the student from the roster argument.
-     * @param studentRoster Roster object containing student objects.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
      * @return An updated Roster object.
      */
-    private Roster removeStudent(Roster studentRoster, String[] parameters) {
+    private void removeStudent(String[] parameters) {
         // create student using parameters with dummy major and credits
         String student =
                 parameters[1] + " " + parameters[2] + " "
                         + parameters[3] + " FAKE 50";
-        Student toRemove = new Student(student);
+        //Student toRemove = new Student(student);
+        Student toRemove = new Resident(student);
         if (studentRoster.contains(toRemove)) {
             studentRoster.remove(toRemove);
             System.out.println(parameters[1] + " " + parameters[2] + " "
@@ -184,37 +236,7 @@ public class TuitionManager {
             System.out.println(parameters[1] + " " + parameters[2] + " "
                     + parameters[3] + " is not in the roster.");
         }
-        return studentRoster;
-    }
-
-    /**
-     Private method which, given the parameters, makes a Student obj and adds
-     the student to the roster argument.
-     * @param studentRoster Roster object containing student objects.
-     * @param parameters Array of strings containing a breakdown of the
-     *                   student to process.
-     * @return An updated Roster object.
-     */
-    private Roster addStudent(Roster studentRoster, String[] parameters) {
-        int PROFILEINDEX = 5; // point of only having profile info
-        if (parameters.length < PROFILEINDEX) {
-            System.out.println("Insufficient parameters to add a student. ");
-            return studentRoster;
-        }
-        String student =
-                parameters[1] + " " + parameters[2] + " "
-                        + parameters[3] + " " + parameters[4] + " "
-                        + parameters[5];
-        Student toAdd = new Student(student);
-        if(!studentRoster.contains(toAdd)) {
-            studentRoster.add(toAdd);
-             System.out.println(parameters[1] + " " + parameters[2]
-             + " " + parameters[3] + " added to the " + "roster.");
-        } else {
-            System.out.println(parameters[1] + " " + parameters[2]
-                    + " " + parameters[3] + " is already in the roster.");
-        }
-        return studentRoster;
+        return;
     }
 
     /**
