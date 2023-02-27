@@ -61,12 +61,10 @@ public class TuitionManager {
                 break;
             case "AI": // add international student
                 addInternational(parameters, true);
-                break; /**
+                break;
             case "R": //remove student
-                if (validStudent(parameters)) {
-                    studentRoster = removeStudent(studentRoster, parameters);
-                }
-                break; */
+                removeStudent(parameters);
+                break;
             case "P": // print roster by last name
                 studentRoster.print();
                 break;
@@ -351,8 +349,6 @@ public class TuitionManager {
         String student =
                 parameters[1] + " " + parameters[2] + " "
                         + parameters[3] + " FAKE 50";
-        System.out.println(student);
-        //Student toRemove = new Student(student);
         Student toRemove = new Resident(student);
         if (studentRoster.contains(toRemove)) {
             studentRoster.remove(toRemove);
