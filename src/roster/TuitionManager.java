@@ -18,6 +18,7 @@ public class TuitionManager {
      * Global instance variable representing the enrollment object
      */
     Enrollment enrolledStudents = new Enrollment();
+    private static int SINGLE = 1;
 
     /**
      This method launches the Tuition Manager.
@@ -84,7 +85,7 @@ public class TuitionManager {
                 }
                 break;
             case "LS":
-                addFromFile();
+                addFromFile(parameters);
                 break;
             case "E": //enroll a student
                 System.out.println("Enroll student");
@@ -262,12 +263,11 @@ public class TuitionManager {
      students to the given roster argument.
      * @return An updated Roster object.
      */
-    private void addFromFile() {
+    private void addFromFile(String[] params) {
         try {
-            File studentList = new File("./src/roster/studentList.txt");
+            File studentList = getFile(params);
             Scanner intake = new Scanner(studentList);
             String opCode = "init";
-
             while(intake.hasNextLine()) {
                 String command = intake.nextLine();
                 String[] parameters = command.split(",");
@@ -294,6 +294,26 @@ public class TuitionManager {
             System.out.println(e.getClass());
         }
         return;
+    }
+
+    /**
+     Method returns a valid file given a file name with no path.
+     * @param parameters String array containing the op code and file name.
+     * @return Valid file with path for the given file name.
+     */
+    private File getFile(String[] parameters) {
+        File studentList = new File("./src/roster/studentList.txt");
+        if (parameters.length != SINGLE) {
+            File otherList = new File("./src/roster/" + parameters[1]);
+            File temp = new File(parameters[1]);
+            File list = new File(temp.getAbsolutePath());
+            if (list.isFile()) {
+                return list;
+            } else if (otherList.isFile()) {
+                return otherList;
+            }
+        }
+        return studentList;
     }
 
     /**
