@@ -19,6 +19,11 @@ public class Resident extends Student {
         scholarship = INITVALUE;
     }
 
+    public Resident(Profile studentProf) {
+        super(studentProf);
+        scholarship = INITVALUE;
+    }
+
     /**
      Assigns a scholarship amount to a Student Resident.
      * @param scholarshipValue integer value of how much scholarship to assign.

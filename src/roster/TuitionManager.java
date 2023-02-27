@@ -80,9 +80,7 @@ public class TuitionManager {
                 studentRoster.print(parameters[1]);
                 break;
             case "C": // change a students major
-                if (validStudent(parameters)) {
-                    changeMajor(parameters);
-                }
+                changeMajor(parameters);
                 break;
             case "LS":
                 addFromFile(parameters);
@@ -324,17 +322,14 @@ public class TuitionManager {
      * @return An updated Roster object.
      */
     private void changeMajor(String[] parameters) {
-        if (!validMajor(parameters[4])) {
+        if (!validStudent(parameters) || !validMajor(parameters[4])) {
             return;
         }
         // create a profile and then student from that profile
         String student = parameters[1] + " " + parameters[2] + " "
                         + parameters[3];
-        System.out.println(student);
         Profile toChange = new Profile(student);
-        String studentparam = student + " " + parameters[4];
-        //Student stuObj = new Student(toChange);
-        Resident stuObj = new Resident(student);
+        Resident stuObj = new Resident(toChange);
         if (studentRoster.contains(stuObj)) {
             studentRoster.changeMajor(toChange, parameters[4]);
             System.out.println(student + " major changed to " + parameters[4]);
