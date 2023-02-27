@@ -303,6 +303,8 @@ public abstract class Student implements Comparable<Student> {
 
     public abstract boolean isResident();
 
+    public abstract String returnType();
+
     /**
      Testbed main() to test the functionality of the Student class when creating
      Student objects. Method will test valid and invalid arguments.

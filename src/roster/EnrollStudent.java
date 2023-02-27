@@ -17,6 +17,7 @@ public class EnrollStudent {
                 profileStr = enrollInput.substring(0, ind);
                 // Expect credits after space following profile, goes to end
                 creditStr = enrollInput.substring(ind+1);
+                break;
             }
         }
         profile = new Profile(profileStr);
