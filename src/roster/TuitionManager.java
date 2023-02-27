@@ -93,7 +93,7 @@ public class TuitionManager {
                 System.out.println("Award a scholarship");
                 break;
             case "PE": // print roll list
-                System.out.println("Print roll list");
+                enrolledStudents.print();
                 break;
             case "PT": // print roll list with tuition
                 System.out.println("Print roll list with tuition");
@@ -110,9 +110,19 @@ public class TuitionManager {
         }
     }
 
+    /**
+     Method enrolls a student to the Enroll object. Student must be in the
+     Roster object to be qualified to enroll.
+     * @param parameters String array of student's details.
+     */
     private void enrollStudent(String[] parameters) {
         if (validEnroll(parameters)) {
-            System.out.println("valid enroll");
+            String toAdd = parameters[1] + " " + parameters[2] + " "
+                    + parameters[3];
+            EnrollStudent student = new EnrollStudent(toAdd+ " " + parameters[4]);
+            enrolledStudents.add(student);
+            System.out.println(toAdd + " enrolled " + parameters[4] + " " +
+                    "credits");
         }
     }
 
@@ -134,8 +144,21 @@ public class TuitionManager {
                 return false;
             }
         }
-        // if invalid credits
-        // if not in roster
+        int CRDSTOENROLL = Integer.parseInt(parameters[parameters.length - SINGLE]);
+        String toFind = parameters[1] + " " + parameters[2] + " " + parameters[3];
+        Profile tempProfile = new Profile(toFind);
+        Student tempStudent = new Resident(tempProfile);
+        Student student = studentRoster.getStudent(tempStudent);
+        if (student == null || !studentRoster.contains(student)){
+            System.out.println("Cannot enroll: " + toFind + " is not in the " +
+                    "roster.");
+            return false;
+        }
+        if (!student.isValid(CRDSTOENROLL)) {
+            System.out.println("(" + student.returnType() + ") "
+                    + parameters[parameters.length - SINGLE] + ": invalid credit hours.");
+            return false;
+        }
         return true;
     }
 
