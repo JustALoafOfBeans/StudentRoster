@@ -84,7 +84,7 @@ public class TuitionManager {
                 addFromFile(parameters);
                 break;
             case "E": //enroll a student
-                System.out.println("Enroll student");
+                enrollStudent(parameters);
                 break;
             case "D": // drop a student from the roll list
                 System.out.println("Drop student");
@@ -108,6 +108,35 @@ public class TuitionManager {
                 System.out.println(opCode + " is an invalid command!");
                 break;
         }
+    }
+
+    private void enrollStudent(String[] parameters) {
+        if (validEnroll(parameters)) {
+            System.out.println("valid enroll");
+        }
+    }
+
+    /**
+     Method verifies if a Student can be enrolled to the enroll list.
+     * @param parameters String array detailing the students details.
+     * @return true if the student can be added to enroll list, false otherwise.
+     */
+    private boolean validEnroll(String[] parameters) {
+        int NUMPARAMS = 5;
+        if (parameters.length != NUMPARAMS) {
+            System.out.println("Missing data in line command.");
+            return false;
+        }
+        char[] digits = parameters[parameters.length - SINGLE].toCharArray();
+        for (int i = 0; i < digits.length; i++) {
+            if (!Character.isDigit(digits[i])) {
+                System.out.println("Credits enrolled is not an integer.");
+                return false;
+            }
+        }
+        // if invalid credits
+        // if not in roster
+        return true;
     }
 
     /**
