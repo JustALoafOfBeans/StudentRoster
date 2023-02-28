@@ -185,4 +185,46 @@ public class Enrollment {
         }
         return enrollStudents[foundIndex];
     }
+
+    /**
+     Method ends the semester and adds the enrolled credits to credits
+     completed, printing all students with 120 or more credits.
+     * @param studentRoster Roster object containing all students
+     */
+    public void findGraduates(Roster studentRoster) {
+        int GRADCREDITS = 120;
+        System.out.println("** list of students eligible for graduation **");
+        for (int ind = 0; ind < size; ind++) {
+            String studentDetails = enrollStudents[ind].toString();
+            String profile[] = studentDetails.split(": ");
+
+            Profile tempProfile = new Profile(profile[0]);
+            Student tempStudent = new Resident(tempProfile);
+            Student studentR = studentRoster.getStudent(tempStudent);
+            EnrollStudent studentE = new EnrollStudent(profile[0] + " " + profile[2]);
+
+            if (studentR.getCreditCompleted() + studentE.getCredits() >= GRADCREDITS) {
+                int credits = studentR.getCreditCompleted() + studentE.getCredits();
+                String details = studentR.toString();
+                String[] studentName = details.split(": ");
+                String[] studentStatus = studentName[1].split(" ");
+                String strStudent = studentName[0] + ": " + credits + " ";
+                strStudent += studentStatus[1] + " ";
+
+                if (studentR.isResident()) {
+                    strStudent += "(resident)";
+                } else {
+                    strStudent += "(non-resident) ";
+                    if (studentR.returnType().equals("International Student")) {
+                        strStudent += "(international)";
+                    } else {
+                        String needState = studentR.returnType();
+                        String[] state = needState.split(" ");
+                        strStudent += "(tri-state:" + state[1] + ")";
+                    }
+                }
+                System.out.println(strStudent);
+            }
+        }
+    }
 }

@@ -77,7 +77,7 @@ public class TuitionManager {
                     awardScholarship(parameters);
                     break;
                 case "SE": // end semester
-                    System.out.println("End semester.");
+                    endSemester();
                     break;
                 case "Q": // end the program
                     System.out.println("Tuition Manager terminated.");
@@ -87,6 +87,14 @@ public class TuitionManager {
                     break;
             }
         }
+    }
+
+    /**
+     Method accesses Enrollment and runs findGraduates().
+     */
+    private void endSemester() {
+        System.out.println("Credit completed has been updated.");
+        enrolledStudents.findGraduates(studentRoster);
     }
 
     /**
