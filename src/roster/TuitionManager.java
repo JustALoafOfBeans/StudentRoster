@@ -93,13 +93,14 @@ public class TuitionManager {
         int NUMPARAMS = 4;
         if (!validStudent(parameters)) {
             return;
-        } else if (parameters.length <= NUMPARAMS) {
+        } else if (parameters.length < NUMPARAMS) {
             System.out.println("Missing data in line command.");
+            return;
         }
-        // create a profile and then student from that profile
+        // create a dunmmy EnrollStudent for search
         String student = parameters[1] + " " + parameters[2] + " "
                 + parameters[3];
-        EnrollStudent stuObj = new EnrollStudent(student);
+        EnrollStudent stuObj = new EnrollStudent(student + " 12");
         if (enrolledStudents.contains(stuObj)) {
             enrolledStudents.remove(stuObj);
             System.out.println(student + " dropped.");
