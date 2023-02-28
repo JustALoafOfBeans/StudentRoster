@@ -1,9 +1,19 @@
 package roster;
 
 public class EnrollStudent {
+    /**
+     * Profile object for student's name and DOB
+     */
     private Profile profile;
+    /**
+     * Number of credits that student has completed
+     */
     private int creditsEnrolled;
 
+    /**
+     Constructor for EnrollStudent object
+     * @param enrollInput student profile and credits as string
+     */
     public EnrollStudent(String enrollInput) { // Constructor
         // todo check input, takes in String eg. "Emma Miller 2/28/2003 8"
         // Expect profile to conclude just before 3rd space
@@ -24,6 +34,11 @@ public class EnrollStudent {
         creditsEnrolled = Integer.parseInt(creditStr);
     }
 
+    /**
+     Converts student to string for profile and credits
+     * Overrides toString() from Object class
+     * @return string in form "[PROFILE]: credits enrolled: [CREDITS]"
+     */
     @Override
     public String toString() {
         // Format: [profile as FIRST LAST DOB]: credits enrolled: [credits]
@@ -33,20 +48,27 @@ public class EnrollStudent {
         return strEnroll;
     }
 
+    /**
+     Returns profile of current student
+     * @return profile of EnrollStudent on which it is called
+     */
     public Profile getProfile() {
         return profile;
     }
 
+    /**
+     Returns credits current student currently enrolled in
+     * @return current credit enrollment
+     */
     public int getCredits() {
         return creditsEnrolled;
     }
 
+    /**
+     Changes credit for student in question
+     * @param newCredits new credit load to set to
+     */
     public void setCredits(int newCredits) {
         creditsEnrolled = newCredits;
-    }
-
-    public static void main (String[] args) {
-        EnrollStudent testEnroll = new EnrollStudent("Emma Miller 2/28/2003 8");
-        System.out.println(testEnroll.toString());
     }
 }
