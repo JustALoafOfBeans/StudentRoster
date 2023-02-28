@@ -89,6 +89,10 @@ public class TuitionManager {
         }
     }
 
+    /**
+     Method removes a Student from the enroll list object.
+     * @param parameters String array of the student's details.
+     */
     private void dropStudent(String[] parameters) {
         int NUMPARAMS = 4;
         if (!validStudent(parameters)) {
@@ -107,7 +111,6 @@ public class TuitionManager {
         } else {
             System.out.println(student + " is not enrolled.");
         }
-        return;
     }
 
     /**
