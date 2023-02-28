@@ -6,11 +6,18 @@ public class Enrollment {
 
     private static final int STARTSIZE = 0;
 
+    /**
+     Constructor for Enrollment class
+     */
     public Enrollment() {
         size = STARTSIZE;
         enrollStudents = new EnrollStudent[size];
     }
 
+    /**
+     Adds a new student to the enrollStudents array
+     * @param enrollStudent new student to add
+     */
     public void add(EnrollStudent enrollStudent) {
         // Check if student in roster (if not, print error) // todo allowed to print here??
         // Check to see if student already enrolled
@@ -27,6 +34,9 @@ public class Enrollment {
         }
     }
 
+    /**
+     Method that increases capacity of enrollStudents array
+     */
     private void grow () {
         // Increase array capacity by 4
         EnrollStudent[] enrollStudentsNew = new EnrollStudent[enrollStudents.length + 4];
@@ -36,6 +46,10 @@ public class Enrollment {
         enrollStudents = enrollStudentsNew;
     }
 
+    /**
+     Removes a specified student from the enrollment list
+     * @param enrollStudent target student to remove
+     */
     public void remove(EnrollStudent enrollStudent) {
         int remIndex = find(enrollStudent); // Index to remove at
         if (remIndex < 0) { // Not in enrollment, nothing to remove
@@ -53,7 +67,12 @@ public class Enrollment {
         }
     }
 
-    // Helper method for finding student index, used by add(), remove(), and find()
+    /**
+     Helper method that finds target student
+     * Used by add(), remove(), and find() methods
+     * @param enrollStudent target student
+     * @return index at which target student found, or -1 if not found
+     */
     private int find(EnrollStudent enrollStudent) {
         Profile seekProf = enrollStudent.getProfile(); // Profile of enrollStudent sought
         for (int ind = 0; ind < size; ind++) {
@@ -65,12 +84,20 @@ public class Enrollment {
         return -1; // Not found
     }
 
+    /**
+     Method that checks if a target student is contained in the enrollment list
+     * @param enrollStudent target student that is being checked for
+     * @return true if found in array, false if not
+     */
     public boolean contains(EnrollStudent enrollStudent) {
         int containsIndex = find(enrollStudent);
         // Returns "true" if in enrollment at some index >=0 containsIndex
         return (containsIndex >= 0);
     }
 
+    /**
+     Method that prints out enrollment in order of addition
+     */
     public void print() {
         if (size == STARTSIZE) {
             System.out.println("Enrollment is empty!");
@@ -83,6 +110,9 @@ public class Enrollment {
         System.out.println("* end of enrollment *");
     }
 
+    /**
+     Method that prints out enrollment as well as each student's tuition
+     */
     public void printTuition(Roster rost) {
         if (size == STARTSIZE) {
             System.out.println("Enrollment is empty!");
