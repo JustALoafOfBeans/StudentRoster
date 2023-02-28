@@ -122,17 +122,20 @@ public class Enrollment {
      Method that prints out enrollment as well as each student's tuition
      */
     public void printTuition(Roster rost) {
-        if (size == STARTSIZE) {
+        // Get array of roster students
+        Student[] rostArr = rost.getStudentArr();
+        if (rostArr.length == STARTSIZE) {
+            System.out.println("Student roster is empty!");
+            return;
+        } else if (size == STARTSIZE) {
             System.out.println("Enrollment is empty!");
             return;
         }
-        System.out.println("** Tuition due **");
-        // Get array of roster students
-        Student[] rostArr = rost.getStudentArr();
         Profile enrollProf;
         int profIndex;
         String tuitionStr;
         double tuitionDouble;
+        System.out.println("** Tuition due **");
         // For each student in enrollArr, find profile in Roster and print details
         for (int eInd = 0; eInd < size; eInd++) {
             enrollProf = enrollStudents[eInd].getProfile();
