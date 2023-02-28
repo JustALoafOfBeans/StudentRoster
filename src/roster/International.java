@@ -1,5 +1,11 @@
 package roster;
 
+/**
+ The International class extends NonResident and provides methods to create
+ subtypes of Student objects from a String or Profile object and for
+ manipulating the Student fields.
+ @author Victoria Chen, Bridget Zhang
+ */
 public class International extends NonResident {
     /**
      * Boolean that is TRUE if student is studying abroad and FALSE if not

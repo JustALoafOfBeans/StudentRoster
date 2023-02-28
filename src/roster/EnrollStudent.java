@@ -1,5 +1,10 @@
 package roster;
 
+/**
+ The EnrollStudent class provides methods to create EnrollStudent objects
+ from a String and for manipulating the EnrollStudent fields.
+ @author Bridget Zhang
+ */
 public class EnrollStudent {
     /**
      * Profile object for student's name and DOB

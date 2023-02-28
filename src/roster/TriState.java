@@ -1,5 +1,11 @@
 package roster;
 
+/**
+ The TriState class is a subclass of NonResident which provides methods to
+ create TriState objects using no parameters and for manipulating the TriState
+ fields.
+ @author Victoria Chen, Bridget Zhang
+ */
 public class TriState extends NonResident {
 
     /**

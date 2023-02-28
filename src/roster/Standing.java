@@ -25,8 +25,15 @@ public enum Standing {
      */
     SENIOR("Senior");
 
+    /**
+     * String representing the title assigned to each enum
+     */
     public final String title;
 
+    /**
+     This method assigns the enum its respective value
+     * @param title String value
+     */
     Standing (String title) {
         this.title = title;
     }

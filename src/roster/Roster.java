@@ -170,7 +170,6 @@ public class Roster {
             System.out.println("School doesn't exist: " + targetSchool);
             return;
         }
-
         // Sort by profile
         sortProfile();
         // Print if student found in school

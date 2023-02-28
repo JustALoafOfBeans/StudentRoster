@@ -4,14 +4,21 @@ package roster;
  The Resident class is a subclass of Student which provides methods to create
  Resident objects using no parameters and for manipulating the Resident
  fields.
- @author Victoria Chen
+ @author Victoria Chen, Bridget Zhang
  */
 public class Resident extends Student {
+    /**
+     * Integer representing how much a student has in scholarships.
+     */
     private int scholarship;
+    /**
+     * Integer representing an initial value of 0.
+     */
     private int INITVALUE = 0;
 
     /**
-     Constructs a new Student Resident initialized with 0 scholarship.
+     Constructs a new Student Resident initialized with 0 scholarship and
+     String parameter.
      */
     public Resident(String studentparam) {
         // todo check and correct constructor
@@ -19,6 +26,11 @@ public class Resident extends Student {
         scholarship = INITVALUE;
     }
 
+    /**
+     Constructs a new Student Resident initialized with 0 scholarship and
+     profile parameter.
+     * @param studentProf Profile for the Resident Student object.
+     */
     public Resident(Profile studentProf) {
         super(studentProf);
         scholarship = INITVALUE;

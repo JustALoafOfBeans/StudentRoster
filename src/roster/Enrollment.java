@@ -1,5 +1,11 @@
 package roster;
 
+/**
+ The Enrollment class provides methods to create Enrollment objects with no
+ parameters and for manipulating the Enrollment fields. An Enrollment object
+ holds an array-equivalent of EnrollStudent objects.
+ @author Bridget Zhang
+ */
 public class Enrollment {
     /**
      * Array of students in enrollment

@@ -299,37 +299,23 @@ public abstract class Student implements Comparable<Student> {
         return true;
     }
 
+    /**
+     Abstract implementation of calculating how much a student owes in tuition.
+     * @param creditsEnrolled Integer value of how many credits a student has.
+     * @return Double value. See abstractions for more details.
+     */
     public abstract double tuitionDue(int creditsEnrolled);
 
+    /**
+     Abstract implementation of a Student's residential status.
+     * @return Boolean value. See abstractions for more details.
+     */
     public abstract boolean isResident();
 
+    /**
+     Abstract implementation of a Student's type.
+     * @return String value. See abstractions for more details.
+     */
     public abstract String returnType();
 
-    /**
-     Testbed main() to test the functionality of the Student class when creating
-     Student objects. Method will test valid and invalid arguments.
-     * @param args default String array of multiple arguments. Not used.
-     */
-    public static void main(String[] args) {
-        // Test dates
-        /*
-        //todo can not have objects of abstract class
-        Student base = new Student("John Doe 9/2/2002 BAIT 10");
-        Student nameLess = new Student("Ivy Doe 9/2/2002 BAIT 10"); // Test 1
-        Student nameGreater = new Student("John Evans 9/2/2002 BAIT 10"); // Test 2
-        Student same = new Student("John Doe 9/2/2002 BAIT 10"); // Test 3
-        Student nameCase = new Student("jOhN DOe 9/2/2002 BAIT 10"); // Test 4
-        Student majGreater = new Student("John Doe 9/2/2002 EE 10"); // Test 5
-        Student majCase = new Student("John Doe 9/2/2002 bAIt 10"); // Test 6
-        Student credMore = new Student("John Doe 9/2/2002 BAIT 11"); // Test 7
-
-        System.out.println(nameLess.compareTo(base)); // Test 1, expect -1
-        System.out.println(nameGreater.compareTo(base)); // Test 2, expect 1
-        System.out.println(same.compareTo(base)); // Test 3, expect 0
-        System.out.println(nameCase.compareTo(base)); // Test 4, expect 0
-        System.out.println(majGreater.compareTo(base)); // Test 5, expect 1
-        System.out.println(majCase.compareTo(base)); // Test 6, expect 0
-        System.out.println(credMore.compareTo(base)); // Test 7, expect 1
-         */
-    }
 }
