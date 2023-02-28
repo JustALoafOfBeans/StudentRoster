@@ -22,6 +22,10 @@ public class TuitionManager {
      * Integer for a single digit adjustments
      */
     private static int SINGLE = 1;
+    /**
+     * Integer for an initial digit adjustments
+     */
+    private static int INIT = 0;
 
     /**
      This method launches the Tuition Manager.
@@ -36,7 +40,7 @@ public class TuitionManager {
             // split on white space
             String[] parameters = command.split("\\s+");
             // ignore empty enters
-            if (parameters.length > 0 && parameters[0] != "") {
+            if (parameters.length > INIT && parameters[0] != "") {
                 opCode = parameters[0];
                 takeAction(parameters);
             }
@@ -49,12 +53,11 @@ public class TuitionManager {
      *                   command to process.
      * @return An updated Roster object.
      */
-    // MUST BE LESS THAN 50 LINES
     private void takeAction(String[] parameters) {
         String opCode = parameters[0];
-        if (opCode.charAt(0) == 'A') {
+        if (opCode.charAt(INIT) == 'A') {
             addCommands(parameters);
-        } else if (opCode.charAt(0) == 'P') {
+        } else if (opCode.charAt(INIT) == 'P') {
             printCommands(parameters);
         } else {
             switch (opCode) {
@@ -298,7 +301,7 @@ public class TuitionManager {
         int NUMPARAMS = 6;
         int WITHSTATUS = 7;
         boolean studyAbroad = false;
-        int adjust = 0;
+        int adjust = INIT;
 
         if (parameters.length < NUMPARAMS && prints) {
             System.out.println("Missing data in command line.");
@@ -369,8 +372,7 @@ public class TuitionManager {
      * @return true if state is New York (NY) or Connecticut (CT).
      */
     private boolean validState(String state) {
-        if (state.toUpperCase().equals("NY") || state.toUpperCase().equals(
-                "CT")) {
+        if (state.toUpperCase().equals("NY") || state.toUpperCase().equals("CT")) {
             return true;
         }
         System.out.println(state + ": Invalid state code.");
@@ -446,7 +448,7 @@ public class TuitionManager {
             while(intake.hasNextLine()) {
                 String command = intake.nextLine();
                 String[] parameters = command.split(",");
-                if (parameters.length > 0 && parameters[0] != "") {
+                if (parameters.length > INIT && parameters[0] != "") {
                     opCode = parameters[0];
                     switch (opCode) {
                         case "R":
@@ -599,7 +601,7 @@ public class TuitionManager {
     private boolean validCredits(String credits) {
         char[] digits = credits.toCharArray();
         for (int i = 0; i < digits.length; i++) {
-            if (i == 0 && digits[0] == '-') {
+            if (i == INIT && digits[0] == '-') {
                 continue; // exception made for negative values
             } else if (!Character.isDigit(digits[i])) {
                 System.out.println("Credits completed invalid: " +
@@ -607,7 +609,7 @@ public class TuitionManager {
                 return false;
             }
         }
-        if(Integer.parseInt(credits) < 0) {
+        if(Integer.parseInt(credits) < INIT) {
             System.out.println("Credits completed invalid: " +
                     "cannot be negative!");
             return false;
