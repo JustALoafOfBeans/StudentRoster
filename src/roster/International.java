@@ -18,11 +18,11 @@ public class International extends NonResident {
     }
 
     public double tuitionDue(int creditsEnrolled) { // From Abstract Student
-        double interSum = super.tuitionDue(getCreditCompleted());
+        double interSum = super.tuitionDue(creditsEnrolled);
         if (isStudyAbroad) {
-            interSum -= Tuition.FNRTUITION.fee; // International students don't pay tuition
-            // if
-            // abroad
+            interSum = Tuition.FUNI.fee + Tuition.FIHEALTH.fee;
+        } else {
+            interSum += Tuition.FIHEALTH.fee;
         }
         return interSum;
     }
