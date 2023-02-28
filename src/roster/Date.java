@@ -212,29 +212,4 @@ public class Date implements Comparable<Date> {
         }
         return AFTER;
     }
-
-    /**
-     Testbed main() to test the functionality of the Date class when creating
-     Date objects. Method will test valid and invalid arguments.
-     * @param args default String array of multiple arguments. Not used.
-     */
-    public static void main(String[] args) {
-        // invalid dates
-        String[] invalid = new String[] {"10/24/2001", "2/29/2004", "5/18" +
-                "/2030", "2/29/2003", "4/31/2003", "13/31/2003", "3/32/2003",
-                "-1/31/2003", };
-        for (int i = 0; i < invalid.length; i++) {
-            Date dob = new Date(invalid[i]);
-            if (!dob.isValid()) { //valid DoB
-                System.out.println("DOB invalid: " + dob + " not a valid calendar "
-                        + "date!");
-            } else if (!dob.checkIfSixteen()) { // over 16 years old
-                System.out.println("DOB invalid: " + dob
-                        + " younger than 16 years old.");
-            } else {
-                System.out.println(dob + " is a valid date.");
-            }
-        }
-    }
-
 }
