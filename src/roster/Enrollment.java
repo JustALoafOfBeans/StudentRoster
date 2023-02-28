@@ -1,9 +1,17 @@
 package roster;
 
 public class Enrollment {
+    /**
+     * Array of students in enrollment
+     */
     private EnrollStudent[] enrollStudents;
+    /**
+     * Number of students currently enrolled
+     */
     private int size;
-
+    /**
+     * Start size for enrollment array
+     */
     private static final int STARTSIZE = 0;
 
     /**
