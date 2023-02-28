@@ -18,6 +18,9 @@ public class TuitionManager {
      * Global instance variable representing the enrollment object
      */
     Enrollment enrolledStudents = new Enrollment();
+    /**
+     * Integer for a single digit adjustments
+     */
     private static int SINGLE = 1;
 
     /**
