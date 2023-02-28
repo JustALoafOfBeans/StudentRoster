@@ -17,8 +17,8 @@ public class Resident extends Student {
     private int INITVALUE = 0;
 
     /**
-     Constructs a new Student Resident initialized with 0 scholarship and
-     String parameter.
+     Constructs a new Student Resident initialized with 0 scholarship.
+     * @param studentparam string that creates Student super
      */
     public Resident(String studentparam) {
         // todo check and correct constructor
