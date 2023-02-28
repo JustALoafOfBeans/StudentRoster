@@ -7,11 +7,23 @@ package roster;
  @author Victoria Chen, Bridget Zhang
  */
 public class NonResident extends Student {
-
+    /**
+     * Initial value for tuition
+     */
     private int INITVALUE = 0;
+    /**
+     * Minimum credits a student can take
+     */
     private int MINCREDS = 3;
+    /**
+     * Maximum credits a student can take
+     */
     private int MAXCREDS = 24;
 
+    /**
+     Constructor for NonResident object
+     @param studentParam string for student constructor in FIRST LAST DOB format
+     */
     public NonResident(String studentParam) { // NonResident constructor, using Student
         // todo check constructor, should have no additional instance vars
         super(studentParam);

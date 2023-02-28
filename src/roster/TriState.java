@@ -2,18 +2,35 @@ package roster;
 
 public class TriState extends NonResident {
 
+    /**
+     * String that refers to state that TriState student from
+     */
     private String state;
 
+    /**
+     Constructor for TriState object
+     * @param studentParam student constructor string in form FIRST LAST DOB
+     * @param studentState state that student is from
+     */
     public TriState(String studentParam, String studentState) { // TriState constructor, using Student
         // todo this constructor too
         super(studentParam);
         state = studentState;
     }
 
+    /**
+     Method that returns number of credit that student has completed
+     * @return number of credits completed
+     */
     public int getCreditCompleted() {
         return super.getCreditCompleted();
     }
 
+    /**
+     Method that returns the amount of tuition that student must pay
+     * @param creditsEnrolled number of credits currently enrolled in
+     * @return amount for tuition in DOLLARS.CENTS
+     */
     public double tuitionDue(int creditsEnrolled) { // From Abstract Student
         int PARTTTIME = 12;
         double tristateSum = super.tuitionDue(creditsEnrolled);
