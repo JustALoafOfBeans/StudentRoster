@@ -41,8 +41,13 @@ public abstract class Student implements Comparable<Student> {
      * Difference from upper to lower case ASCII values for conversion
      */
     private static final int ASCIICASEDIFF = 32;
-
+    /**
+     * Minimum credits that a student can take
+     */
     private int MINCREDS = 3;
+    /**
+     * Maximum credits that a student can take
+     */
     private int MAXCREDS = 24;
 
     /**

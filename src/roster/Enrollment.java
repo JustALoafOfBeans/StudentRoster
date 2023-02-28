@@ -126,6 +126,7 @@ public class Enrollment {
 
     /**
      Method that prints out enrollment as well as each student's tuition
+     * @param rost uses roster of students to get profiles
      */
     public void printTuition(Roster rost) {
         // Get array of roster students
@@ -163,6 +164,7 @@ public class Enrollment {
     /**
      Method to find the student in the roster
      * @param profile profile that should be found and matched
+     * @param roster list of students in roster
      * @return index in roster where student with profile is located, or NOT_FOUND = -1 if not found
      */
     private int findProfile (Profile profile, Student[] roster) {

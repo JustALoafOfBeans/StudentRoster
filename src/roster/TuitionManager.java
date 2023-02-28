@@ -51,7 +51,6 @@ public class TuitionManager {
      Private method, switches action based on the processed opcode.
      * @param parameters Array of strings containing a breakdown of the
      *                   command to process.
-     * @return An updated Roster object.
      */
     private void takeAction(String[] parameters) {
         String opCode = parameters[0];
@@ -235,7 +234,7 @@ public class TuitionManager {
 
     /**
      Helper method to clump together print commands.
-     * @param parameters
+     * @param parameters String parameters for new student
      */
     private void printCommands(String[] parameters) {
         String opCode = parameters[0];
@@ -260,7 +259,7 @@ public class TuitionManager {
 
     /**
      Helper method to clump together add commands.
-     * @param parameters
+     * @param parameters String parameters for new student
      */
     private void addCommands(String[] parameters) {
         String opCode = parameters[0];
@@ -336,6 +335,7 @@ public class TuitionManager {
      Private method adds a International type student to the Roster object.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
+     * @param prints Boolean if the method should print out error messages.
      */
     private void addInternational(String[] parameters, boolean prints) {
         int NUMPARAMS = 6;
@@ -374,6 +374,7 @@ public class TuitionManager {
      Private method adds a TriState type student to the Roster object.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
+     * @param prints Boolean if the method should print out error messages.
      */
     private void addTristate(String[] parameters, boolean prints) {
         int NUMPARAMS = 7;
@@ -423,6 +424,7 @@ public class TuitionManager {
      Private method adds a NonResident type student to the Roster object.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
+     * @param prints Boolean if the method should print out error messages.
      */
     private void addNonResident(String[] parameters, boolean prints) {
         int NUMPARAMS = 6;
@@ -451,6 +453,7 @@ public class TuitionManager {
      Private method adds a Resident type student to the Roster object.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
+     * @param prints Boolean if the method should print out error messages.
      */
     private void addResident(String[] parameters, boolean prints) {
         int NUMPARAMS = 6;
@@ -478,7 +481,7 @@ public class TuitionManager {
     /**
      Private method which reads input from studentList.txt and adds the
      students to the given roster argument.
-     * @return An updated Roster object.
+     @param params Input string parameters for new student
      */
     private void addFromFile(String[] params) {
         try {
@@ -538,7 +541,6 @@ public class TuitionManager {
      specified student.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
-     * @return An updated Roster object.
      */
     private void changeMajor(String[] parameters) {
         if (!validStudent(parameters) || !validMajor(parameters[4])) {
@@ -563,7 +565,6 @@ public class TuitionManager {
      removes the student from the roster argument.
      * @param parameters Array of strings containing a breakdown of the
      *                   student to process.
-     * @return An updated Roster object.
      */
     private void removeStudent(String[] parameters) {
         // create student using parameters with dummy major and credits
