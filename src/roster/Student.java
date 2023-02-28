@@ -217,6 +217,7 @@ public abstract class Student implements Comparable<Student> {
 
     /**
      Updates a students credits.
+     @param credits Updated credit amount
      */
     public void updateCreditCompleted(int credits) {
         creditCompleted = credits;
