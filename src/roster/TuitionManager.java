@@ -96,11 +96,51 @@ public class TuitionManager {
     }
 
     /**
-     Method accesses Enrollment and runs findGraduates().
+     Method ends the semester and adds the enrolled credits to credits
+     completed.
      */
     private void endSemester() {
+        int credsComplete = INIT;
+        int GRADCREDITS = 120;
         System.out.println("Credit completed has been updated.");
-        enrolledStudents.findGraduates(studentRoster);
+        System.out.println("** list of students eligible for graduation **");
+        Profile[] students = enrolledStudents.getGraduates();
+        for (int ind = INIT; ind < students.length; ind++) {
+            Profile tempProfile = students[ind];
+            Student tempStudent = new Resident(tempProfile);
+            Student studentR = studentRoster.getStudent(tempStudent);
+            EnrollStudent stuObj = new EnrollStudent(students[ind] + " 12");
+            EnrollStudent studentE = enrolledStudents.getStudent(stuObj);
+
+            credsComplete = studentR.getCreditCompleted() + studentE.getCredits();
+
+            studentR.updateCreditCompleted(credsComplete);
+            if (credsComplete >= GRADCREDITS) {
+                printGrad(studentR);
+            }
+        }
+    }
+
+    /**
+     Helper method which prints the graduate students in the proper format.
+     * @param studentR Student object. The student to be printed.
+     */
+    private void printGrad(Student studentR) {
+        String strStudent = studentR.toString() + " ";
+
+        if (studentR.isResident()) {
+            strStudent += "(resident)";
+        } else {
+            strStudent += "(non-resident) ";
+            if (studentR.returnType().equals("International Student")) {
+                strStudent += "(international)";
+            } else if (studentR.returnType().contains("state")) {
+                String needState = studentR.returnType();
+                String[] state = needState.split(" ");
+                strStudent += "(tri-state:" + state[1] + ")";
+            }
+        }
+        System.out.println(strStudent);
     }
 
     /**

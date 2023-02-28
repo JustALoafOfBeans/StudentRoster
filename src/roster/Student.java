@@ -211,6 +211,13 @@ public abstract class Student implements Comparable<Student> {
     }
 
     /**
+     Updates a students credits.
+     */
+    public void updateCreditCompleted(int credits) {
+        creditCompleted = credits;
+    }
+
+    /**
      Helper method that returns standing based on credits completed
      * @return value of Standing enum
      */
