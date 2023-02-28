@@ -72,12 +72,23 @@ public class Enrollment {
     }
 
     public void print() {
+        if (size == STARTSIZE) {
+            System.out.println("Enrollment is empty!");
+            return;
+        }
+        System.out.println("** Enrollment **");
         for (int ind = 0; ind < size; ind++) {
             System.out.println(enrollStudents[ind].toString());
         }
+        System.out.println("* end of enrollment *");
     }
 
     public void printTuition(Roster rost) {
+        if (size == STARTSIZE) {
+            System.out.println("Enrollment is empty!");
+            return;
+        }
+        System.out.println("** Tuition due **");
         // Get array of roster students
         Student[] rostArr = rost.getStudentArr();
         Profile enrollProf;
@@ -99,6 +110,7 @@ public class Enrollment {
 
             System.out.println(tuitionStr);
         }
+        System.out.println("* end of tuition due *");
     }
 
     /**
