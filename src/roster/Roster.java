@@ -329,6 +329,10 @@ public class Roster {
         roster[indY] = swapTemp;
     }
 
+    /**
+     Returns array of students in roster
+     @return array of students
+     */
     public Student[] getStudentArr() {
         return roster;
     }

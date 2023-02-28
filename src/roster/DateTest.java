@@ -2,7 +2,15 @@ package roster;
 
 import static org.junit.Assert.*;
 
+/**
+ Test class with cases to test the isValid() function of Date class
+ Includes 2 valid and 7 invalid cases from Project 1
+ @author Victoria Chen, Bridget Zhang
+ */
 public class DateTest {
+    /*
+    * Should return FALSE for any February with >28 days that is not a leap year
+    */
     @org.junit.Test
     public void test_isValid_feb_leap() {
         Date nonleap_date = new Date("2/29/2001");

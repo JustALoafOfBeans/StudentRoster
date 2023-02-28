@@ -4,6 +4,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ Test class for add() method in Roster class
+ @author Victoria Chen, Bridget Zhang
+ */
 public class RosterTest {
 
     /**
