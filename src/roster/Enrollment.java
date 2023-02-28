@@ -132,4 +132,19 @@ public class Enrollment {
         // Returns -1 if reach end of roster without hit
         return -1;
     }
+
+    /**
+     Method returns the EnrollStudent object given a dummy student obj as
+     long as the profile matches.
+     * @param enrollStudent EnrollStudent object to find.
+     * @return Full EnrollStudent object.
+     */
+    public EnrollStudent getStudent(EnrollStudent enrollStudent) {
+        int NOTFOUND = -1;
+        int foundIndex = find(enrollStudent);
+        if (foundIndex == NOTFOUND) {
+            return null;
+        }
+        return enrollStudents[foundIndex];
+    }
 }

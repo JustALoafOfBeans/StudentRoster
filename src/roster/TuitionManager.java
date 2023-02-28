@@ -74,7 +74,7 @@ public class TuitionManager {
                     dropStudent(parameters);
                     break;
                 case "S": //award a scholarship
-                    System.out.println("Award a scholarship");
+                    awardScholarship(parameters);
                     break;
                 case "SE": // end semester
                     System.out.println("End semester.");
@@ -86,6 +86,72 @@ public class TuitionManager {
                     System.out.println(opCode + " is an invalid command!");
                     break;
             }
+        }
+    }
+
+    /**
+     Method assigns a scholarship to a student if they are eligible. This
+     method checks if the passed Student is a Resident and then calls
+     residentScholarship when applicable.
+     * @param parameters String array of the student's details.
+     */
+    private void awardScholarship(String[] parameters) {
+        int NUMPARAMS = 4;
+        if (parameters.length < NUMPARAMS) {
+            System.out.println("Missing data in line command.");
+            return;
+        }
+        String[] prf = {parameters[1], parameters[2], parameters[3]};
+        String[] profile = {parameters[0], parameters[1], parameters[2], parameters[3]};
+        if (!validStudent(profile)) {
+            return;
+        }
+        String student = String.join(" ", prf);
+        EnrollStudent stuObj = new EnrollStudent(student + " 12");
+        if (enrolledStudents.contains(stuObj)) {
+            Profile tempProfile = new Profile(student);
+            Student tempStudent = new Resident(tempProfile);
+            Student toGiveScholarship = studentRoster.getStudent(tempStudent);
+            if (toGiveScholarship.isResident()) {
+                residentScholarship(toGiveScholarship, parameters, student);
+            } else {
+                System.out.println(student + " (" + toGiveScholarship.returnType()
+                        + ") is not eligible for the scholarship.");
+            }
+        } else {
+            System.out.println(student + " is not in the roster.");
+        }
+    }
+
+    /**
+     Helper function to awardScholarship, continues verification after
+     student is found to be a Resident.
+     * @param foundStudent Student Object that is in Roster.
+     * @param parameters String array of the student's details.
+     * @param student String containing the student's profile.
+     */
+    private void residentScholarship(Student foundStudent, String[] parameters, String student) {
+        int NUMPARAMS = 4;
+        int PARTTIME = 12;
+        Resident toGive = (Resident) foundStudent;
+        char[] digits = parameters[NUMPARAMS].toCharArray();
+        for (int i = 0; i < digits.length; i++) {
+            if (!Character.isDigit(digits[i])) {
+                System.out.println("Amount is not an integer.");
+                return;
+            }
+        }
+        EnrollStudent temp = new EnrollStudent(student + " 12");
+        EnrollStudent stuObj = enrolledStudents.getStudent(temp);
+        int scholarship = Integer.parseInt(parameters[NUMPARAMS]);
+        if (scholarship > 10000 || scholarship < 1) {
+            System.out.println(scholarship + ": invalid amount.");
+        } else if (stuObj.getCredits() < PARTTIME) {
+            System.out.println(student + " part time student is not eligible " +
+                    "for the scholarship.");
+        } else { //assign scholarship
+            toGive.assignScholarship(scholarship);
+            System.out.println(student + ": scholarship amount updated.");
         }
     }
 
